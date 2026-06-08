@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RASTRO
 
-## Getting Started
+Dashboard open source de inteligencia civil para monitoreo de personas desaparecidas en México.
 
-First, run the development server:
+Patrones inspirados en [OSIRIS](https://github.com/simplifaisoul/osiris): API routes con caché, capas MapLibre progresivas, agregador RSS/GDELT/Telegram.
+
+## Stack
+
+- Next.js 16 (App Router, Turbopack)
+- TypeScript 5
+- MapLibre GL JS
+- Tailwind CSS 4
+- Framer Motion
+
+## Desarrollo
 
 ```bash
+cp .env.template .env
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `GET /api/rnpdno` — agregado estatal + municipios
+- `GET /api/amber` — alertas AMBER
+- `GET /api/news` — RSS configurable
+- `GET /api/gdelt` — noticias GDELT filtradas México
+- `GET /api/telegram-feed` — posts geoparseados de canales públicos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Atajos de teclado
 
-## Learn More
+| Tecla | Acción |
+|---|---|
+| 1–4 | Tabs mapa / alertas / noticias / datos |
+| L | Panel de capas |
+| A | Toggle AMBER (en mapa) |
+| N | Toggle noticias geo (en mapa) |
+| Esc | Cerrar panel / deseleccionar |
 
-To learn more about Next.js, take a look at the following resources:
+## Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cp .env.template .env
+docker compose up -d --build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Abre `http://localhost:${RASTRO_PORT:-3000}`.
