@@ -1,4 +1,4 @@
-import { geoparseText, isInMexico } from "@/lib/geoparse/mx-places";
+import { geoparseText, inferEstadoFromText, isInMexico } from "@/lib/geoparse/mx-places";
 import { normalizeNewsItem } from "@/lib/feeds/news-utils";
 import type { Noticia } from "@/lib/types";
 
@@ -34,7 +34,7 @@ export async function fetchGdeltNews(): Promise<{ items: Noticia[]; usedMock: bo
             )
           : new Date();
 
-        const geo = geoparseText(article.title ?? "");
+        const geo = geoparseText(article.title ?? "") ?? inferEstadoFromText(article.title ?? "");
         const item = normalizeNewsItem({
           id: `gdelt-${index}-${article.url ?? article.title}`,
           titulo: article.title ?? "",
@@ -43,6 +43,7 @@ export async function fetchGdeltNews(): Promise<{ items: Noticia[]; usedMock: bo
           url: article.url,
           lat: geo?.lat,
           lng: geo?.lng,
+          geoConfidence: geo?.confidence ?? "none",
         });
 
         if (geo && isInMexico(geo.lat, geo.lng)) {

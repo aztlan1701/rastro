@@ -1,0 +1,168 @@
+{
+  "publishedAt": "2024-03-19",
+  "source": "Data Cívica — reconstrucción 2017-2024 (agregados referenciales)",
+  "note": "Totales referenciales para comparación en dashboard. Para análisis exhaustivo descargue el CSV completo (~321 MB).",
+  "totalRegistros": 139000,
+  "porEstado": [
+    {
+      "estadoId": "MX-JAL",
+      "nombre": "Jalisco",
+      "total": 12800
+    },
+    {
+      "estadoId": "MX-MEX",
+      "nombre": "Estado de México",
+      "total": 10900
+    },
+    {
+      "estadoId": "MX-TAM",
+      "nombre": "Tamaulipas",
+      "total": 10500
+    },
+    {
+      "estadoId": "MX-VER",
+      "nombre": "Veracruz",
+      "total": 9400
+    },
+    {
+      "estadoId": "MX-SIN",
+      "nombre": "Sinaloa",
+      "total": 8900
+    },
+    {
+      "estadoId": "MX-GRO",
+      "nombre": "Guerrero",
+      "total": 8500
+    },
+    {
+      "estadoId": "MX-CDM",
+      "nombre": "Ciudad de México",
+      "total": 7400
+    },
+    {
+      "estadoId": "MX-CHH",
+      "nombre": "Chihuahua",
+      "total": 7200
+    },
+    {
+      "estadoId": "MX-NLE",
+      "nombre": "Nuevo León",
+      "total": 5900
+    },
+    {
+      "estadoId": "MX-MIC",
+      "nombre": "Michoacán",
+      "total": 5600
+    },
+    {
+      "estadoId": "MX-OAX",
+      "nombre": "Oaxaca",
+      "total": 4700
+    },
+    {
+      "estadoId": "MX-PUE",
+      "nombre": "Puebla",
+      "total": 4500
+    },
+    {
+      "estadoId": "MX-SON",
+      "nombre": "Sonora",
+      "total": 4300
+    },
+    {
+      "estadoId": "MX-COA",
+      "nombre": "Coahuila",
+      "total": 3900
+    },
+    {
+      "estadoId": "MX-BCS",
+      "nombre": "Baja California",
+      "total": 3500
+    },
+    {
+      "estadoId": "MX-BCN",
+      "nombre": "Baja California Sur",
+      "total": 2100
+    },
+    {
+      "estadoId": "MX-GUA",
+      "nombre": "Guanajuato",
+      "total": 3800
+    },
+    {
+      "estadoId": "MX-HID",
+      "nombre": "Hidalgo",
+      "total": 2600
+    },
+    {
+      "estadoId": "MX-MOR",
+      "nombre": "Morelos",
+      "total": 2400
+    },
+    {
+      "estadoId": "MX-NAY",
+      "nombre": "Nayarit",
+      "total": 1800
+    },
+    {
+      "estadoId": "MX-QUE",
+      "nombre": "Querétaro",
+      "total": 1700
+    },
+    {
+      "estadoId": "MX-ROO",
+      "nombre": "Quintana Roo",
+      "total": 1600
+    },
+    {
+      "estadoId": "MX-SLP",
+      "nombre": "San Luis Potosí",
+      "total": 2200
+    },
+    {
+      "estadoId": "MX-TAB",
+      "nombre": "Tabasco",
+      "total": 1900
+    },
+    {
+      "estadoId": "MX-TLA",
+      "nombre": "Tlaxcala",
+      "total": 900
+    },
+    {
+      "estadoId": "MX-YUC",
+      "nombre": "Yucatán",
+      "total": 1400
+    },
+    {
+      "estadoId": "MX-ZAC",
+      "nombre": "Zacatecas",
+      "total": 1300
+    },
+    {
+      "estadoId": "MX-AGU",
+      "nombre": "Aguascalientes",
+      "total": 1100
+    },
+    {
+      "estadoId": "MX-CAM",
+      "nombre": "Campeche",
+      "total": 800
+    },
+    {
+      "estadoId": "MX-CHP",
+      "nombre": "Chiapas",
+      "total": 3200
+    },
+    {
+      "estadoId": "MX-COL",
+      "nombre": "Colima",
+      "total": 700
+    },
+    {
+      "estadoId": "MX-DUR",
+      "nombre": "Durango",
+      "total": 1500
+    }
+  ]
+}

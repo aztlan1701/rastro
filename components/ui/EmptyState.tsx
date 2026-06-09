@@ -24,7 +24,7 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
           <path d="M8 12h8" />
         </svg>
       </div>
-      <p className="text-[11px] font-medium tracking-wide text-[#888]">{title}</p>
+      <h3 className="text-[11px] font-medium tracking-wide text-[#888]">{title}</h3>
       {description ? (
         <p className="mt-1 max-w-xs text-[11px] leading-relaxed text-[#556070]">{description}</p>
       ) : null}

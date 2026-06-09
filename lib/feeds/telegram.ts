@@ -45,6 +45,7 @@ function extractPosts(html: string, channel: string): TelegramPost[] {
       lat: geo?.lat,
       lng: geo?.lng,
       lugar: geo?.label,
+      geoConfidence: geo?.confidence ?? "none",
     });
   }
 

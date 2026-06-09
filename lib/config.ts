@@ -1,14 +1,90 @@
+export const DATACIVICA = {
+  site: "https://volveradesaparecer.datacivica.org",
+  datosAbiertos: "https://volveradesaparecer.datacivica.org/datos-abiertos",
+  buscador: "https://volveradesaparecer.datacivica.org/buscador",
+} as const;
+
+function driveDownload(id: string, large = false): string {
+  const confirm = large ? "&confirm=t" : "";
+  return `https://drive.google.com/uc?export=download${confirm}&id=${id}`;
+}
+
 export const RNPDNO_CSV_URL =
   process.env.RASTRO_RNPDNO_CSV_URL ??
-  "https://files.datacivica.org/volveradesaparecer/rnpdno_publico.csv";
+  driveDownload("13GK5Vt9WjB_G4vkCpymmMH1QwkQobJGa");
+
+export const VAD_BORRADOS_CSV_URL =
+  process.env.RASTRO_VAD_BORRADOS_CSV_URL ??
+  driveDownload("1wuo-bsRoVGhuQIIpC-u_KdcdICyDgwqw");
+
+export const VAD_DATASETS = [
+  {
+    id: "rnpdno_publico",
+    name: "RNPDNO versión pública (sep 2023)",
+    description:
+      "Versión pública de 11 variables del RNPDNO publicada por la Comisión Nacional de Búsqueda.",
+    publishedAt: "2023-09-22",
+    downloadUrl:
+      "https://drive.google.com/file/d/13GK5Vt9WjB_G4vkCpymmMH1QwkQobJGa/view?usp=drive_link",
+    format: "csv",
+    usedInRastro: true,
+  },
+  {
+    id: "reconstruccion_2017_2024",
+    name: "Personas desaparecidas: registros de 2017 a 2024",
+    description:
+      "Reconstrucción por Data Cívica de registros del RNPED, versiones públicas del RNPDNO y búsqueda generalizada.",
+    publishedAt: "2024-03-19",
+    downloadUrl:
+      "https://drive.google.com/file/d/165KwBF1hmnAfk8fqiQUmh6RAACROUmuO/view?usp=drive_link",
+    format: "csv",
+    usedInRastro: false,
+  },
+  {
+    id: "nombres_borrados",
+    name: "Nombres borrados (ago–dic 2023)",
+    description:
+      "Reconstrucción de nombres borrados entre versiones públicas del RNPDNO y la versión especial de búsqueda generalizada.",
+    publishedAt: "2024-03-12",
+    downloadUrl:
+      "https://drive.google.com/file/d/1wuo-bsRoVGhuQIIpC-u_KdcdICyDgwqw/view?usp=drive_link",
+    format: "csv",
+    usedInRastro: true,
+  },
+] as const;
 
 export const RSS_FEEDS = (
   process.env.RASTRO_RSS_FEEDS ??
-  "https://www.animalpolitico.com/feed/,https://www.proceso.com.mx/rss,https://www.reforma.com/rss/portada.xml"
+  [
+    "https://www.animalpolitico.com/feed/",
+    "https://www.proceso.com.mx/rss",
+    "https://www.reforma.com/rss/portada.xml",
+    "https://www.gob.mx/cnbp/es/rss",
+  ].join(",")
 )
   .split(",")
   .map((url) => url.trim())
   .filter(Boolean);
+
+export const MONITOR_KEYWORDS = (
+  process.env.RASTRO_MONITOR_KEYWORDS ??
+  "desaparec,hallazgo,fosa,alerta amber,alerta alba,buscadoras,localizad"
+)
+  .split(",")
+  .map((keyword) => keyword.trim().toLowerCase())
+  .filter(Boolean);
+
+export const MONITOR_ESTADOS = (
+  process.env.RASTRO_MONITOR_ESTADOS ?? ""
+)
+  .split(",")
+  .map((estado) => estado.trim())
+  .filter(Boolean);
+
+export const ALERT_WEBHOOK_URL = process.env.RASTRO_ALERT_WEBHOOK_URL ?? "";
+
+export const RECONSTRUCCION_AGGREGADOS_URL =
+  process.env.RASTRO_RECONSTRUCCION_AGGREGADOS_URL ?? "/data/reconstruccion-agregados.json";
 
 export const TELEGRAM_CHANNELS = (
   process.env.RASTRO_TELEGRAM_CHANNELS ?? "buscadoras_mx,AlertaAmberMexico"
@@ -19,6 +95,7 @@ export const TELEGRAM_CHANNELS = (
 
 export const CACHE_TTL = {
   rnpdno: 24 * 60 * 60 * 1000,
+  vad: 24 * 60 * 60 * 1000,
   amber: 30 * 60 * 1000,
   news: 15 * 60 * 1000,
   gdelt: 30 * 60 * 1000,
@@ -27,6 +104,7 @@ export const CACHE_TTL = {
 
 export const CACHE_STALE = {
   rnpdno: 7 * 24 * 60 * 60 * 1000,
+  vad: 7 * 24 * 60 * 60 * 1000,
   amber: 24 * 60 * 60 * 1000,
   news: 24 * 60 * 60 * 1000,
   gdelt: 24 * 60 * 60 * 1000,

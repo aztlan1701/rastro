@@ -3,15 +3,21 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { EmptyState } from "@/components/ui/EmptyState";
-import type { AlertaAmber, AlertaFilter } from "@/lib/types";
+import type { AlertaAmber, AlertaFilter, ApiMeta } from "@/lib/types";
+import { formatRelativeDate } from "@/lib/utils";
+import { SourceMetaBar } from "./SourceMetaBar";
+import { TabSectionHeader } from "./TabSectionHeader";
 
 interface AlertsTabProps {
   alertas: AlertaAmber[];
+  meta: ApiMeta;
+  demoMode?: boolean;
+  portalReachable?: boolean;
 }
 
 const FILTERS: AlertaFilter[] = ["todas", "activas", "cerradas"];
 
-export function AlertsTab({ alertas }: AlertsTabProps) {
+export function AlertsTab({ alertas, meta, demoMode, portalReachable }: AlertsTabProps) {
   const [filter, setFilter] = useState<AlertaFilter>("todas");
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
@@ -22,13 +28,40 @@ export function AlertsTab({ alertas }: AlertsTabProps) {
 
   return (
     <div className="flex-1 overflow-auto p-6">
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="font-display text-lg font-bold text-white">Alertas AMBER / ALBA</h2>
-          <p className="mt-1 text-[11px] text-[#556070]">
-            Casos activos en tiempo real · FGR
-          </p>
+      <SourceMetaBar
+        sourceId="amber"
+        meta={meta}
+        extra={
+          demoMode
+            ? `Modo demostración · Portal FGR ${portalReachable ? "accesible" : "no verificado"}`
+            : undefined
+        }
+      />
+      {demoMode ? (
+        <div
+          role="note"
+          className="mb-5 rounded-md border border-[#ffb300]/20 bg-[#ffb300]/8 px-4 py-3 text-[11px] text-[#c0bfb8]"
+        >
+          Las alertas mostradas son datos ficticios de demostración. Para casos reales consulte{" "}
+          <a
+            href="https://alertaamber.fgr.org.mx/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#ffb300] underline"
+          >
+            alertaamber.fgr.org.mx
+          </a>
+          .
         </div>
+      ) : null}
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+        <TabSectionHeader
+          className="mb-0"
+          title="Alertas AMBER / ALBA"
+          subtitle={
+            demoMode ? "Demostración · verificar en portal FGR" : "Casos activos · FGR"
+          }
+        />
         <div className="flex gap-1.5" role="group" aria-label="Filtrar alertas">
           {FILTERS.map((item) => (
             <button
@@ -84,7 +117,9 @@ export function AlertsTab({ alertas }: AlertsTabProps) {
                 >
                   {alerta.activa ? "● Activa" : "✓ Localizada"}
                 </span>
-                <span className="text-[11px] text-[#3a4558]">{alerta.fecha}</span>
+                <span className="text-[11px] text-[#3a4558]">
+                {formatRelativeDate(alerta.fecha)}
+              </span>
               </div>
               <div className="font-display text-base font-bold text-white">{alerta.nombre}</div>
               <p className="mt-1 text-[11px] text-[#888]">

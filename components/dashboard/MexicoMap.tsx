@@ -1,9 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { FeatureCollection } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildEstadosGeoJson, filterMunicipiosByBbox } from "@/lib/geo/choropleth";
+import { buildEstadosGeoJson, filterMunicipiosByBbox, maplibreChoroplethExpression } from "@/lib/geo/choropleth";
+import {
+  bindPointLayerHover,
+  buildAlertGeoJson,
+  buildMunicipioGeoJson,
+  buildNewsGeoJson,
+  NEWS_DOT_COLOR_EXPRESSION,
+  showEstadoPopup,
+} from "@/lib/geo/map-sources";
+import {
+  loadOfficialStatesGeoJson,
+  mergeOfficialEstadosGeoJson,
+} from "@/lib/geo/states-geojson";
+import {
+  getMapFitPadding,
+  getMapFocusPadding,
+  MEXICO_MAP_DEFAULT,
+} from "@/lib/map-view";
 import type {
   AlertaAmber,
   EstadoData,
@@ -13,10 +31,48 @@ import type {
   TelegramPost,
 } from "@/lib/types";
 import { formatNum } from "@/lib/utils";
+import { MapLegend } from "./MapLegend";
+import { useMexicoMap } from "@/hooks/useMexicoMap";
 
 const DEFAULT_MAP_STYLE =
   "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 const FALLBACK_MAP_STYLE = "https://demotiles.maplibre.org/style.json";
+
+const MEXICO_FRAME_SW: [number, number] = [-117.85, 14.15];
+const MEXICO_FRAME_NE: [number, number] = [-86.65, 33.05];
+const MEXICO_FRAME_CENTER: [number, number] = [-102.25, 23.6];
+
+function getMexicoFrameZoom(map: maplibregl.Map): number {
+  const padding = getMapFitPadding();
+  const width = Math.max(
+    map.getContainer().clientWidth - padding.left - padding.right,
+    1,
+  );
+  const height = Math.max(
+    map.getContainer().clientHeight - padding.top - padding.bottom,
+    1,
+  );
+
+  const latSpan = MEXICO_FRAME_NE[1] - MEXICO_FRAME_SW[1];
+  const lngSpan = MEXICO_FRAME_NE[0] - MEXICO_FRAME_SW[0];
+  const latRad = (MEXICO_FRAME_CENTER[1] * Math.PI) / 180;
+
+  const zoomLat = Math.log2((height / 256) * (360 / latSpan));
+  const zoomLng = Math.log2((width / 256) * (360 / lngSpan) / Math.cos(latRad));
+  const zoom = Math.min(zoomLat, zoomLng) - 0.05;
+
+  return Math.min(Math.max(zoom, 4), 10);
+}
+
+function frameMexico(map: maplibregl.Map, duration = 0) {
+  map.resize();
+  map.easeTo({
+    center: MEXICO_FRAME_CENTER,
+    zoom: getMexicoFrameZoom(map),
+    padding: getMapFitPadding(),
+    duration,
+  });
+}
 
 interface MexicoMapProps {
   estados: EstadoData[];
@@ -29,119 +85,26 @@ interface MexicoMapProps {
   hoveredEstado: EstadoData | null;
   onSelectEstado: (estado: EstadoData | null) => void;
   onHoverEstado: (estado: EstadoData | null) => void;
+  onResetSelection: () => void;
 }
-
-const LEGEND = [
-  { color: "#ff2d55", label: ">7,000" },
-  { color: "#ff6b35", label: "5,000–7,000" },
-  { color: "#ffb347", label: "3,500–5,000" },
-  { color: "#ffd700", label: "2,000–3,500" },
-  { color: "#4a9eff", label: "<2,000" },
-];
 
 function layerEnabled(layers: LayerState[], id: LayerState["id"]) {
   return layers.find((layer) => layer.id === id)?.enabled ?? false;
 }
 
-function buildAlertGeoJson(alertas: AlertaAmber[]) {
-  return {
-    type: "FeatureCollection" as const,
-    features: alertas
-      .filter((alerta) => alerta.activa && alerta.lat && alerta.lng)
-      .map((alerta) => ({
-        type: "Feature" as const,
-        geometry: {
-          type: "Point" as const,
-          coordinates: [alerta.lng!, alerta.lat!],
-        },
-        properties: {
-          id: alerta.id,
-          nombre: alerta.nombre,
-        },
-      })),
-  };
-}
-
-function buildNewsGeoJson(noticias: Noticia[], telegram: TelegramPost[]) {
-  const newsFeatures = noticias
-    .filter((item) => item.lat && item.lng)
-    .map((item) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [item.lng!, item.lat!],
-      },
-      properties: {
-        id: item.id,
-        titulo: item.titulo,
-        tipo: item.tipo,
-      },
-    }));
-
-  const tgFeatures = telegram
-    .filter((post) => post.lat && post.lng)
-    .map((post) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [post.lng!, post.lat!],
-      },
-      properties: {
-        id: post.id,
-        titulo: post.text.slice(0, 80),
-        tipo: "telegram",
-      },
-    }));
-
-  return {
-    type: "FeatureCollection" as const,
-    features: [...newsFeatures, ...tgFeatures],
-  };
-}
-
-function buildMunicipioGeoJson(municipios: MunicipioPoint[]) {
-  return {
-    type: "FeatureCollection" as const,
-    features: municipios.map((point) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [point.lng, point.lat],
-      },
-      properties: {
-        id: point.id,
-        nombre: point.nombre,
-        total: point.total,
-      },
-    })),
-  };
-}
-
-function colorExpression() {
-  return [
-    "step",
-    ["get", "total"],
-    "#4a9eff",
-    2000,
-    "#ffd700",
-    3500,
-    "#ffb347",
-    5000,
-    "#ff6b35",
-    7000,
-    "#ff2d55",
-  ] as maplibregl.ExpressionSpecification;
-}
-
-function buildEstadoCentroids(
-  geoJson: ReturnType<typeof buildEstadosGeoJson>,
-): Map<string, { lng: number; lat: number }> {
+function buildEstadoCentroids(geoJson: FeatureCollection): Map<string, { lng: number; lat: number }> {
   const centroids = new Map<string, { lng: number; lat: number }>();
 
   for (const feature of geoJson.features) {
-    const { id, centerLng, centerLat } = feature.properties;
-    if (typeof centerLng !== "number" || typeof centerLat !== "number") continue;
-    centroids.set(id, { lng: centerLng, lat: centerLat });
+    const props = feature.properties as {
+      id?: string;
+      centerLng?: number;
+      centerLat?: number;
+    } | null;
+    if (!props?.id || typeof props.centerLng !== "number" || typeof props.centerLat !== "number") {
+      continue;
+    }
+    centroids.set(props.id, { lng: props.centerLng, lat: props.centerLat });
   }
 
   return centroids;
@@ -151,6 +114,7 @@ function focusMapOnEstado(
   map: maplibregl.Map,
   estadoId: string,
   centroids: Map<string, { lng: number; lat: number }>,
+  padding: ReturnType<typeof getMapFocusPadding>,
 ) {
   const center = centroids.get(estadoId);
   if (!center) return;
@@ -159,7 +123,16 @@ function focusMapOnEstado(
     center: [center.lng, center.lat],
     zoom: Math.max(map.getZoom(), 5.2),
     duration: 600,
+    padding,
   });
+}
+
+function resetMapView(
+  map: maplibregl.Map,
+  _estados: EstadoData[],
+  duration = 600,
+) {
+  frameMexico(map, duration);
 }
 
 export function MexicoMap({
@@ -173,6 +146,7 @@ export function MexicoMap({
   hoveredEstado,
   onSelectEstado,
   onHoverEstado,
+  onResetSelection,
 }: MexicoMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -180,6 +154,17 @@ export function MexicoMap({
   const layersInitializedRef = useRef(false);
   const styleFallbackUsedRef = useRef(false);
   const lastFocusedIdRef = useRef<string | null>(null);
+  const userMovedMapRef = useRef(false);
+  const layoutFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const queueLayoutFit = useCallback((map: maplibregl.Map) => {
+    if (layoutFitTimerRef.current) clearTimeout(layoutFitTimerRef.current);
+    layoutFitTimerRef.current = setTimeout(() => {
+      layoutFitTimerRef.current = null;
+      if (userMovedMapRef.current || selectedEstadoRef.current) return;
+      frameMexico(map);
+    }, 120);
+  }, []);
 
   const municipiosRef = useRef(municipios);
   const alertasRef = useRef(alertas);
@@ -190,10 +175,27 @@ export function MexicoMap({
   const onHoverRef = useRef(onHoverEstado);
   const onSelectRef = useRef(onSelectEstado);
   const estadoCentroidsRef = useRef(new Map<string, { lng: number; lat: number }>());
+  const selectedEstadoRef = useRef(selectedEstado);
+  const hoveredEstadoRef = useRef(hoveredEstado);
 
   const [mapReady, setMapReady] = useState(false);
+  const { liveMessage } = useMexicoMap(selectedEstado, hoveredEstado);
+  const [officialTemplate, setOfficialTemplate] = useState<Awaited<
+    ReturnType<typeof loadOfficialStatesGeoJson>
+  > | null>(null);
 
-  const choropleth = useMemo(() => buildEstadosGeoJson(estados), [estados]);
+  const buildChoropleth = useCallback(
+    (items: EstadoData[]): FeatureCollection => {
+      if (officialTemplate) return mergeOfficialEstadosGeoJson(officialTemplate, items);
+      return buildEstadosGeoJson(items) as FeatureCollection;
+    },
+    [officialTemplate],
+  );
+
+  const officialTemplateRef = useRef(officialTemplate);
+  const buildChoroplethRef = useRef(buildChoropleth);
+
+  const choropleth = useMemo(() => buildChoropleth(estados), [buildChoropleth, estados]);
   const estadoCentroids = useMemo(() => buildEstadoCentroids(choropleth), [choropleth]);
   const showEstados = layerEnabled(layers, "rnpdno_estados");
   const showMunicipios = layerEnabled(layers, "rnpdno_municipios");
@@ -210,7 +212,24 @@ export function MexicoMap({
     onHoverRef.current = onHoverEstado;
     onSelectRef.current = onSelectEstado;
     estadoCentroidsRef.current = estadoCentroids;
-  }, [alertas, estados, estadoCentroids, layers, municipios, noticias, onHoverEstado, onSelectEstado, telegram]);
+    selectedEstadoRef.current = selectedEstado;
+    hoveredEstadoRef.current = hoveredEstado;
+    officialTemplateRef.current = officialTemplate;
+    buildChoroplethRef.current = buildChoropleth;
+  }, [alertas, estados, estadoCentroids, hoveredEstado, layers, municipios, noticias, onHoverEstado, onSelectEstado, selectedEstado, telegram, officialTemplate, buildChoropleth]);
+
+  useEffect(() => {
+    loadOfficialStatesGeoJson()
+      .then(setOfficialTemplate)
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    if (!officialTemplate || !mapRef.current || !layersInitializedRef.current) return;
+    (mapRef.current.getSource("estados-choropleth") as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildChoroplethRef.current(estadosRef.current),
+    );
+  }, [officialTemplate]);
 
   const syncMapLayers = useCallback(() => {
     const map = mapRef.current;
@@ -223,7 +242,7 @@ export function MexicoMap({
     const showNewsLayer = layerEnabled(currentLayers, "noticias_geo");
 
     (map.getSource("estados-choropleth") as maplibregl.GeoJSONSource | undefined)?.setData(
-      buildEstadosGeoJson(estadosRef.current),
+      buildChoroplethRef.current(estadosRef.current),
     );
     (map.getSource("alertas") as maplibregl.GeoJSONSource | undefined)?.setData(
       buildAlertGeoJson(alertasRef.current),
@@ -288,7 +307,7 @@ export function MexicoMap({
 
       map.addSource("estados-choropleth", {
         type: "geojson",
-        data: buildEstadosGeoJson(estadosRef.current),
+        data: buildChoroplethRef.current(estadosRef.current),
       });
 
       map.addSource("municipios", {
@@ -311,7 +330,7 @@ export function MexicoMap({
         type: "fill",
         source: "estados-choropleth",
         paint: {
-          "fill-color": colorExpression(),
+          "fill-color": maplibreChoroplethExpression(),
           "fill-opacity": 0.55,
         },
       });
@@ -359,17 +378,7 @@ export function MexicoMap({
         source: "noticias-geo",
         paint: {
           "circle-radius": 5,
-          "circle-color": [
-            "match",
-            ["get", "tipo"],
-            "hallazgo",
-            "#ff2d55",
-            "alerta",
-            "#ffb300",
-            "telegram",
-            "#00e5ff",
-            "#00d084",
-          ],
+          "circle-color": NEWS_DOT_COLOR_EXPRESSION,
           "circle-opacity": 0.85,
           "circle-stroke-width": 1,
           "circle-stroke-color": "#ffffff",
@@ -386,17 +395,12 @@ export function MexicoMap({
 
         onHoverRef.current(estado);
 
-        const centerLng = feature.properties.centerLng;
-        const centerLat = feature.properties.centerLat;
-        const popupLngLat =
-          typeof centerLng === "number" && typeof centerLat === "number"
-            ? { lng: centerLng, lat: centerLat }
-            : event.lngLat;
+        if (selectedEstadoRef.current?.id === estado.id) return;
 
         popup
-          .setLngLat(popupLngLat)
+          .setLngLat(event.lngLat)
           .setHTML(
-            `<div class="rastro-popup-inner"><strong>${estado.nombre}</strong><span>${formatNum(estado.total)} registradas</span></div>`,
+            `<div class="rastro-popup-inner"><strong>${estado.nombre}</strong><span>${formatNum(estado.total)} registradas · clic para fijar</span></div>`,
           )
           .addTo(map);
       });
@@ -404,15 +408,100 @@ export function MexicoMap({
       map.on("mouseleave", "estados-fill", () => {
         map.getCanvas().style.cursor = "";
         onHoverRef.current(null);
+
+        const selected = selectedEstadoRef.current;
+        if (selected) {
+          showEstadoPopup(map, popup, selected, estadoCentroidsRef.current);
+          return;
+        }
         popup.remove();
       });
 
-      map.on("click", "estados-fill", (event) => {
-        const feature = event.features?.[0];
-        if (!feature?.properties) return;
-        const estado = estadosRef.current.find((item) => item.id === feature.properties?.id);
-        if (estado) onSelectRef.current(estado);
+      map.on("click", (event) => {
+        const estadoFeature = map.queryRenderedFeatures(event.point, {
+          layers: ["estados-fill"],
+        })[0];
+
+        if (estadoFeature?.properties) {
+          const estado = estadosRef.current.find(
+            (item) => item.id === estadoFeature.properties?.id,
+          );
+          if (estado) {
+            onHoverRef.current(estado);
+            onSelectRef.current(estado);
+            showEstadoPopup(map, popup, estado, estadoCentroidsRef.current);
+            return;
+          }
+        }
+
+        const amberFeature = map.queryRenderedFeatures(event.point, {
+          layers: ["alertas-dots"],
+        })[0];
+        if (amberFeature?.properties) {
+          popup
+            .setLngLat(event.lngLat)
+            .setHTML(
+              `<div class="rastro-popup-inner"><strong>${amberFeature.properties.nombre ?? "Alerta AMBER"}</strong><span>Alerta activa</span></div>`,
+            )
+            .addTo(map);
+          return;
+        }
+
+        const municipioFeature = map.queryRenderedFeatures(event.point, {
+          layers: ["municipios-points"],
+        })[0];
+        if (municipioFeature?.properties) {
+          popup
+            .setLngLat(event.lngLat)
+            .setHTML(
+              `<div class="rastro-popup-inner"><strong>${municipioFeature.properties.nombre ?? "Municipio"}</strong><span>${formatNum(Number(municipioFeature.properties.total ?? 0))} registradas</span></div>`,
+            )
+            .addTo(map);
+          return;
+        }
+
+        const newsFeature = map.queryRenderedFeatures(event.point, {
+          layers: ["noticias-geo-dots"],
+        })[0];
+        if (newsFeature?.properties) {
+          popup
+            .setLngLat(event.lngLat)
+            .setHTML(
+              `<div class="rastro-popup-inner"><strong>${newsFeature.properties.tipo ?? "Noticia"}</strong><span>${newsFeature.properties.titulo ?? ""}</span></div>`,
+            )
+            .addTo(map);
+        }
       });
+
+      bindPointLayerHover(
+        map,
+        "alertas-dots",
+        popup,
+        (properties) =>
+          `<strong>${properties.nombre ?? "Alerta AMBER"}</strong><span>Alerta activa</span>`,
+        selectedEstadoRef,
+        estadoCentroidsRef,
+      );
+
+      bindPointLayerHover(
+        map,
+        "municipios-points",
+        popup,
+        (properties) =>
+          `<strong>${properties.nombre ?? "Municipio"}</strong><span>${formatNum(Number(properties.total ?? 0))} registradas</span>`,
+        selectedEstadoRef,
+        estadoCentroidsRef,
+      );
+
+      bindPointLayerHover(
+        map,
+        "noticias-geo-dots",
+        popup,
+        (properties) =>
+          `<strong>${properties.tipo ?? "Noticia"}</strong><span>${properties.titulo ?? ""}</span>`,
+        selectedEstadoRef,
+        estadoCentroidsRef,
+      );
 
       map.on("moveend", () => {
         if (!map.getSource("municipios")) return;
@@ -432,11 +521,17 @@ export function MexicoMap({
 
       layersInitializedRef.current = true;
       syncMapLayers();
-      map.resize();
+      frameMexico(map);
+      queueLayoutFit(map);
       setMapReady(true);
     },
-    [syncMapLayers],
+    [queueLayoutFit, syncMapLayers],
   );
+
+  const initializeLayersRef = useRef(initializeLayers);
+  initializeLayersRef.current = initializeLayers;
+  const queueLayoutFitRef = useRef(queueLayoutFit);
+  queueLayoutFitRef.current = queueLayoutFit;
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -447,9 +542,9 @@ export function MexicoMap({
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: mapStyle,
-      center: [-102.5, 23.5],
-      zoom: 4.2,
-      minZoom: 3.5,
+      center: MEXICO_MAP_DEFAULT.center,
+      zoom: MEXICO_MAP_DEFAULT.zoom,
+      minZoom: 4.0,
       maxZoom: 10,
       attributionControl: false,
     });
@@ -468,8 +563,21 @@ export function MexicoMap({
     });
     popupRef.current = popup;
 
+    map.on("dragstart", (event) => {
+      if (event.originalEvent) userMovedMapRef.current = true;
+    });
+    map.on("zoomstart", (event) => {
+      if (event.originalEvent) userMovedMapRef.current = true;
+    });
+
     map.on("load", () => {
-      initializeLayers(map, popup);
+      frameMexico(map);
+      initializeLayersRef.current(map, popup);
+    });
+
+    map.once("idle", () => {
+      if (userMovedMapRef.current || selectedEstadoRef.current) return;
+      frameMexico(map);
     });
 
     map.on("error", (event) => {
@@ -482,7 +590,8 @@ export function MexicoMap({
       setMapReady(false);
       map.setStyle(FALLBACK_MAP_STYLE);
       map.once("load", () => {
-        initializeLayers(map, popup);
+        frameMexico(map);
+        initializeLayersRef.current(map, popup);
       });
     });
 
@@ -490,11 +599,14 @@ export function MexicoMap({
 
     const resizeObserver = new ResizeObserver(() => {
       map.resize();
+      if (userMovedMapRef.current || selectedEstadoRef.current) return;
+      queueLayoutFitRef.current(map);
     });
     resizeObserver.observe(containerRef.current);
 
     return () => {
       resizeObserver.disconnect();
+      if (layoutFitTimerRef.current) clearTimeout(layoutFitTimerRef.current);
       popup.remove();
       map.remove();
       mapRef.current = null;
@@ -502,7 +614,9 @@ export function MexicoMap({
       styleFallbackUsedRef.current = false;
       setMapReady(false);
     };
-  }, [initializeLayers]);
+    // Map instance must be created once; layer/data updates go through syncMapLayers.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!mapReady) return;
@@ -524,60 +638,71 @@ export function MexicoMap({
 
   useEffect(() => {
     const map = mapRef.current;
-    const target = selectedEstado ?? hoveredEstado;
+    const popup = popupRef.current;
+    const highlight = selectedEstado ?? hoveredEstado;
     if (!mapReady || !map || !map.getLayer("estados-outline")) return;
 
-    if (!target) {
+    if (!highlight) {
       lastFocusedIdRef.current = null;
+      if (!selectedEstado) popup?.remove();
+      map.setPaintProperty("estados-outline", "line-width", 0.6);
+      map.setPaintProperty("estados-fill", "fill-opacity", 0.55);
       return;
     }
 
-    if (lastFocusedIdRef.current !== target.id) {
-      focusMapOnEstado(map, target.id, estadoCentroids);
-      lastFocusedIdRef.current = target.id;
+    if (selectedEstado && lastFocusedIdRef.current !== selectedEstado.id) {
+      focusMapOnEstado(map, selectedEstado.id, estadoCentroids, getMapFocusPadding());
+      lastFocusedIdRef.current = selectedEstado.id;
+    }
+
+    if (selectedEstado && popup) {
+      showEstadoPopup(map, popup, selectedEstado, estadoCentroids);
     }
 
     map.setPaintProperty("estados-outline", "line-width", [
       "case",
-      ["==", ["get", "id"], target.id],
+      ["==", ["get", "id"], highlight.id],
       2.5,
       0.6,
     ]);
     map.setPaintProperty("estados-fill", "fill-opacity", [
       "case",
-      ["==", ["get", "id"], target.id],
+      ["==", ["get", "id"], highlight.id],
       0.85,
       0.45,
     ]);
   }, [estadoCentroids, hoveredEstado, mapReady, selectedEstado]);
 
+  const hasMapFocus = Boolean(selectedEstado || hoveredEstado);
+
+  const handleResetView = () => {
+    const map = mapRef.current;
+    const popup = popupRef.current;
+    if (map && mapReady) {
+      userMovedMapRef.current = false;
+      resetMapView(map, estadosRef.current);
+      lastFocusedIdRef.current = null;
+    }
+    popup?.remove();
+    onResetSelection();
+  };
+
   return (
     <div className="relative min-h-[420px] w-full flex-1">
-      <div ref={containerRef} className="absolute inset-0 h-full w-full" />
-      <div className="pointer-events-none absolute right-3 bottom-3 z-10 max-w-[200px] rounded-sm border border-white/8 bg-[#030508]/90 p-3 text-[11px]">
-        <div className="mb-2 text-[11px] tracking-widest text-[#556070] uppercase">
-          Escala de casos
-        </div>
-        <p className="mb-2 text-[11px] leading-snug text-[#3a4558]">
-          Pasa el cursor o haz clic en un estado
-        </p>
-        {LEGEND.map((item) => (
-          <div key={item.label} className="mb-1 flex items-center gap-2">
-            <div className="h-1.5 w-2.5 rounded-sm" style={{ background: item.color }} />
-            <span className="text-[#888]">{item.label}</span>
-          </div>
-        ))}
-        <div className="mt-2 space-y-1 border-t border-white/6 pt-2">
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-[#ffb300]" />
-            <span className="text-[#888]">Alerta AMBER</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-[#00e5ff]" />
-            <span className="text-[#888]">Telegram geo</span>
-          </div>
-        </div>
+      <div ref={containerRef} className="absolute inset-0 h-full w-full" aria-label="Mapa de México" />
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {liveMessage}
       </div>
+      {hasMapFocus ? (
+        <button
+          type="button"
+          onClick={handleResetView}
+          className="absolute top-12 right-3 z-20 rounded-sm border border-white/10 bg-[#030508]/95 px-3 py-1.5 text-[11px] text-[#c0bfb8] backdrop-blur-md transition-colors hover:border-white/20 hover:text-white lg:top-3"
+        >
+          Ver todo México
+        </button>
+      ) : null}
+      <MapLegend defaultCollapsedOnMobile />
     </div>
   );
 }

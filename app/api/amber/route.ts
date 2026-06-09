@@ -21,6 +21,8 @@ export async function GET() {
 
     return jsonResponse({
       alertas: entry.data.alertas,
+      demoMode: entry.data.demoMode,
+      portalReachable: entry.data.portalReachable,
       meta: buildMeta(entry.status, entry.fetchedAt, entry.source),
     });
   } catch (error) {

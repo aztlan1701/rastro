@@ -15,7 +15,8 @@ interface StatsBarProps {
 export function StatsBar({ stats }: StatsBarProps) {
   return (
     <div className="relative shrink-0 border-b border-white/5 bg-white/[0.015]">
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#030508] to-transparent md:hidden" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#030508] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-[#030508] to-transparent md:hidden" />
       <div className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
         {stats.map((stat) => (
           <div
@@ -76,7 +77,7 @@ export function buildStats(
       label: "Estados monitoreados",
       value: estadosCount,
       color: "#4a9eff",
-      sub: "de 32 entidades",
+      sub: `${estadosCount} con datos RNPDNO · 32 entidades`,
     },
   ];
 }

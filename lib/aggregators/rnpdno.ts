@@ -36,6 +36,11 @@ function findColumn(headers: string[], candidates: string[]): number {
   for (const candidate of candidates) {
     const index = headers.indexOf(candidate);
     if (index >= 0) return index;
+
+    const partial = headers.findIndex(
+      (header) => header.startsWith(candidate) || header.includes(candidate),
+    );
+    if (partial >= 0) return partial;
   }
   return -1;
 }
@@ -68,6 +73,7 @@ export function parseRnpdnoCsv(csvText: string): RnpdnoRecord[] {
   const stateCol = findColumn(headers, [
     "entidad_federativa_de_ocurrencia",
     "entidad_federativa",
+    "entidad_de_desaparici",
     "entidad",
     "estado",
   ]);

@@ -12,6 +12,7 @@ import type {
   MunicipioPoint,
   Noticia,
   TelegramPost,
+  VadSummary,
 } from "@/lib/types";
 
 const DEFAULT_LAYERS: LayerState[] = [
@@ -43,11 +44,15 @@ export function useRastroData() {
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState<DashboardData["meta"]>({
     rnpdno: EMPTY_META,
+    vad: EMPTY_META,
     amber: EMPTY_META,
     news: EMPTY_META,
     gdelt: EMPTY_META,
     telegram: EMPTY_META,
   });
+  const [vad, setVad] = useState<VadSummary | null>(null);
+  const [amberDemo, setAmberDemo] = useState(true);
+  const [amberPortalReachable, setAmberPortalReachable] = useState(false);
 
   const fetchedLayers = useRef<Set<LayerId>>(new Set(["rnpdno_estados", "amber_activas"]));
 
@@ -103,11 +108,17 @@ export function useRastroData() {
     async function load() {
       setLoading(true);
       try {
-        const [rnpdno, amber, news] = await Promise.all([
+        const [rnpdno, vadResponse, amber, news] = await Promise.all([
           fetchJson<{ estados: EstadoData[]; municipios: MunicipioPoint[]; meta: ApiMeta }>(
             "/api/rnpdno",
           ),
-          fetchJson<{ alertas: AlertaAmber[]; meta: ApiMeta }>("/api/amber"),
+          fetchJson<{ summary: VadSummary; meta: ApiMeta }>("/api/volver-a-desaparecer"),
+          fetchJson<{
+            alertas: AlertaAmber[];
+            meta: ApiMeta;
+            demoMode?: boolean;
+            portalReachable?: boolean;
+          }>("/api/amber"),
           fetchJson<{ noticias: Noticia[]; meta: ApiMeta }>("/api/news"),
         ]);
 
@@ -115,10 +126,14 @@ export function useRastroData() {
 
         setEstados(rnpdno.estados);
         setMunicipios(rnpdno.municipios);
+        setVad(vadResponse.summary);
         setAlertas(amber.alertas);
+        setAmberDemo(amber.demoMode ?? true);
+        setAmberPortalReachable(amber.portalReachable ?? false);
         setNoticias(news.noticias);
         setMeta({
           rnpdno: rnpdno.meta,
+          vad: vadResponse.meta,
           amber: amber.meta,
           news: news.meta,
           gdelt: EMPTY_META,
@@ -173,6 +188,9 @@ export function useRastroData() {
     municipios,
     layers,
     meta,
+    vad,
+    amberDemo,
+    amberPortalReachable,
     loading,
     toggleLayer,
     setLayers,

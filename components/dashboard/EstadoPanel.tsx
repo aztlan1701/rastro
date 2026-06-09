@@ -1,28 +1,66 @@
 "use client";
 
-import { useState } from "react";
-import type { EstadoData } from "@/lib/types";
-import { formatNum, getColor, getIntensity } from "@/lib/utils";
+import { useCallback, useState } from "react";
+import type { EstadoData, VadSummary } from "@/lib/types";
+import { formatNum, getColor, getIntensity, sortEstadosByTotal } from "@/lib/utils";
 
 interface EstadoPanelProps {
   hoveredEstado: EstadoData | null;
   selectedEstado: EstadoData | null;
   estados: EstadoData[];
+  vad?: VadSummary | null;
   onSelectEstado: (estado: EstadoData | null) => void;
+  /** Announce selection changes to screen readers */
+  onAnnounce?: (message: string) => void;
 }
 
 export function EstadoPanel({
   hoveredEstado,
   selectedEstado,
   estados,
+  vad,
   onSelectEstado,
+  onAnnounce,
 }: EstadoPanelProps) {
   const [rankingExpanded, setRankingExpanded] = useState(false);
-  const ranked = [...estados].sort((a, b) => b.total - a.total);
+  const ranked = sortEstadosByTotal(estados);
 
   const isHoverOnly = Boolean(hoveredEstado && !selectedEstado);
   const isSelected = Boolean(selectedEstado);
   const displayEstado = selectedEstado ?? hoveredEstado;
+  const borradosEstado =
+    displayEstado && vad
+      ? vad.porEstado.find((item) => item.estadoId === displayEstado.id)?.borrados ?? 0
+      : 0;
+
+  const pinTerritory = (estado: EstadoData) => {
+    window.localStorage.setItem("RASTRO_TERRITORY_ESTADO", estado.id);
+  };
+
+  const selectFromRanking = useCallback(
+    (estado: EstadoData, alreadySelected: boolean) => {
+      const next = alreadySelected ? null : estado;
+      onSelectEstado(next);
+      if (next && onAnnounce) {
+        onAnnounce(
+          `${next.nombre} seleccionado desde ranking, ${formatNum(next.total)} casos registradas`,
+        );
+      }
+    },
+    [onAnnounce, onSelectEstado],
+  );
+
+  const handleRankingKeyDown = (event: React.KeyboardEvent, index: number) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const next = ranked[index + 1];
+      if (next) document.getElementById(`estado-rank-${next.id}`)?.focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      const prev = ranked[index - 1];
+      if (prev) document.getElementById(`estado-rank-${prev.id}`)?.focus();
+    }
+  };
 
   return (
     <aside className="flex w-full shrink-0 flex-col overflow-hidden border-r border-white/6 lg:w-[300px]">
@@ -45,6 +83,9 @@ export function EstadoPanel({
                 <div className="font-display text-lg font-bold text-white">
                   {displayEstado.nombre}
                 </div>
+                <p className="mt-1 text-[11px] text-[#556070]">
+                  Color = volumen de casos en este estado
+                </p>
               </div>
               <div
                 className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full"
@@ -62,7 +103,7 @@ export function EstadoPanel({
                 { l: "Mujeres", v: formatNum(displayEstado.mujeres), c: "#ff80ab" },
                 { l: "Hombres", v: formatNum(displayEstado.hombres), c: "#4a9eff" },
                 { l: "Localizadas", v: formatNum(displayEstado.localizados), c: "#00d084" },
-                { l: "Municipio↑", v: displayEstado.municipioAlto, c: "#aaa" },
+                { l: "Borrados VAD", v: formatNum(borradosEstado), c: "#ff6b35" },
               ].map((item) => (
                 <div
                   key={item.l}
@@ -71,15 +112,29 @@ export function EstadoPanel({
                   <div className="mb-1 text-[11px] tracking-[0.1em] text-[#556070] uppercase">
                     {item.l}
                   </div>
-                  <div
-                    className="font-display text-sm font-bold"
-                    style={{ color: item.c }}
-                  >
+                  <div className="font-display text-sm font-bold" style={{ color: item.c }}>
                     {item.v}
                   </div>
                 </div>
               ))}
             </div>
+            {isSelected ? (
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => pinTerritory(displayEstado)}
+                  className="rounded-sm border border-white/10 px-2.5 py-1 text-[11px] text-[#aaa] hover:bg-white/5"
+                >
+                  Fijar territorio
+                </button>
+                <a
+                  href={`/api/informe/${displayEstado.id}`}
+                  className="rounded-sm border border-[#4a9eff]/30 px-2.5 py-1 text-[11px] text-[#4a9eff] hover:bg-[#4a9eff]/10"
+                >
+                  Descargar informe HTML
+                </a>
+              </div>
+            ) : null}
           </div>
         ) : (
           <div className="flex h-full min-h-[120px] flex-col items-center justify-center opacity-50">
@@ -105,13 +160,20 @@ export function EstadoPanel({
             onClick={() => setRankingExpanded((expanded) => !expanded)}
             className="text-[11px] text-[#556070] hover:text-[#aaa] lg:hidden"
             aria-expanded={rankingExpanded}
+            aria-controls="estado-ranking-list"
           >
             {rankingExpanded ? "Ocultar" : "Ver ranking"}
           </button>
         </div>
 
         <div
-          className={`flex-1 overflow-auto ${rankingExpanded ? "block" : "hidden lg:block"}`}
+          id="estado-ranking-list"
+          role="listbox"
+          aria-label="Ranking de estados por casos registradas"
+          aria-activedescendant={
+            selectedEstado ? `estado-rank-${selectedEstado.id}` : undefined
+          }
+          className={`max-h-[min(280px,38vh)] flex-1 overflow-auto lg:max-h-[min(320px,45vh)] ${rankingExpanded ? "block" : "hidden lg:block"}`}
         >
           {ranked.map((estado, index) => {
             const selected = selectedEstado?.id === estado.id;
@@ -119,8 +181,12 @@ export function EstadoPanel({
             return (
               <button
                 key={estado.id}
+                id={`estado-rank-${estado.id}`}
                 type="button"
-                onClick={() => onSelectEstado(selected ? null : estado)}
+                role="option"
+                aria-selected={selected}
+                onClick={() => selectFromRanking(estado, selected)}
+                onKeyDown={(event) => handleRankingKeyDown(event, index)}
                 className={`flex w-full items-center gap-2.5 px-5 py-2 text-left transition-colors ${
                   selected
                     ? "border-l-2 border-[#ff2d55] bg-[#ff2d55]/8"

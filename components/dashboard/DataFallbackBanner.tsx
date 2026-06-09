@@ -17,9 +17,9 @@ export function DataFallbackBanner({ meta, onGoToData }: DataFallbackBannerProps
   return (
     <div
       role="status"
-      className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-[#ffb300]/20 bg-[#ffb300]/8 px-4 py-2.5 text-[11px]"
+      className="grid shrink-0 grid-cols-1 items-center gap-2 border-b border-[#ffb300]/20 bg-[#ffb300]/8 px-4 py-2.5 sm:grid-cols-[1fr_auto]"
     >
-      <p className="text-[#c0bfb8]">
+      <p className="min-w-0 text-[11px] text-[#c0bfb8]">
         {isMock
           ? "Mostrando datos de respaldo"
           : "Datos posiblemente desactualizados"}
@@ -28,7 +28,7 @@ export function DataFallbackBanner({ meta, onGoToData }: DataFallbackBannerProps
       <button
         type="button"
         onClick={onGoToData}
-        className="shrink-0 rounded-sm border border-[#ffb300]/30 px-2.5 py-1 text-[11px] tracking-wide text-[#ffb300] transition-colors hover:bg-[#ffb300]/10"
+        className="w-full shrink-0 rounded-sm border border-[#ffb300]/30 px-2.5 py-1 text-[11px] tracking-wide whitespace-nowrap text-[#ffb300] transition-colors hover:bg-[#ffb300]/10 sm:w-auto"
       >
         Ver fuentes
       </button>

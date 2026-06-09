@@ -2,6 +2,11 @@
 
 import { useEffect } from "react";
 import type { LayerId, TabId } from "@/lib/types";
+import {
+  DASHBOARD_TABS,
+  getAdjacentTab,
+  TAB_BY_SHORTCUT,
+} from "@/lib/dashboard-tabs";
 
 interface DashboardKeyboardOptions {
   activeTab: TabId;
@@ -10,14 +15,11 @@ interface DashboardKeyboardOptions {
   layerPanelOpen: boolean;
   onToggleLayer: (layerId: LayerId) => void;
   onClearSelection: () => void;
+  onToggleShortcuts: () => void;
+  shortcutsOpen: boolean;
 }
 
-const TAB_KEYS: Record<string, TabId> = {
-  "1": "mapa",
-  "2": "alertas",
-  "3": "noticias",
-  "4": "datos",
-};
+const TAB_KEYS = TAB_BY_SHORTCUT;
 
 export function useDashboardKeyboard({
   activeTab,
@@ -26,6 +28,8 @@ export function useDashboardKeyboard({
   layerPanelOpen,
   onToggleLayer,
   onClearSelection,
+  onToggleShortcuts,
+  shortcutsOpen,
 }: DashboardKeyboardOptions) {
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -40,8 +44,37 @@ export function useDashboardKeyboard({
       }
 
       if (event.key === "Escape") {
+        if (shortcutsOpen) {
+          onToggleShortcuts();
+          return;
+        }
         if (layerPanelOpen) onToggleLayerPanel();
         onClearSelection();
+        return;
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+        onTabChange(getAdjacentTab(activeTab, direction as 1 | -1));
+        return;
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        onTabChange(DASHBOARD_TABS[0].id);
+        return;
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        onTabChange(DASHBOARD_TABS[DASHBOARD_TABS.length - 1].id);
+        return;
+      }
+
+      if (event.key === "?" || (event.key === "/" && event.shiftKey)) {
+        event.preventDefault();
+        onToggleShortcuts();
         return;
       }
 
@@ -74,5 +107,7 @@ export function useDashboardKeyboard({
     onTabChange,
     onToggleLayer,
     onToggleLayerPanel,
+    onToggleShortcuts,
+    shortcutsOpen,
   ]);
 }

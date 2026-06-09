@@ -1,4 +1,4 @@
-import type { Noticia, NoticiaTipo } from "@/lib/types";
+import type { GeoConfidence, Noticia, NoticiaTipo } from "@/lib/types";
 import { normalizeStateName } from "@/lib/state-catalog";
 
 const KEYWORDS: Record<NoticiaTipo, string[]> = {
@@ -47,8 +47,11 @@ export function normalizeNewsItem(input: {
   url?: string;
   lat?: number;
   lng?: number;
+  geoConfidence?: GeoConfidence;
 }): Noticia {
   const titulo = input.titulo.trim();
+  const inferred = !input.geoConfidence && !input.lat ? "none" : input.geoConfidence;
+
   return {
     id: input.id,
     titulo,
@@ -59,5 +62,6 @@ export function normalizeNewsItem(input: {
     url: input.url,
     lat: input.lat,
     lng: input.lng,
+    geoConfidence: input.lat && input.lng ? inferred ?? "state" : inferred ?? "none",
   };
 }
