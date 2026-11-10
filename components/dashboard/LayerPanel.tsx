@@ -5,7 +5,8 @@ import type { LayerState } from "@/lib/types";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 const LAYER_HINTS: Partial<Record<LayerState["id"], string>> = {
-  rnpdno_municipios: "Puntos aproximados por municipio (coordenadas estimadas)",
+  rnpdno_municipios:
+    "Coropleta al seleccionar un estado: agregados del tablero CNB (snapshot) o CSV sep-2023",
   noticias_geo: "Carga GDELT al activar la capa",
 };
 
@@ -46,49 +47,34 @@ export function LayerPanel({ open, layers, onToggle, onClose }: LayerPanelProps)
           </div>
 
           <div className="flex flex-col gap-1.5">
-            {layers.map((layer) => {
-              const municipiosUnavailable =
-                layer.id === "rnpdno_municipios" && layer.count === 0;
-              const disabled = municipiosUnavailable;
-
-              return (
-                <div key={layer.id}>
-                  <button
-                    type="button"
-                    disabled={disabled}
-                    aria-pressed={layer.enabled}
-                    aria-disabled={disabled}
-                    onClick={() => !disabled && onToggle(layer.id)}
-                    className={`flex w-full items-center justify-between rounded-sm border px-2.5 py-2 text-left transition-colors ${
-                      disabled
-                        ? "cursor-not-allowed border-edge/10 opacity-50"
-                        : layer.enabled
-                          ? "border-edge/18 bg-surface"
-                          : "border-edge/10 bg-transparent hover:bg-surface"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="h-2 w-2 rounded-full"
-                        style={{ background: layer.enabled ? layer.color : "#9aa3af" }}
-                      />
-                      <span className="text-[11px] text-ink-2">
-                        {layer.label}
-                        {municipiosUnavailable ? (
-                          <span className="ml-1 text-faint">(próximamente)</span>
-                        ) : null}
-                      </span>
-                    </div>
-                    <span className="text-[11px] text-muted">{layer.count}</span>
-                  </button>
-                  {(layer.count === 0 || municipiosUnavailable) && LAYER_HINTS[layer.id] ? (
-                    <p className="mt-1 px-1 text-[11px] leading-snug text-faint">
-                      {LAYER_HINTS[layer.id]}
-                    </p>
-                  ) : null}
-                </div>
-              );
-            })}
+            {layers.map((layer) => (
+              <div key={layer.id}>
+                <button
+                  type="button"
+                  aria-pressed={layer.enabled}
+                  onClick={() => onToggle(layer.id)}
+                  className={`flex w-full items-center justify-between rounded-sm border px-2.5 py-2 text-left transition-colors ${
+                    layer.enabled
+                      ? "border-edge/18 bg-surface"
+                      : "border-edge/10 bg-transparent hover:bg-surface"
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-2 w-2 rounded-full"
+                      style={{ background: layer.enabled ? layer.color : "#9aa3af" }}
+                    />
+                    <span className="text-[11px] text-ink-2">{layer.label}</span>
+                  </div>
+                  <span className="text-[11px] text-muted">{layer.count}</span>
+                </button>
+                {LAYER_HINTS[layer.id] ? (
+                  <p className="mt-1 px-1 text-[11px] leading-snug text-faint">
+                    {LAYER_HINTS[layer.id]}
+                  </p>
+                ) : null}
+              </div>
+            ))}
           </div>
 
           <div className="mt-3 border-t border-edge/10 pt-2 text-[11px] leading-relaxed text-faint">

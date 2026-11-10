@@ -15,7 +15,7 @@ import type {
 
 const DEFAULT_LAYERS: LayerState[] = [
   { id: "rnpdno_estados", label: "RNPDNO estados", enabled: true, count: 0, color: "#c8102e" },
-  { id: "rnpdno_municipios", label: "Municipios", enabled: false, count: 0, color: "#1f6fd0" },
+  { id: "rnpdno_municipios", label: "Municipios (CNB/CSV)", enabled: true, count: 0, color: "#1f6fd0" },
   { id: "noticias_geo", label: "Noticias geo", enabled: false, count: 0, color: "#0b7a52" },
 ];
 
@@ -141,8 +141,7 @@ export function useRastroData() {
   }, []);
 
   const layers = useMemo(() => {
-    const geoCount =
-      noticias.filter((item) => item.lat && item.lng).length;
+    const geoCount = noticias.filter((item) => item.lat && item.lng).length;
     return baseLayers.map((layer) =>
       layer.id === "noticias_geo" ? { ...layer, count: geoCount } : layer,
     );

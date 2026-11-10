@@ -33,6 +33,28 @@ export function maplibreChoroplethExpression(): ExpressionSpecification {
   return expression as ExpressionSpecification;
 }
 
+/** Escala para conteos municipales (órdenes de magnitud menores que estatales). */
+export const MUNICIPAL_CHOROPLETH_STOPS: ChoroplethStop[] = [
+  { threshold: 0, color: "#fcd9b6", label: "<50", desc: "Incidencia baja" },
+  { threshold: 50, color: "#f9a86c", label: "50–150", desc: "Incidencia media" },
+  { threshold: 150, color: "#ee7440", label: "150–400", desc: "Incidencia media-alta" },
+  { threshold: 400, color: "#d43d2a", label: "400–1,000", desc: "Incidencia alta" },
+  { threshold: 1000, color: "#9f1239", label: ">1,000", desc: "Incidencia muy alta" },
+];
+
+export function maplibreMunicipalChoroplethExpression(): ExpressionSpecification {
+  const [, ...steps] = MUNICIPAL_CHOROPLETH_STOPS;
+  const expression: unknown[] = [
+    "step",
+    ["coalesce", ["get", "total"], 0],
+    MUNICIPAL_CHOROPLETH_STOPS[0].color,
+  ];
+  for (const stop of steps) {
+    expression.push(stop.threshold, stop.color);
+  }
+  return expression as ExpressionSpecification;
+}
+
 export function getChoroplethLegendItems() {
   return [
     { color: "#9f1239", label: ">7,000", desc: "Incidencia muy alta" },

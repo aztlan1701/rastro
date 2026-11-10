@@ -1,4 +1,4 @@
-import { DATACIVICA, RNPDNO_CSV_URL, VAD_DATASETS } from "@/lib/config";
+import { DATACIVICA, VAD_DATASETS } from "@/lib/config";
 
 export type SourceId =
   | "rnpdno"
@@ -21,12 +21,14 @@ export interface SourceDefinition {
 export const SOURCE_CATALOG: Record<SourceId, SourceDefinition> = {
   rnpdno: {
     id: "rnpdno",
-    label: "RNPDNO versión pública",
-    provider: "Comisión Nacional de Búsqueda · Data Cívica",
-    cutDate: "2023-09-22",
-    method: "CSV agregado por entidad federativa",
-    url: RNPDNO_CSV_URL,
-    refreshNote: "Configure RASTRO_RNPDNO_CSV_URL cuando exista una versión más reciente.",
+    label: "RNPDNO agregados (tablero CNB)",
+    provider: "Comisión Nacional de Búsqueda",
+    cutDate: "Snapshot versionado (tablero estadístico)",
+    method:
+      "Agregados estatales vía consulta del tablero público; regenerar con scripts/rnpdno_ingest.py",
+    url: "https://versionpublicarnpdno.segob.gob.mx",
+    refreshNote:
+      "Mapa y ranking usan agregados del tablero. La búsqueda nominal sigue en CSV sep 2023.",
   },
   vad: {
     id: "vad",
@@ -63,10 +65,11 @@ export const SOURCE_CATALOG: Record<SourceId, SourceDefinition> = {
   mapa: {
     id: "mapa",
     label: "Mapa territorial",
-    provider: "CONABIO / strotgen · Carto basemap",
-    cutDate: "Límites estatales + RNPDNO sep 2023",
-    method: "GeoJSON estatal oficial + agregados RNPDNO",
-    url: "/geo/mx-states.geojson",
+    provider: "INEGI · CONABIO/strotgen · Carto · CNB · CSV RNPDNO",
+    cutDate: "Estados + municipios: snapshot tablero CNB · respaldo CSV sep-2023",
+    method:
+      "Choropleth estatal + municipal (BarChartSexoMunicipio por entidad → CVEGEO; CSV si no hay snapshot)",
+    url: "/geo/municipios/",
   },
 };
 
@@ -75,6 +78,8 @@ export const USAGE_DISCLAIMER =
 
 export const THIRD_PARTY_SERVICES = [
   "Google Drive (CSVs Data Cívica)",
+  "Tablero estadístico RNPDNO (CNB / SEGOB)",
+  "INEGI wscatgeo (límites municipales)",
   "Carto (mapa base)",
   "GDELT Project",
   "Medios RSS configurados",

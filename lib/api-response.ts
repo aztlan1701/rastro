@@ -16,14 +16,19 @@ export function jsonResponse<T>(data: T, init?: ResponseInit) {
   return Response.json(data, init);
 }
 
-/** Keeps responses that carry names or downloadable reports out of search engines. */
-export const NO_INDEX_HEADERS = {
-  "X-Robots-Tag": "noindex, nofollow, noarchive",
-} as const;
+/**
+ * Cabecera para indicar a los buscadores que NO indexen ni sigan la respuesta.
+ * Se usa en rutas que devuelven datos personales (búsqueda de personas e
+ * informes por estado) para que perfiles individuales no terminen indexados.
+ */
+export const NOINDEX_HEADERS: Record<string, string> = {
+  "X-Robots-Tag": "noindex, nofollow",
+};
 
-export function tooManyRequests(message: string) {
-  return jsonResponse(
-    { error: message },
-    { status: 429, headers: { "Retry-After": "60", ...NO_INDEX_HEADERS } },
-  );
+/** Igual que `jsonResponse` pero añadiendo las cabeceras `noindex`. */
+export function jsonResponseNoIndex<T>(data: T, init?: ResponseInit) {
+  return Response.json(data, {
+    ...init,
+    headers: { ...NOINDEX_HEADERS, ...(init?.headers as Record<string, string>) },
+  });
 }

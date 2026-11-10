@@ -20,17 +20,28 @@ export function MethodologyPageContent() {
         <h2 className="font-display text-lg font-bold text-ink-strong">Fuentes principales</h2>
         <ul className="mt-3 space-y-3 text-sm text-ink-3">
           <li>
-            <strong className="text-ink-2">RNPDNO versión pública (sep 2023)</strong> — CSV
-            publicado por la CNB, replicado por Data Cívica. Corte fijo; puede no reflejar
-            registros recientes.
+            <strong className="text-ink-2">RNPDNO agregados (tablero CNB)</strong> — Totales
+            estatales y desgloses sociodemográficos del tablero estadístico público. RASTRO usa un
+            snapshot JSON regenerable con{" "}
+            <code className="text-ink-2">scripts/rnpdno_ingest.py</code> (no consulta el tablero
+            en cada visita). Alcance: solo agregados, sin nombres.
+          </li>
+          <li>
+            <strong className="text-ink-2">RNPDNO microdatos (CSV sep 2023)</strong> — Versión
+            pública con nombres, replicada por Data Cívica. Alimenta la búsqueda por nombre, la
+            auditoría de inconsistencias y la coropleta municipal (conteos por CVEGEO). Corte fijo.
+          </li>
+          <li>
+            <strong className="text-ink-2">Límites municipales (INEGI)</strong> — GeoJSON
+            simplificado por entidad (`public/geo/municipios/XX.geojson`), regenerable con{" "}
+            <code className="text-ink-2">scripts/build_municipios_geo.py</code>.
           </li>
           <li>
             <strong className="text-ink-2">Volver a Desaparecer</strong> — Reconstrucción de
             nombres borrados y registros enmascarados como ELIMINADO entre versiones del RNPDNO.
           </li>
           <li>
-            <strong className="text-ink-2">Noticias y OSINT</strong> — RSS y GDELT con
-            geoparse heurístico. Revise la confianza geográfica antes de usar en campo.
+            <strong className="text-ink-2">Noticias y OSINT</strong> — RSS y GDELT con geoparse heurístico. Revise la confianza geográfica antes de usar en campo.
           </li>
         </ul>
       </section>
@@ -47,39 +58,27 @@ export function MethodologyPageContent() {
       <section className="mt-8">
         <h2 className="font-display text-lg font-bold text-ink-strong">Limitaciones conocidas</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-3">
-          <li>Datos RNPDNO con corte sep 2023; no reflejan cambios posteriores del registro.</li>
-          <li>Municipios en mapa son puntos aproximados cuando no hay coordenadas oficiales.</li>
+          <li>
+            Mapa y ranking usan agregados del tablero CNB (snapshot). La búsqueda por nombre y las
+            inconsistencias siguen en CSV con corte sep 2023 / reconstrucciones Data Cívica.
+          </li>
+          <li>
+            El tablero agregado no publica municipios ni “nuevos 30 días”; esos campos aparecen
+            vacíos o en cero en el mapa/informes estatales cuando la fuente es el snapshot vivo.
+          </li>
+          <li>
+            La vista municipal prioriza el snapshot del tablero CNB (`por_municipio`); si falta,
+            usa conteos del CSV sep-2023 unidos por nombre a CVEGEO. En entidades grandes el
+            tablero suele limitar la serie a los municipios con más casos.
+          </li>
           <li>
             La búsqueda por nombre expone datos ya publicados en CSV abiertos; use con
             responsabilidad.
           </li>
           <li>Sin autenticación: no apto para datos no públicos ni casos en curso no publicados.</li>
-        </ul>
-      </section>
-
-      <section className="mt-8">
-        <h2 className="font-display text-lg font-bold text-ink-strong">Salvaguardas</h2>
-        <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-3">
-          <li>RASTRO no permite alta ni edición de casos y no guarda las consultas de búsqueda.</li>
           <li>
-            La búsqueda por nombre y la lista de inconsistencias devuelven como máximo 100
-            registros por consulta, con un límite de 30 consultas por minuto por dirección IP.
-          </li>
-          <li>
-            Los informes por estado contienen solo cifras agregadas, se limitan a 10 por minuto y
-            escapan todo valor insertado para que el navegador lo lea como texto.
-          </li>
-          <li>
-            Las respuestas de búsqueda, inconsistencias, informes y monitoreo incluyen la cabecera
-            X-Robots-Tag para evitar su indexación.
-          </li>
-          <li>
-            El monitoreo solo envía avisos al webhook cuando el operador configuró un token y la
-            petición lo presenta; sin token, ninguna petición pública puede dispararlo.
-          </li>
-          <li>
-            Las consultas a fuentes externas se identifican con un agente que enlaza al
-            repositorio del proyecto.
+            La consulta automatizada del tablero no es una API oficial documentada: el script puede
+            romperse si la CNB cambia la interfaz.
           </li>
         </ul>
       </section>

@@ -1,3 +1,34 @@
+/**
+ * Escapa texto para interpolarlo de forma segura en HTML. Necesario en los
+ * popups del mapa (MapLibre `setHTML`) y en cualquier HTML construido a mano,
+ * porque títulos de noticias y nombres de municipio provienen
+ * de fuentes externas y podrían contener marcado malicioso (XSS).
+ */
+export function escapeHtml(value: unknown): string {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * Devuelve la URL solo si usa un esquema seguro (http/https). Evita que un feed
+ * malicioso inyecte `javascript:` u otros esquemas en un `href`, lo que
+ * ejecutaría código al hacer clic.
+ */
+export function safeHttpUrl(url?: string | null): string | undefined {
+  if (!url) return undefined;
+  try {
+    const parsed = new URL(url.trim());
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") return parsed.href;
+  } catch {
+    return undefined;
+  }
+  return undefined;
+}
+
 export function getColor(total: number): string {
   if (total > 7000) return "#9f1239";
   if (total > 5000) return "#d43d2a";

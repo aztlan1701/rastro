@@ -8,6 +8,8 @@ export interface EstadoData {
   localizados: number;
   mujeres: number;
   hombres: number;
+  /** Registros cuyo sexo viene vacío, "indeterminado" o no clasificable. */
+  noEspecificado: number;
   municipioAlto: string;
 }
 
@@ -26,6 +28,14 @@ export interface MunicipioPoint {
   estadoId: string;
   lat: number;
   lng: number;
+  total: number;
+}
+
+/** Agregado municipal unido a CVEGEO (capa CSV 2023). */
+export interface MunicipioAgg {
+  cvegeo: string;
+  nombre: string;
+  estadoId: string;
   total: number;
 }
 

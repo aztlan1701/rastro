@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useDashboardKeyboard } from "@/hooks/useDashboardKeyboard";
 import { useRastroData } from "@/hooks/useRastroData";
 import type { EstadoData, TabId } from "@/lib/types";
@@ -14,10 +14,8 @@ import { KeyboardShortcutsModal } from "./KeyboardShortcutsModal";
 import { LayerPanel } from "./LayerPanel";
 import { LayerToggleButton } from "./LayerToggleButton";
 import { MobileBottomNav } from "./MobileBottomNav";
-import { MobileFeedDrawer } from "./MobileFeedDrawer";
 import { NewsTab } from "./NewsTab";
 import { SearchTab } from "./SearchTab";
-import { RightPanel } from "./RightPanel";
 import { SourceMetaBar } from "./SourceMetaBar";
 import { UsageDisclaimer } from "./UsageDisclaimer";
 import { buildStats, StatsBar } from "./StatsBar";
@@ -47,7 +45,7 @@ function readPinnedEstadoId() {
 const readPinnedEstadoIdOnServer = () => null;
 
 export function RastroDashboard() {
-  // undefined until the user selects or clears; until then the pinned territory applies.
+  // undefined hasta que la persona selecciona o limpia; mientras tanto aplica el territorio fijado.
   const [selection, setSelectedEstado] = useState<EstadoData | null | undefined>(undefined);
   const [hoveredEstado, setHoveredEstado] = useState<EstadoData | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>("mapa");
@@ -64,7 +62,18 @@ export function RastroDashboard() {
     vad,
     loading,
     toggleLayer,
+    setLayers,
   } = useRastroData();
+
+  const handleMunicipiosLoaded = useCallback((count: number) => {
+    setLayers((current) => {
+      const layer = current.find((item) => item.id === "rnpdno_municipios");
+      if (!layer || layer.count === count) return current;
+      return current.map((item) =>
+        item.id === "rnpdno_municipios" ? { ...item, count } : item,
+      );
+    });
+  }, [setLayers]);
 
   const pinnedEstadoId = useSyncExternalStore(
     subscribeNoop,
@@ -202,10 +211,7 @@ export function RastroDashboard() {
               onSelectEstado={handleSelectEstado}
               onHoverEstado={setHoveredEstado}
               onResetSelection={handleResetSelection}
-            />
-            <MobileFeedDrawer
-              noticias={noticias}
-              onGoToNews={() => handleTabChange("noticias")}
+              onMunicipiosLoaded={handleMunicipiosLoaded}
             />
           </div>
 
@@ -266,12 +272,6 @@ export function RastroDashboard() {
             />
           </motion.div>
         </main>
-
-        <RightPanel
-          noticias={noticias}
-          meta={meta}
-          onGoToNews={() => handleTabChange("noticias")}
-        />
       </div>
 
       <MobileBottomNav activeTab={activeTab} onTabChange={handleTabChange} />

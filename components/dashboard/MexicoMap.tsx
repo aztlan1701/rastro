@@ -4,10 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildEstadosGeoJson, filterMunicipiosByBbox, maplibreChoroplethExpression } from "@/lib/geo/choropleth";
+import {
+  buildEstadosGeoJson,
+  maplibreChoroplethExpression,
+  maplibreMunicipalChoroplethExpression,
+} from "@/lib/geo/choropleth";
 import {
   bindPointLayerHover,
-  buildMunicipioGeoJson,
   buildNewsGeoJson,
   NEWS_DOT_COLOR_EXPRESSION,
   showEstadoPopup,
@@ -16,6 +19,7 @@ import {
   loadOfficialStatesGeoJson,
   mergeOfficialEstadosGeoJson,
 } from "@/lib/geo/states-geojson";
+import { loadMunicipiosGeoJson, mergeMunicipioCounts } from "@/lib/geo/municipios-geojson";
 import {
   getMapFitPadding,
   getMapFocusPadding,
@@ -24,13 +28,13 @@ import {
 import type {
   EstadoData,
   LayerState,
+  MunicipioAgg,
   MunicipioPoint,
   Noticia,
 } from "@/lib/types";
-import { formatNum } from "@/lib/utils";
+import { escapeHtml, formatNum } from "@/lib/utils";
 import { MapLegend } from "./MapLegend";
 import { useMexicoMap } from "@/hooks/useMexicoMap";
-import { escapeHtml } from "@/lib/export/escape";
 
 const DEFAULT_MAP_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
@@ -39,6 +43,11 @@ const FALLBACK_MAP_STYLE = "https://demotiles.maplibre.org/style.json";
 const MEXICO_FRAME_SW: [number, number] = [-117.85, 14.15];
 const MEXICO_FRAME_NE: [number, number] = [-86.65, 33.05];
 const MEXICO_FRAME_CENTER: [number, number] = [-102.25, 23.6];
+
+const EMPTY_FEATURE_COLLECTION: FeatureCollection = {
+  type: "FeatureCollection",
+  features: [],
+};
 
 function getMexicoFrameZoom(map: maplibregl.Map): number {
   const padding = getMapFitPadding();
@@ -82,6 +91,7 @@ interface MexicoMapProps {
   onSelectEstado: (estado: EstadoData | null) => void;
   onHoverEstado: (estado: EstadoData | null) => void;
   onResetSelection: () => void;
+  onMunicipiosLoaded?: (count: number) => void;
 }
 
 function layerEnabled(layers: LayerState[], id: LayerState["id"]) {
@@ -141,6 +151,7 @@ export function MexicoMap({
   onSelectEstado,
   onHoverEstado,
   onResetSelection,
+  onMunicipiosLoaded,
 }: MexicoMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -150,8 +161,6 @@ export function MexicoMap({
   const lastFocusedIdRef = useRef<string | null>(null);
   const userMovedMapRef = useRef(false);
   const layoutFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const selectedEstadoRef = useRef(selectedEstado);
 
   const queueLayoutFit = useCallback((map: maplibregl.Map) => {
     if (layoutFitTimerRef.current) clearTimeout(layoutFitTimerRef.current);
@@ -169,7 +178,15 @@ export function MexicoMap({
   const onHoverRef = useRef(onHoverEstado);
   const onSelectRef = useRef(onSelectEstado);
   const estadoCentroidsRef = useRef(new Map<string, { lng: number; lat: number }>());
+  const selectedEstadoRef = useRef(selectedEstado);
   const hoveredEstadoRef = useRef(hoveredEstado);
+  const onMunicipiosLoadedRef = useRef(onMunicipiosLoaded);
+  const lastMunicipiosCountRef = useRef<number | null>(null);
+  const municipalFuenteRef = useRef("CSV sep-2023");
+
+  useEffect(() => {
+    onMunicipiosLoadedRef.current = onMunicipiosLoaded;
+  }, [onMunicipiosLoaded]);
 
   const [mapReady, setMapReady] = useState(false);
   const { liveMessage } = useMexicoMap(selectedEstado, hoveredEstado);
@@ -202,6 +219,10 @@ export function MexicoMap({
     onHoverRef.current = onHoverEstado;
     onSelectRef.current = onSelectEstado;
     estadoCentroidsRef.current = estadoCentroids;
+    // Patrón "latest ref" deliberado: este ref se lee dentro de queueLayoutFit
+    // (useCallback), por lo que la regla lo marca como inmutable; aquí solo
+    // sincronizamos el último valor dentro de un efecto, lo cual es correcto.
+    // eslint-disable-next-line react-hooks/immutability
     selectedEstadoRef.current = selectedEstado;
     hoveredEstadoRef.current = hoveredEstado;
     officialTemplateRef.current = officialTemplate;
@@ -250,23 +271,23 @@ export function MexicoMap({
       );
     }
 
-    if (map.getLayer("municipios-points")) {
+    if (map.getLayer("municipios-fill")) {
+      const showMuni =
+        showMunicipiosLayer && Boolean(selectedEstadoRef.current);
       map.setLayoutProperty(
-        "municipios-points",
+        "municipios-fill",
         "visibility",
-        showMunicipiosLayer ? "visible" : "none",
+        showMuni ? "visible" : "none",
       );
-      if (showMunicipiosLayer) {
-        const bounds = map.getBounds();
-        const visible = filterMunicipiosByBbox(municipiosRef.current, {
-          west: bounds.getWest(),
-          south: bounds.getSouth(),
-          east: bounds.getEast(),
-          north: bounds.getNorth(),
-        });
-        (map.getSource("municipios") as maplibregl.GeoJSONSource).setData(
-          buildMunicipioGeoJson(visible),
-        );
+      map.setLayoutProperty(
+        "municipios-outline",
+        "visibility",
+        showMuni ? "visible" : "none",
+      );
+      if (showEstadosLayer && showMuni) {
+        map.setPaintProperty("estados-fill", "fill-opacity", 0.18);
+      } else if (showEstadosLayer) {
+        map.setPaintProperty("estados-fill", "fill-opacity", 0.78);
       }
     }
 
@@ -279,6 +300,76 @@ export function MexicoMap({
     }
   }, []);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!mapReady || !map || !layersInitializedRef.current) return;
+
+    const activeMap = map;
+    const showMunicipiosLayer = layerEnabled(layers, "rnpdno_municipios");
+    let cancelled = false;
+
+    function reportCount(count: number) {
+      if (lastMunicipiosCountRef.current === count) return;
+      lastMunicipiosCountRef.current = count;
+      onMunicipiosLoadedRef.current?.(count);
+    }
+
+    async function loadMunicipalChoropleth(estado: EstadoData) {
+      try {
+        const [geo, aggResponse] = await Promise.all([
+          loadMunicipiosGeoJson(estado.id),
+          fetch(`/api/rnpdno/municipios?estado=${encodeURIComponent(estado.id)}`).then(
+            async (response) => {
+              if (!response.ok) throw new Error(`municipios ${response.status}`);
+              return response.json() as Promise<{
+                municipios: MunicipioAgg[];
+                fuente?: string;
+              }>;
+            },
+          ),
+        ]);
+        if (cancelled || !geo) return;
+
+        const merged = mergeMunicipioCounts(geo, aggResponse.municipios);
+        const source = activeMap.getSource("municipios-choropleth") as
+          | maplibregl.GeoJSONSource
+          | undefined;
+        source?.setData(merged);
+        municipalFuenteRef.current =
+          aggResponse.fuente === "cnb-tablero" ? "tablero CNB" : "CSV sep-2023";
+        reportCount(aggResponse.municipios.length);
+        syncMapLayers();
+      } catch {
+        if (cancelled) return;
+        const source = activeMap.getSource("municipios-choropleth") as
+          | maplibregl.GeoJSONSource
+          | undefined;
+        source?.setData(EMPTY_FEATURE_COLLECTION);
+        reportCount(0);
+        syncMapLayers();
+      }
+    }
+
+    if (!selectedEstado || !showMunicipiosLayer) {
+      const source = activeMap.getSource("municipios-choropleth") as
+        | maplibregl.GeoJSONSource
+        | undefined;
+      source?.setData(EMPTY_FEATURE_COLLECTION);
+      reportCount(0);
+      syncMapLayers();
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    void loadMunicipalChoropleth(selectedEstado);
+    return () => {
+      cancelled = true;
+    };
+    // Solo reaccionar a selección / toggle de capa / mapa listo — no a cada
+    // actualización de `layers.count` (eso disparaba un bucle de setState).
+  }, [mapReady, selectedEstado?.id, showMunicipios, syncMapLayers]);
+
   const initializeLayers = useCallback(
     (map: maplibregl.Map, popup: maplibregl.Popup) => {
       if (layersInitializedRef.current) return;
@@ -288,9 +379,9 @@ export function MexicoMap({
         data: buildChoroplethRef.current(estadosRef.current),
       });
 
-      map.addSource("municipios", {
+      map.addSource("municipios-choropleth", {
         type: "geojson",
-        data: buildMunicipioGeoJson([]),
+        data: EMPTY_FEATURE_COLLECTION,
       });
 
       map.addSource("noticias-geo", {
@@ -315,20 +406,35 @@ export function MexicoMap({
         paint: {
           "line-color": "#5c2a1e",
           "line-width": 0.6,
-          "line-opacity": 0.45,
+          "line-opacity": 0.35,
         },
       });
 
       map.addLayer({
-        id: "municipios-points",
-        type: "circle",
-        source: "municipios",
+        id: "municipios-fill",
+        type: "fill",
+        source: "municipios-choropleth",
+        layout: { visibility: "none" },
         paint: {
-          "circle-radius": ["interpolate", ["linear"], ["get", "total"], 1, 3, 20, 8, 100, 12],
-          "circle-color": "#1f6fd0",
-          "circle-opacity": 0.65,
-          "circle-stroke-width": 1,
-          "circle-stroke-color": "#ffffff",
+          "fill-color": maplibreMunicipalChoroplethExpression(),
+          "fill-opacity": [
+            "case",
+            ["boolean", ["get", "hasData"], false],
+            0.72,
+            0.12,
+          ],
+        },
+      });
+
+      map.addLayer({
+        id: "municipios-outline",
+        type: "line",
+        source: "municipios-choropleth",
+        layout: { visibility: "none" },
+        paint: {
+          "line-color": "#5c2a1e",
+          "line-width": 0.5,
+          "line-opacity": 0.45,
         },
       });
 
@@ -378,6 +484,25 @@ export function MexicoMap({
       });
 
       map.on("click", (event) => {
+        const municipioFeature = map.queryRenderedFeatures(event.point, {
+          layers: ["municipios-fill"],
+        })[0];
+        if (municipioFeature?.properties) {
+          const nombre = String(
+            municipioFeature.properties.NOM_MUN ??
+              municipioFeature.properties.nombre ??
+              "Municipio",
+          );
+          const total = Number(municipioFeature.properties.total ?? 0);
+          popup
+            .setLngLat(event.lngLat)
+            .setHTML(
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} registradas · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
+            )
+            .addTo(map);
+          return;
+        }
+
         const estadoFeature = map.queryRenderedFeatures(event.point, {
           layers: ["estados-fill"],
         })[0];
@@ -394,19 +519,6 @@ export function MexicoMap({
           }
         }
 
-        const municipioFeature = map.queryRenderedFeatures(event.point, {
-          layers: ["municipios-points"],
-        })[0];
-        if (municipioFeature?.properties) {
-          popup
-            .setLngLat(event.lngLat)
-            .setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(municipioFeature.properties.nombre ?? "Municipio")}</strong><span>${formatNum(Number(municipioFeature.properties.total ?? 0))} registradas</span></div>`,
-            )
-            .addTo(map);
-          return;
-        }
-
         const newsFeature = map.queryRenderedFeatures(event.point, {
           layers: ["noticias-geo-dots"],
         })[0];
@@ -420,15 +532,29 @@ export function MexicoMap({
         }
       });
 
-      bindPointLayerHover(
-        map,
-        "municipios-points",
-        popup,
-        (properties) =>
-          `<strong>${escapeHtml(properties.nombre ?? "Municipio")}</strong><span>${formatNum(Number(properties.total ?? 0))} registradas</span>`,
-        selectedEstadoRef,
-        estadoCentroidsRef,
-      );
+      map.on("mouseenter", "municipios-fill", (event) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = event.features?.[0];
+        if (!feature?.properties) return;
+        const nombre = String(feature.properties.NOM_MUN ?? "Municipio");
+        const total = Number(feature.properties.total ?? 0);
+        popup
+          .setLngLat(event.lngLat)
+          .setHTML(
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} registradas · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
+          )
+          .addTo(map);
+      });
+
+      map.on("mouseleave", "municipios-fill", () => {
+        map.getCanvas().style.cursor = "";
+        const selected = selectedEstadoRef.current;
+        if (selected) {
+          showEstadoPopup(map, popup, selected, estadoCentroidsRef.current);
+          return;
+        }
+        popup.remove();
+      });
 
       bindPointLayerHover(
         map,
@@ -439,22 +565,6 @@ export function MexicoMap({
         selectedEstadoRef,
         estadoCentroidsRef,
       );
-
-      map.on("moveend", () => {
-        if (!map.getSource("municipios")) return;
-        if (!layerEnabled(layersRef.current, "rnpdno_municipios")) return;
-
-        const bounds = map.getBounds();
-        const visible = filterMunicipiosByBbox(municipiosRef.current, {
-          west: bounds.getWest(),
-          south: bounds.getSouth(),
-          east: bounds.getEast(),
-          north: bounds.getNorth(),
-        });
-        (map.getSource("municipios") as maplibregl.GeoJSONSource).setData(
-          buildMunicipioGeoJson(visible),
-        );
-      });
 
       layersInitializedRef.current = true;
       syncMapLayers();
@@ -468,10 +578,14 @@ export function MexicoMap({
   const initializeLayersRef = useRef(initializeLayers);
   const queueLayoutFitRef = useRef(queueLayoutFit);
 
+  // Mantener los refs "última versión" sincronizados fuera del render. Escribir
+  // `ref.current` en el cuerpo del componente está prohibido por las reglas de
+  // hooks; useRef ya los inicializa con el primer valor, así que este efecto
+  // solo refresca en renders posteriores.
   useEffect(() => {
     initializeLayersRef.current = initializeLayers;
     queueLayoutFitRef.current = queueLayoutFit;
-  }, [initializeLayers, queueLayoutFit]);
+  });
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -598,7 +712,7 @@ export function MexicoMap({
     map.setPaintProperty("estados-outline", "line-width", [
       "case",
       ["==", ["get", "id"], highlight.id],
-      2.2,
+      2.5,
       0.6,
     ]);
     map.setPaintProperty("estados-fill", "fill-opacity", [

@@ -83,10 +83,15 @@ export const MONITOR_ESTADOS = (
 
 export const ALERT_WEBHOOK_URL = process.env.RASTRO_ALERT_WEBHOOK_URL ?? "";
 
-/** Shared secret required to trigger the monitor webhook. Without it the webhook never fires. */
+/**
+ * Token para autorizar el disparo del webhook en `/api/monitor`. Si está vacío,
+ * el endpoint sigue permitiendo consultar coincidencias pero NUNCA dispara el
+ * webhook desde una petición pública (evita que cualquiera spamee el webhook o
+ * amplifique peticiones salientes). Configúralo para cron/automatizaciones.
+ */
 export const MONITOR_TOKEN = process.env.RASTRO_MONITOR_TOKEN ?? "";
 
-/** Identifies RASTRO to the servers it queries, with a way to reach the operator. */
+/** Identifica a RASTRO ante los servidores que consulta, con una vía de contacto. */
 export const USER_AGENT =
   process.env.RASTRO_USER_AGENT ?? "RASTRO/0.3 (+https://github.com/aztlan1701/rastro)";
 

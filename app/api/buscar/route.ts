@@ -1,6 +1,6 @@
-import { buildMeta, jsonResponse, NO_INDEX_HEADERS, tooManyRequests } from "@/lib/api-response";
+import { buildMeta, jsonResponseNoIndex as jsonResponse } from "@/lib/api-response";
 import { DATACIVICA } from "@/lib/config";
-import { checkRateLimit, clientKey } from "@/lib/rate-limit";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { PersonSearchFilters } from "@/lib/types";
 import {
   DEFAULT_LIMIT,
@@ -9,10 +9,14 @@ import {
   searchPersonRecords,
 } from "@/lib/search/person-search";
 
+function clientKey(request: Request): string {
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
+}
+
 export async function GET(request: Request) {
   try {
-    if (!checkRateLimit(`buscar:${clientKey(request)}`, 30, 60_000)) {
-      return tooManyRequests("Demasiadas búsquedas. Intente de nuevo en un minuto.");
+    if (!(await checkRateLimit(`buscar:${clientKey(request)}`, 30, 60_000))) {
+      return jsonResponse({ error: "Demasiadas búsquedas. Intente de nuevo en un minuto." }, { status: 429 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -35,10 +39,11 @@ export async function GET(request: Request) {
         query,
         meta: buildMeta("live", Date.now(), DATACIVICA.site),
         error: `La búsqueda requiere al menos ${MIN_QUERY_LENGTH} caracteres`,
-      }, { headers: NO_INDEX_HEADERS });
+      });
     }
 
-    // Queries are answered from the in-memory index and never cached or logged.
+    // Las consultas se responden desde el índice en memoria y nunca se guardan
+    // en caché: la caché puede residir en un KV externo y conservaría los nombres buscados.
     const { results, total, query: normalizedQuery, usedMock } = await searchPersonRecords(
       query,
       limit,
@@ -51,11 +56,11 @@ export async function GET(request: Request) {
       query: normalizedQuery,
       meta: buildMeta(usedMock ? "mock" : "live", Date.now(), usedMock ? "mock-data" : DATACIVICA.site),
       mock: usedMock,
-    }, { headers: NO_INDEX_HEADERS });
+    });
   } catch (error) {
     return jsonResponse(
       { error: error instanceof Error ? error.message : "Search error" },
-      { status: 500, headers: NO_INDEX_HEADERS },
+      { status: 500 },
     );
   }
 }

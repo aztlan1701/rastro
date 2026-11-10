@@ -1,5 +1,5 @@
 import type { Noticia } from "@/lib/types";
-import { getNoticiaStyles } from "@/lib/utils";
+import { getNoticiaStyles, safeHttpUrl } from "@/lib/utils";
 
 interface NoticiaListItemProps {
   noticia: Noticia;
@@ -48,12 +48,13 @@ export function NoticiaListItem({ noticia, index = 0, compact, onPress }: Notici
     </>
   );
 
-  if (noticia.url) {
+  const safeUrl = safeHttpUrl(noticia.url);
+  if (safeUrl) {
     return (
       <a
-        href={noticia.url}
+        href={safeUrl}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className={`${className} w-full text-left`}
         style={{ animationDelay: `${index * 0.08}s` }}
       >

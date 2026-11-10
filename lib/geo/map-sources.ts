@@ -2,8 +2,7 @@ import type { RefObject } from "react";
 import type maplibregl from "maplibre-gl";
 import type { ExpressionSpecification } from "maplibre-gl";
 import type { EstadoData, MunicipioPoint, Noticia } from "@/lib/types";
-import { escapeHtml } from "@/lib/export/escape";
-import { formatNum } from "@/lib/utils";
+import { escapeHtml, formatNum } from "@/lib/utils";
 
 export function buildEstadoPopupHtml(estado: EstadoData): string {
   return `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} registradas</span><span>+${estado.nuevos30d} este mes</span></div>`;

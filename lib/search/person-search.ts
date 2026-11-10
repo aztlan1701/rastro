@@ -1,4 +1,5 @@
 import { RNPDNO_CSV_URL, VAD_BORRADOS_CSV_URL } from "@/lib/config";
+import { cell, findColumn, normalizeHeader, parseCsv } from "@/lib/csv";
 import { normalizeStateName } from "@/lib/state-catalog";
 import type { PersonSearchFilters, PersonSearchResult } from "@/lib/types";
 
@@ -24,50 +25,6 @@ export interface PersonSearchResponse {
   total: number;
   query: string;
   usedMock: boolean;
-}
-
-function parseCsvLine(line: string): string[] {
-  const result: string[] = [];
-  let current = "";
-  let inQuotes = false;
-
-  for (let i = 0; i < line.length; i += 1) {
-    const char = line[i];
-    if (char === '"') {
-      inQuotes = !inQuotes;
-      continue;
-    }
-    if (char === "," && !inQuotes) {
-      result.push(current.trim());
-      current = "";
-      continue;
-    }
-    current += char;
-  }
-  result.push(current.trim());
-  return result;
-}
-
-function normalizeHeader(header: string): string {
-  return header
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^\w]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
-
-function findColumn(headers: string[], candidates: string[]): number {
-  for (const candidate of candidates) {
-    const exact = headers.indexOf(candidate);
-    if (exact >= 0) return exact;
-
-    const partial = headers.findIndex(
-      (header) => header.startsWith(candidate) || header.includes(candidate),
-    );
-    if (partial >= 0) return partial;
-  }
-  return -1;
 }
 
 function normalizeSearchText(value: string): string {
@@ -103,10 +60,10 @@ async function fetchCsvText(url: string): Promise<string> {
 }
 
 function parsePublicPersons(csvText: string): IndexedPerson[] {
-  const lines = csvText.split(/\r?\n/).filter((line) => line.trim());
-  if (lines.length < 2) return [];
+  const rows = parseCsv(csvText);
+  if (rows.length < 2) return [];
 
-  const headers = parseCsvLine(lines[0]).map(normalizeHeader);
+  const headers = rows[0].map(normalizeHeader);
   const nombreCol = findColumn(headers, ["nombre"]);
   const apellido1Col = findColumn(headers, ["primer_apellido"]);
   const apellido2Col = findColumn(headers, ["segundo_apellido"]);
@@ -120,11 +77,11 @@ function parsePublicPersons(csvText: string): IndexedPerson[] {
 
   const people: IndexedPerson[] = [];
 
-  for (let i = 1; i < lines.length; i += 1) {
-    const cols = parseCsvLine(lines[i]);
-    const nombre = cols[nombreCol] ?? "";
-    const primerApellido = apellido1Col >= 0 ? cols[apellido1Col] ?? "" : "";
-    const segundoApellido = apellido2Col >= 0 ? cols[apellido2Col] ?? "" : "";
+  for (let i = 1; i < rows.length; i += 1) {
+    const cols = rows[i];
+    const nombre = cell(cols, nombreCol);
+    const primerApellido = cell(cols, apellido1Col);
+    const segundoApellido = cell(cols, apellido2Col);
     const eliminado = isEliminadoPlaceholder(nombre);
     const nombreCompleto = eliminado
       ? "Registro enmascarado (ELIMINADO)"
@@ -132,21 +89,21 @@ function parsePublicPersons(csvText: string): IndexedPerson[] {
 
     if (!nombreCompleto) continue;
 
-    const entidadRaw = entidadCol >= 0 ? cols[entidadCol] ?? "" : "";
+    const entidadRaw = cell(cols, entidadCol);
     const state = entidadRaw ? normalizeStateName(entidadRaw) : null;
     const searchText = normalizeSearchText(
       eliminado ? "eliminado enmascarado registro" : nombreCompleto,
     );
 
     people.push({
-      id: `rnpdno-${cols[consecutivoCol] ?? i}`,
+      id: `rnpdno-${cell(cols, consecutivoCol) || i}`,
       source: "rnpdno_publico",
       nombreCompleto,
-      edad: edadCol >= 0 ? cols[edadCol] ?? "" : "",
-      sexo: sexoCol >= 0 ? cols[sexoCol] ?? "" : "",
+      edad: cell(cols, edadCol),
+      sexo: cell(cols, sexoCol),
       entidad: state?.nombre ?? entidadRaw,
       estadoId: state?.id,
-      fecha: fechaCol >= 0 ? cols[fechaCol] ?? "" : "",
+      fecha: cell(cols, fechaCol),
       eliminado,
       searchText,
     });
@@ -156,10 +113,10 @@ function parsePublicPersons(csvText: string): IndexedPerson[] {
 }
 
 function parseBorradosPersons(csvText: string): IndexedPerson[] {
-  const lines = csvText.split(/\r?\n/).filter((line) => line.trim());
-  if (lines.length < 2) return [];
+  const rows = parseCsv(csvText);
+  if (rows.length < 2) return [];
 
-  const headers = parseCsvLine(lines[0]).map(normalizeHeader);
+  const headers = rows[0].map(normalizeHeader);
   const nombresCol = findColumn(headers, ["nombres", "nombre"]);
   const entidadCol = findColumn(headers, ["entidad_hechos", "entidad"]);
   const sexoCol = findColumn(headers, ["sexo"]);
@@ -171,26 +128,26 @@ function parseBorradosPersons(csvText: string): IndexedPerson[] {
 
   const people: IndexedPerson[] = [];
 
-  for (let i = 1; i < lines.length; i += 1) {
-    const cols = parseCsvLine(lines[i]);
-    const nombreCompleto = (cols[nombresCol] ?? "").trim();
+  for (let i = 1; i < rows.length; i += 1) {
+    const cols = rows[i];
+    const nombreCompleto = cell(cols, nombresCol);
     if (!nombreCompleto) continue;
 
-    const entidadRaw = entidadCol >= 0 ? cols[entidadCol] ?? "" : "";
+    const entidadRaw = cell(cols, entidadCol);
     const state =
       entidadRaw && entidadRaw.toUpperCase() !== "SE DESCONOCE"
         ? normalizeStateName(entidadRaw)
         : null;
 
     people.push({
-      id: `borrado-${cols[consecutivoCol] ?? i}`,
+      id: `borrado-${cell(cols, consecutivoCol) || i}`,
       source: "nombre_borrado",
       nombreCompleto,
-      edad: edadCol >= 0 ? cols[edadCol] ?? "" : "",
-      sexo: sexoCol >= 0 ? cols[sexoCol] ?? "" : "",
+      edad: cell(cols, edadCol),
+      sexo: cell(cols, sexoCol),
       entidad: state?.nombre ?? (entidadRaw || "Se desconoce"),
       estadoId: state?.id,
-      fecha: fechaCol >= 0 ? cols[fechaCol] ?? "" : "",
+      fecha: cell(cols, fechaCol),
       eliminado: false,
       searchText: normalizeSearchText(nombreCompleto),
     });
