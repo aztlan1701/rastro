@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useDashboardKeyboard } from "@/hooks/useDashboardKeyboard";
 import { useRastroData } from "@/hooks/useRastroData";
 import type { EstadoData, TabId } from "@/lib/types";
@@ -35,8 +35,21 @@ const MexicoMap = dynamic(
   },
 );
 
+const subscribeNoop = () => () => {};
+
+function readPinnedEstadoId() {
+  try {
+    return window.localStorage.getItem("RASTRO_TERRITORY_ESTADO");
+  } catch {
+    return null;
+  }
+}
+
+const readPinnedEstadoIdOnServer = () => null;
+
 export function RastroDashboard() {
-  const [selectedEstado, setSelectedEstado] = useState<EstadoData | null>(null);
+  // undefined until the user selects or clears; until then the pinned territory applies.
+  const [selection, setSelectedEstado] = useState<EstadoData | null | undefined>(undefined);
   const [hoveredEstado, setHoveredEstado] = useState<EstadoData | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>("mapa");
   const [layerPanelOpen, setLayerPanelOpen] = useState(false);
@@ -57,6 +70,16 @@ export function RastroDashboard() {
     loading,
     toggleLayer,
   } = useRastroData();
+
+  const pinnedEstadoId = useSyncExternalStore(
+    subscribeNoop,
+    readPinnedEstadoId,
+    readPinnedEstadoIdOnServer,
+  );
+  const selectedEstado =
+    selection === undefined
+      ? (estados.find((item) => item.id === pinnedEstadoId) ?? null)
+      : selection;
 
   const showFallbackBanner =
     !loading && (meta.rnpdno.status === "mock" || meta.rnpdno.status === "stale");
@@ -105,13 +128,6 @@ export function RastroDashboard() {
     onToggleShortcuts: () => setShortcutsOpen((open) => !open),
     shortcutsOpen,
   });
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem("RASTRO_TERRITORY_ESTADO");
-    if (!saved || selectedEstado || estados.length === 0) return;
-    const estado = estados.find((item) => item.id === saved);
-    if (estado) setSelectedEstado(estado);
-  }, [estados, selectedEstado]);
 
   useEffect(() => {
     const panel = document.getElementById(`tabpanel-${activeTab}`);

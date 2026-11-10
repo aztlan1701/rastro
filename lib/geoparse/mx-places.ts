@@ -1,5 +1,4 @@
 import { STATE_CATALOG, normalizeStateName, type StateCatalogEntry } from "@/lib/state-catalog";
-import type { EstadoData } from "@/lib/types";
 
 export type GeoConfidence = "exact" | "state" | "inferred" | "none";
 

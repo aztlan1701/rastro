@@ -1,4 +1,4 @@
-import { DATACIVICA, RNPDNO_CSV_URL, VAD_BORRADOS_CSV_URL, VAD_DATASETS } from "@/lib/config";
+import { DATACIVICA, RNPDNO_CSV_URL, VAD_DATASETS } from "@/lib/config";
 
 export type SourceId =
   | "rnpdno"

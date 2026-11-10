@@ -1,12 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import {
   getChoroplethLegendItems,
   MAP_MARKER_LEGEND,
 } from "@/lib/geo/choropleth";
 
 const LEGEND = getChoroplethLegendItems();
+const MOBILE_QUERY = "(max-width: 1023px)";
+
+function subscribeToMobileQuery(onChange: () => void) {
+  const query = window.matchMedia(MOBILE_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+const getIsMobile = () => window.matchMedia(MOBILE_QUERY).matches;
+const getIsMobileOnServer = () => true;
 
 interface MapLegendProps {
   /** Collapsed by default on small screens */
@@ -14,20 +24,17 @@ interface MapLegendProps {
 }
 
 export function MapLegend({ defaultCollapsedOnMobile = true }: MapLegendProps) {
-  const [open, setOpen] = useState(!defaultCollapsedOnMobile);
+  const isMobile = useSyncExternalStore(subscribeToMobileQuery, getIsMobile, getIsMobileOnServer);
+  // null until the user toggles; until then the viewport decides.
+  const [userOpen, setUserOpen] = useState<boolean | null>(null);
+  const open = userOpen ?? (defaultCollapsedOnMobile ? !isMobile : true);
   const panelId = "map-legend-panel";
-
-  useEffect(() => {
-    if (!defaultCollapsedOnMobile) return;
-    const mobile = window.matchMedia("(max-width: 1023px)").matches;
-    setOpen(!mobile);
-  }, [defaultCollapsedOnMobile]);
 
   return (
     <div className="absolute top-3 right-3 z-10 w-[220px] rounded-sm border border-white/8 bg-[#030508]/95 text-[11px] backdrop-blur-md lg:bottom-3 lg:top-auto">
       <button
         type="button"
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => setUserOpen(!open)}
         aria-expanded={open}
         aria-controls={panelId}
         className="flex w-full items-center justify-between px-3 py-2 text-left text-[#c0bfb8] transition-colors hover:text-white"

@@ -38,14 +38,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
 
   useEffect(() => {
     const trimmed = query.trim();
-    if (trimmed.length < 2) {
-      setResults([]);
-      setTotal(0);
-      setMeta(null);
-      setError(null);
-      setLoading(false);
-      return;
-    }
+    if (trimmed.length < 2) return;
 
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
@@ -89,6 +82,17 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
       window.clearTimeout(timer);
     };
   }, [query, source, estadoId, sexo]);
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    if (value.trim().length < 2) {
+      setResults([]);
+      setTotal(0);
+      setMeta(null);
+      setError(null);
+      setLoading(false);
+    }
+  };
 
   const handleOpenEstado = (estadoId?: string) => {
     if (!estadoId) return;
@@ -155,7 +159,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
           id="person-search"
           type="search"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => handleQueryChange(event.target.value)}
           placeholder="Nombre, apellido o nombre completo…"
           autoComplete="off"
           spellCheck={false}

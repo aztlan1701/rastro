@@ -157,6 +157,8 @@ export function MexicoMap({
   const userMovedMapRef = useRef(false);
   const layoutFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const selectedEstadoRef = useRef(selectedEstado);
+
   const queueLayoutFit = useCallback((map: maplibregl.Map) => {
     if (layoutFitTimerRef.current) clearTimeout(layoutFitTimerRef.current);
     layoutFitTimerRef.current = setTimeout(() => {
@@ -175,7 +177,6 @@ export function MexicoMap({
   const onHoverRef = useRef(onHoverEstado);
   const onSelectRef = useRef(onSelectEstado);
   const estadoCentroidsRef = useRef(new Map<string, { lng: number; lat: number }>());
-  const selectedEstadoRef = useRef(selectedEstado);
   const hoveredEstadoRef = useRef(hoveredEstado);
 
   const [mapReady, setMapReady] = useState(false);
@@ -529,9 +530,12 @@ export function MexicoMap({
   );
 
   const initializeLayersRef = useRef(initializeLayers);
-  initializeLayersRef.current = initializeLayers;
   const queueLayoutFitRef = useRef(queueLayoutFit);
-  queueLayoutFitRef.current = queueLayoutFit;
+
+  useEffect(() => {
+    initializeLayersRef.current = initializeLayers;
+    queueLayoutFitRef.current = queueLayoutFit;
+  }, [initializeLayers, queueLayoutFit]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -615,7 +619,6 @@ export function MexicoMap({
       setMapReady(false);
     };
     // Map instance must be created once; layer/data updates go through syncMapLayers.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

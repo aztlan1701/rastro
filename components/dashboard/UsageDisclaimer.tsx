@@ -1,32 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { USAGE_DISCLAIMER } from "@/lib/source-catalog";
 
 const STORAGE_KEY = "RASTRO_DISCLAIMER_COLLAPSED";
 
-export function UsageDisclaimer() {
-  const [collapsed, setCollapsed] = useState(false);
+const subscribeNoop = () => () => {};
 
-  useEffect(() => {
+function readStoredCollapsed() {
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+const readStoredCollapsedOnServer = () => false;
+
+export function UsageDisclaimer() {
+  const storedCollapsed = useSyncExternalStore(
+    subscribeNoop,
+    readStoredCollapsed,
+    readStoredCollapsedOnServer,
+  );
+  // null until the user toggles; until then the stored value decides.
+  const [userCollapsed, setUserCollapsed] = useState<boolean | null>(null);
+  const collapsed = userCollapsed ?? storedCollapsed;
+
+  const toggle = () => {
+    const next = !collapsed;
+    setUserCollapsed(next);
     try {
-      setCollapsed(sessionStorage.getItem(STORAGE_KEY) === "1");
+      sessionStorage.setItem(STORAGE_KEY, next ? "1" : "0");
     } catch {
       // ignore
     }
-  }, []);
-
-  const toggle = () => {
-    setCollapsed((value) => {
-      const next = !value;
-      try {
-        sessionStorage.setItem(STORAGE_KEY, next ? "1" : "0");
-      } catch {
-        // ignore
-      }
-      return next;
-    });
   };
 
   return (

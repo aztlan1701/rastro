@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ALERTAS_AMBER, ESTADOS_DATA, NOTICIAS } from "@/lib/mock-data";
 import type {
   AlertaAmber,
@@ -40,7 +40,7 @@ export function useRastroData() {
   const [noticias, setNoticias] = useState<Noticia[]>(NOTICIAS);
   const [telegram, setTelegram] = useState<TelegramPost[]>([]);
   const [municipios, setMunicipios] = useState<MunicipioPoint[]>([]);
-  const [layers, setLayers] = useState<LayerState[]>(DEFAULT_LAYERS);
+  const [baseLayers, setLayers] = useState<LayerState[]>(DEFAULT_LAYERS);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState<DashboardData["meta"]>({
     rnpdno: EMPTY_META,
@@ -170,15 +170,13 @@ export function useRastroData() {
     };
   }, []);
 
-  useEffect(() => {
+  const layers = useMemo(() => {
     const geoCount =
       noticias.filter((item) => item.lat && item.lng).length + telegram.length;
-    setLayers((current) =>
-      current.map((layer) =>
-        layer.id === "noticias_geo" ? { ...layer, count: geoCount } : layer,
-      ),
+    return baseLayers.map((layer) =>
+      layer.id === "noticias_geo" ? { ...layer, count: geoCount } : layer,
     );
-  }, [noticias, telegram]);
+  }, [baseLayers, noticias, telegram]);
 
   return {
     estados,
