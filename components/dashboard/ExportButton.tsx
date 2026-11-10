@@ -14,7 +14,7 @@ export function ExportButton({ label, filename, content, mimeType }: ExportButto
     <button
       type="button"
       onClick={() => downloadTextFile(filename, content, mimeType)}
-      className="rounded-sm border border-white/10 px-2.5 py-1 text-[11px] tracking-wide text-[#aaa] transition-colors hover:bg-white/5"
+      className="rounded-sm border border-edge/15 px-2.5 py-1 text-[11px] tracking-wide text-ink-3 transition-colors hover:bg-edge/5"
     >
       {label}
     </button>

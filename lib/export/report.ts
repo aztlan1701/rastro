@@ -1,29 +1,41 @@
 import { rowsToCsv } from "@/lib/export/csv";
 import { SOURCE_CATALOG, USAGE_DISCLAIMER } from "@/lib/source-catalog";
 import type { EstadoData, PersonSearchResult, VadSummary } from "@/lib/types";
-import { formatNum } from "@/lib/utils";
+import { formatNum, formatNumOrDash } from "@/lib/utils";
+
+/** Escapa texto que se interpola en el HTML del informe para evitar inyección. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 export interface EstadoReportInput {
   estado: EstadoData;
   vad?: VadSummary | null;
   noticiasCount?: number;
-  amberActivas?: number;
+  /** True cuando las cifras del RNPDNO provienen de datos simulados de desarrollo. */
+  simulated?: boolean;
 }
 
 export function buildEstadoReportHtml({
   estado,
   vad,
   noticiasCount = 0,
-  amberActivas = 0,
+  simulated = false,
 }: EstadoReportInput): string {
   const borrados = vad?.porEstado.find((item) => item.estadoId === estado.id)?.borrados ?? 0;
+  const sexoNota = estado.sexoUniverso === "todos" ? " *" : "";
   const generatedAt = new Date().toLocaleString("es-MX", { timeZone: "America/Mexico_City" });
 
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>RASTRO — Informe ${estado.nombre}</title>
+  <title>RASTRO — Informe ${escapeHtml(estado.nombre)}</title>
   <style>
     body { font-family: Georgia, serif; max-width: 720px; margin: 2rem auto; color: #111; line-height: 1.5; }
     h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
@@ -36,19 +48,27 @@ export function buildEstadoReportHtml({
   </style>
 </head>
 <body>
-  <h1>Informe territorial — ${estado.nombre}</h1>
+  <h1>Informe territorial — ${escapeHtml(estado.nombre)}</h1>
   <p class="meta">Generado por RASTRO · ${generatedAt} · Inteligencia de datos abiertos</p>
 
-  <h2>RNPDNO (versión pública sep 2023)</h2>
+${
+  simulated
+    ? `  <p style="border:1px solid #b45309;background:#fffbeb;color:#7c2d12;padding:0.75rem;font-size:0.9rem"><strong>Datos simulados.</strong> No fue posible leer los agregados del RNPDNO al generar este informe; las cifras de la primera tabla son de desarrollo y no deben citarse.</p>\n`
+    : ""
+}  <h2>RNPDNO (${simulated ? "datos simulados" : "agregados tablero CNB"})</h2>
   <table>
     <tr><th>Indicador</th><th>Valor</th></tr>
-    <tr><td>Total registradas</td><td>${formatNum(estado.total)}</td></tr>
-    <tr><td>Nuevas (30 días)</td><td>+${formatNum(estado.nuevos30d)}</td></tr>
-    <tr><td>Mujeres</td><td>${formatNum(estado.mujeres)}</td></tr>
-    <tr><td>Hombres</td><td>${formatNum(estado.hombres)}</td></tr>
-    <tr><td>Localizadas</td><td>${formatNum(estado.localizados)}</td></tr>
-    <tr><td>Municipio con más registros</td><td>${estado.municipioAlto}</td></tr>
+    <tr><td>Personas desaparecidas y no localizadas</td><td>${formatNum(estado.total)}</td></tr>
+    <tr><td>Personas localizadas</td><td>${formatNumOrDash(estado.localizados)}</td></tr>
+    <tr><td>Mujeres${sexoNota}</td><td>${formatNum(estado.mujeres)}</td></tr>
+    <tr><td>Hombres${sexoNota}</td><td>${formatNum(estado.hombres)}</td></tr>
+    <tr><td>Sexo no especificado${sexoNota}</td><td>${formatNum(estado.noEspecificado)}</td></tr>
   </table>
+  <p class="meta">Nota: “localizadas” se obtiene restando las personas desaparecidas y no localizadas a todos los registros de la entidad; una raya indica que no pudo calcularse.${
+    sexoNota
+      ? " * El desglose por sexo cuenta todos los registros de la entidad, incluidas las personas localizadas, por lo que no suma el total de desaparecidas."
+      : ""
+  } El tablero agregado no publica “nuevos 30 días” ni municipio con más registros. La búsqueda por nombre sigue usando el CSV público sep 2023.</p>
 
   <h2>Data Cívica — Volver a Desaparecer</h2>
   <table>
@@ -62,7 +82,6 @@ export function buildEstadoReportHtml({
   <table>
     <tr><th>Señal</th><th>Valor</th></tr>
     <tr><td>Noticias geo recientes (feed)</td><td>${noticiasCount}</td></tr>
-    <tr><td>Alertas AMBER demo activas (estado)</td><td>${amberActivas}</td></tr>
   </table>
 
   <h2>Fuentes</h2>
@@ -94,21 +113,27 @@ export function buildSearchResultsCsv(results: PersonSearchResult[]): string {
 export function buildEstadosTableCsv(estados: EstadoData[]): string {
   const headers = [
     "estado",
-    "total",
+    "desaparecidas_y_no_localizadas",
     "nuevos_30d",
     "mujeres",
     "hombres",
-    "localizados",
-    "pct_localizados",
+    "no_especificado",
+    "universo_sexo",
+    "localizadas",
+    "pct_localizadas_sobre_registros",
   ];
   const rows = estados.map((estado) => [
     estado.nombre,
     estado.total,
-    estado.nuevos30d,
+    estado.nuevos30d ?? "",
     estado.mujeres,
     estado.hombres,
-    estado.localizados,
-    estado.total > 0 ? ((estado.localizados / estado.total) * 100).toFixed(1) : "0",
+    estado.noEspecificado,
+    estado.sexoUniverso === "todos" ? "todos_los_registros" : "desaparecidas_y_no_localizadas",
+    estado.localizados ?? "",
+    estado.localizados !== null && estado.total + estado.localizados > 0
+      ? ((estado.localizados / (estado.total + estado.localizados)) * 100).toFixed(1)
+      : "",
   ]);
   return rowsToCsv(headers, rows);
 }

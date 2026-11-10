@@ -68,7 +68,7 @@ export const RSS_FEEDS = (
 
 export const MONITOR_KEYWORDS = (
   process.env.RASTRO_MONITOR_KEYWORDS ??
-  "desaparec,hallazgo,fosa,alerta amber,alerta alba,buscadoras,localizad"
+  "desaparec,hallazgo,fosa,buscadoras,localizad"
 )
   .split(",")
   .map((keyword) => keyword.trim().toLowerCase())
@@ -83,30 +83,31 @@ export const MONITOR_ESTADOS = (
 
 export const ALERT_WEBHOOK_URL = process.env.RASTRO_ALERT_WEBHOOK_URL ?? "";
 
+/**
+ * Token para autorizar el disparo del webhook en `/api/monitor`. Si está vacío,
+ * el endpoint sigue permitiendo consultar coincidencias pero NUNCA dispara el
+ * webhook desde una petición pública (evita que cualquiera spamee el webhook o
+ * amplifique peticiones salientes). Configúralo para cron/automatizaciones.
+ */
+export const MONITOR_TOKEN = process.env.RASTRO_MONITOR_TOKEN ?? "";
+
+/** Identifica a RASTRO ante los servidores que consulta, con una vía de contacto. */
+export const USER_AGENT =
+  process.env.RASTRO_USER_AGENT ?? "RASTRO/0.3 (+https://github.com/aztlan1701/rastro)";
+
 export const RECONSTRUCCION_AGGREGADOS_URL =
   process.env.RASTRO_RECONSTRUCCION_AGGREGADOS_URL ?? "/data/reconstruccion-agregados.json";
-
-export const TELEGRAM_CHANNELS = (
-  process.env.RASTRO_TELEGRAM_CHANNELS ?? "buscadoras_mx,AlertaAmberMexico"
-)
-  .split(",")
-  .map((c) => c.trim())
-  .filter(Boolean);
 
 export const CACHE_TTL = {
   rnpdno: 24 * 60 * 60 * 1000,
   vad: 24 * 60 * 60 * 1000,
-  amber: 30 * 60 * 1000,
   news: 15 * 60 * 1000,
   gdelt: 30 * 60 * 1000,
-  telegram: 15 * 60 * 1000,
 };
 
 export const CACHE_STALE = {
   rnpdno: 7 * 24 * 60 * 60 * 1000,
   vad: 7 * 24 * 60 * 60 * 1000,
-  amber: 24 * 60 * 60 * 1000,
   news: 24 * 60 * 60 * 1000,
   gdelt: 24 * 60 * 60 * 1000,
-  telegram: 24 * 60 * 60 * 1000,
 };

@@ -1,3 +1,4 @@
+import { USER_AGENT } from "@/lib/config";
 import { geoparseText, inferEstadoFromText, isInMexico } from "@/lib/geoparse/mx-places";
 import { normalizeNewsItem } from "@/lib/feeds/news-utils";
 import type { Noticia } from "@/lib/types";
@@ -17,7 +18,7 @@ export async function fetchGdeltNews(): Promise<{ items: Noticia[]; usedMock: bo
   try {
     const response = await fetch(GDELT_URL, {
       next: { revalidate: 1800 },
-      headers: { Accept: "application/json" },
+      headers: { Accept: "application/json", "User-Agent": USER_AGENT },
     });
 
     if (!response.ok) throw new Error("GDELT unavailable");

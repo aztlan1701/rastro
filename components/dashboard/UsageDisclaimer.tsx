@@ -1,38 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { USAGE_DISCLAIMER } from "@/lib/source-catalog";
 
 const STORAGE_KEY = "RASTRO_DISCLAIMER_COLLAPSED";
 
-export function UsageDisclaimer() {
-  const [collapsed, setCollapsed] = useState(false);
+const subscribeNoop = () => () => {};
 
-  useEffect(() => {
+function readStoredCollapsed() {
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+const readStoredCollapsedOnServer = () => false;
+
+export function UsageDisclaimer() {
+  const storedCollapsed = useSyncExternalStore(
+    subscribeNoop,
+    readStoredCollapsed,
+    readStoredCollapsedOnServer,
+  );
+  // null until the user toggles; until then the stored value decides.
+  const [userCollapsed, setUserCollapsed] = useState<boolean | null>(null);
+  const collapsed = userCollapsed ?? storedCollapsed;
+
+  const toggle = () => {
+    const next = !collapsed;
+    setUserCollapsed(next);
     try {
-      setCollapsed(sessionStorage.getItem(STORAGE_KEY) === "1");
+      sessionStorage.setItem(STORAGE_KEY, next ? "1" : "0");
     } catch {
       // ignore
     }
-  }, []);
-
-  const toggle = () => {
-    setCollapsed((value) => {
-      const next = !value;
-      try {
-        sessionStorage.setItem(STORAGE_KEY, next ? "1" : "0");
-      } catch {
-        // ignore
-      }
-      return next;
-    });
   };
 
   return (
     <div
       role="note"
-      className="shrink-0 border-b border-white/6 bg-white/[0.02] px-4 py-2.5 text-[11px] leading-relaxed text-[#556070]"
+      className="shrink-0 border-b border-edge/10 bg-surface px-4 py-2.5 text-[11px] leading-relaxed text-muted"
     >
       <div className="flex items-start justify-between gap-3 lg:hidden">
         <button
@@ -41,9 +50,9 @@ export function UsageDisclaimer() {
           aria-expanded={!collapsed}
           className="flex-1 text-left"
         >
-          <span className="text-[#888]">Aviso de uso</span>
+          <span className="text-ink-4">Aviso de uso</span>
           {collapsed ? (
-            <span className="ml-2 text-[#3a4558]">(tocar para expandir)</span>
+            <span className="ml-2 text-faint">(tocar para expandir)</span>
           ) : (
             <span className="mt-1 block">{USAGE_DISCLAIMER}</span>
           )}
@@ -51,17 +60,17 @@ export function UsageDisclaimer() {
         {!collapsed ? (
           <Link
             href="/metodologia"
-            className="shrink-0 text-[#4a9eff] underline decoration-white/10 underline-offset-2"
+            className="shrink-0 text-[#1f6fd0] underline decoration-edge/30 underline-offset-2"
           >
             Más
           </Link>
         ) : null}
       </div>
       <div className="hidden lg:block">
-        <span className="text-[#888]">Aviso de uso:</span> {USAGE_DISCLAIMER}{" "}
+        <span className="text-ink-4">Aviso de uso:</span> {USAGE_DISCLAIMER}{" "}
         <Link
           href="/metodologia"
-          className="text-[#4a9eff] underline decoration-white/10 underline-offset-2"
+          className="text-[#1f6fd0] underline decoration-edge/30 underline-offset-2"
         >
           Más información
         </Link>

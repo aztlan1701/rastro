@@ -2,11 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useDashboardKeyboard } from "@/hooks/useDashboardKeyboard";
 import { useRastroData } from "@/hooks/useRastroData";
 import type { EstadoData, TabId } from "@/lib/types";
-import { AlertsTab } from "./AlertsTab";
+import { sumOrNull } from "@/lib/utils";
 import { DashboardHeader } from "./DashboardHeader";
 import { DataFallbackBanner } from "./DataFallbackBanner";
 import { DataTab } from "./DataTab";
@@ -15,10 +15,8 @@ import { KeyboardShortcutsModal } from "./KeyboardShortcutsModal";
 import { LayerPanel } from "./LayerPanel";
 import { LayerToggleButton } from "./LayerToggleButton";
 import { MobileBottomNav } from "./MobileBottomNav";
-import { MobileFeedDrawer } from "./MobileFeedDrawer";
 import { NewsTab } from "./NewsTab";
 import { SearchTab } from "./SearchTab";
-import { RightPanel } from "./RightPanel";
 import { SourceMetaBar } from "./SourceMetaBar";
 import { UsageDisclaimer } from "./UsageDisclaimer";
 import { buildStats, StatsBar } from "./StatsBar";
@@ -28,15 +26,28 @@ const MexicoMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex min-h-[420px] flex-1 items-center justify-center text-[11px] tracking-widest text-[#556070] uppercase">
+      <div className="flex min-h-[420px] flex-1 items-center justify-center text-[11px] tracking-widest text-muted uppercase">
         Cargando mapa…
       </div>
     ),
   },
 );
 
+const subscribeNoop = () => () => {};
+
+function readPinnedEstadoId() {
+  try {
+    return window.localStorage.getItem("RASTRO_TERRITORY_ESTADO");
+  } catch {
+    return null;
+  }
+}
+
+const readPinnedEstadoIdOnServer = () => null;
+
 export function RastroDashboard() {
-  const [selectedEstado, setSelectedEstado] = useState<EstadoData | null>(null);
+  // undefined hasta que la persona selecciona o limpia; mientras tanto aplica el territorio fijado.
+  const [selection, setSelectedEstado] = useState<EstadoData | null | undefined>(undefined);
   const [hoveredEstado, setHoveredEstado] = useState<EstadoData | null>(null);
   const [activeTab, setActiveTab] = useState<TabId>("mapa");
   const [layerPanelOpen, setLayerPanelOpen] = useState(false);
@@ -45,36 +56,51 @@ export function RastroDashboard() {
 
   const {
     estados,
-    alertas,
     noticias,
-    telegram,
     municipios,
     layers,
     meta,
     vad,
-    amberDemo,
-    amberPortalReachable,
     loading,
     toggleLayer,
+    setLayers,
   } = useRastroData();
+
+  const handleMunicipiosLoaded = useCallback((count: number) => {
+    setLayers((current) => {
+      const layer = current.find((item) => item.id === "rnpdno_municipios");
+      if (!layer || layer.count === count) return current;
+      return current.map((item) =>
+        item.id === "rnpdno_municipios" ? { ...item, count } : item,
+      );
+    });
+  }, [setLayers]);
+
+  const pinnedEstadoId = useSyncExternalStore(
+    subscribeNoop,
+    readPinnedEstadoId,
+    readPinnedEstadoIdOnServer,
+  );
+  const selectedEstado =
+    selection === undefined
+      ? (estados.find((item) => item.id === pinnedEstadoId) ?? null)
+      : selection;
 
   const showFallbackBanner =
     !loading && (meta.rnpdno.status === "mock" || meta.rnpdno.status === "stale");
 
   const totals = useMemo(() => {
     const totalNacional = estados.reduce((sum, estado) => sum + estado.total, 0);
-    const totalNuevos = estados.reduce((sum, estado) => sum + estado.nuevos30d, 0);
-    const totalLocalizados = estados.reduce((sum, estado) => sum + estado.localizados, 0);
-    const amberActivas = alertas.filter((alerta) => alerta.activa).length;
+    const totalNuevos = sumOrNull(estados.map((estado) => estado.nuevos30d));
+    const totalLocalizados = sumOrNull(estados.map((estado) => estado.localizados));
 
     return buildStats(
       totalNacional,
       totalNuevos,
       totalLocalizados,
-      amberActivas,
       estados.length,
     );
-  }, [alertas, estados]);
+  }, [estados]);
 
   const handleTabChange = (tab: TabId) => {
     setLayerPanelOpen(false);
@@ -107,13 +133,6 @@ export function RastroDashboard() {
   });
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("RASTRO_TERRITORY_ESTADO");
-    if (!saved || selectedEstado || estados.length === 0) return;
-    const estado = estados.find((item) => item.id === saved);
-    if (estado) setSelectedEstado(estado);
-  }, [estados, selectedEstado]);
-
-  useEffect(() => {
     const panel = document.getElementById(`tabpanel-${activeTab}`);
     panel?.focus({ preventScroll: true });
   }, [activeTab]);
@@ -121,10 +140,10 @@ export function RastroDashboard() {
   const showEstadoPanel = activeTab === "mapa";
 
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-[#030508] pb-[calc(3rem+env(safe-area-inset-bottom,0px))] text-[#e8e4dc] lg:pb-0">
+    <div className="flex min-h-screen flex-col overflow-hidden bg-canvas pb-[calc(3rem+env(safe-area-inset-bottom,0px))] text-ink lg:pb-0">
       <a
         href={`#tabpanel-${activeTab}`}
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-sm focus:border focus:border-white/20 focus:bg-[#030508] focus:px-3 focus:py-2 focus:text-[11px] focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-sm focus:border focus:border-edge/30 focus:bg-canvas focus:px-3 focus:py-2 focus:text-[11px] focus:text-ink-strong"
       >
         Saltar al contenido
       </a>
@@ -168,7 +187,7 @@ export function RastroDashboard() {
             aria-hidden={activeTab !== "mapa"}
             className={`relative flex min-h-0 flex-1 flex-col outline-none ${activeTab === "mapa" ? "" : "hidden"}`}
           >
-            <div className="shrink-0 border-b border-white/6 px-4 py-3 xl:px-4">
+            <div className="shrink-0 border-b border-edge/10 py-3 pr-4 pl-14">
               <SourceMetaBar sourceId="rnpdno" meta={meta.rnpdno} />
             </div>
             {!layerPanelOpen ? (
@@ -185,9 +204,7 @@ export function RastroDashboard() {
             />
             <MexicoMap
               estados={estados}
-              alertas={alertas}
               noticias={noticias}
-              telegram={telegram}
               municipios={municipios}
               layers={layers}
               selectedEstado={selectedEstado}
@@ -195,33 +212,9 @@ export function RastroDashboard() {
               onSelectEstado={handleSelectEstado}
               onHoverEstado={setHoveredEstado}
               onResetSelection={handleResetSelection}
-            />
-            <MobileFeedDrawer
-              alertas={alertas}
-              noticias={noticias}
-              onGoToAlerts={() => handleTabChange("alertas")}
-              onGoToNews={() => handleTabChange("noticias")}
+              onMunicipiosLoaded={handleMunicipiosLoaded}
             />
           </div>
-
-          <motion.div
-            id="tabpanel-alertas"
-            role="tabpanel"
-            aria-labelledby="tab-alertas"
-            tabIndex={-1}
-            hidden={activeTab !== "alertas"}
-            aria-hidden={activeTab !== "alertas"}
-            initial={false}
-            animate={activeTab === "alertas" ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-            className={`flex flex-1 flex-col overflow-hidden outline-none ${activeTab === "alertas" ? "" : "hidden"}`}
-          >
-            <AlertsTab
-              alertas={alertas}
-              meta={meta.amber}
-              demoMode={amberDemo}
-              portalReachable={amberPortalReachable}
-            />
-          </motion.div>
 
           <motion.div
             id="tabpanel-noticias"
@@ -236,10 +229,8 @@ export function RastroDashboard() {
           >
             <NewsTab
               noticias={noticias}
-              telegram={telegram}
               newsMeta={meta.news}
               gdeltMeta={meta.gdelt}
-              telegramMeta={meta.telegram}
             />
           </motion.div>
 
@@ -282,14 +273,6 @@ export function RastroDashboard() {
             />
           </motion.div>
         </main>
-
-        <RightPanel
-          alertas={alertas}
-          noticias={noticias}
-          meta={meta}
-          onGoToAlerts={() => handleTabChange("alertas")}
-          onGoToNews={() => handleTabChange("noticias")}
-        />
       </div>
 
       <MobileBottomNav activeTab={activeTab} onTabChange={handleTabChange} />

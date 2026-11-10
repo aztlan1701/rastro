@@ -89,10 +89,6 @@ export function useDashboardKeyboard({
         onToggleLayerPanel();
         return;
       }
-      if (key === "a" && activeTab === "mapa") {
-        onToggleLayer("amber_activas");
-        return;
-      }
       if (key === "n" && activeTab === "mapa") {
         onToggleLayer("noticias_geo");
       }

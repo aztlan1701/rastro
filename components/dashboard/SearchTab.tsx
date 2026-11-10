@@ -21,8 +21,8 @@ const SOURCE_LABELS: Record<PersonSearchResult["source"], string> = {
 };
 
 const SOURCE_COLORS: Record<PersonSearchResult["source"], string> = {
-  rnpdno_publico: "#4a9eff",
-  nombre_borrado: "#ff6b35",
+  rnpdno_publico: "#1f6fd0",
+  nombre_borrado: "#c2410c",
 };
 
 export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: SearchTabProps) {
@@ -38,14 +38,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
 
   useEffect(() => {
     const trimmed = query.trim();
-    if (trimmed.length < 2) {
-      setResults([]);
-      setTotal(0);
-      setMeta(null);
-      setError(null);
-      setLoading(false);
-      return;
-    }
+    if (trimmed.length < 2) return;
 
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
@@ -90,6 +83,17 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
     };
   }, [query, source, estadoId, sexo]);
 
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    if (value.trim().length < 2) {
+      setResults([]);
+      setTotal(0);
+      setMeta(null);
+      setError(null);
+      setLoading(false);
+    }
+  };
+
   const handleOpenEstado = (estadoId?: string) => {
     if (!estadoId) return;
     const estado = estados.find((item) => item.id === estadoId);
@@ -108,12 +112,12 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
       <SourceMetaBar sourceId="buscar" meta={searchMeta ?? meta ?? { status: "live", fetchedAt: new Date().toISOString() }} />
 
       <div className="mb-6 grid gap-3 md:grid-cols-3">
-        <label className="text-[11px] text-[#556070]">
+        <label className="text-[11px] text-muted">
           Fuente
           <select
             value={source}
             onChange={(event) => setSource(event.target.value)}
-            className="mt-1 w-full rounded-sm border border-white/10 bg-[#030508] px-2 py-2 text-[#e8e4dc]"
+            className="mt-1 w-full rounded-sm border border-edge/15 bg-canvas px-2 py-2 text-ink"
           >
             <option value="all">Todas</option>
             <option value="rnpdno_publico">RNPDNO público</option>
@@ -121,12 +125,12 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
             <option value="eliminado">Solo ELIMINADO</option>
           </select>
         </label>
-        <label className="text-[11px] text-[#556070]">
+        <label className="text-[11px] text-muted">
           Entidad
           <select
             value={estadoId}
             onChange={(event) => setEstadoId(event.target.value)}
-            className="mt-1 w-full rounded-sm border border-white/10 bg-[#030508] px-2 py-2 text-[#e8e4dc]"
+            className="mt-1 w-full rounded-sm border border-edge/15 bg-canvas px-2 py-2 text-ink"
           >
             <option value="">Todas</option>
             {estados.map((estado) => (
@@ -136,13 +140,13 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
             ))}
           </select>
         </label>
-        <label className="text-[11px] text-[#556070]">
+        <label className="text-[11px] text-muted">
           Sexo
           <input
             value={sexo}
             onChange={(event) => setSexo(event.target.value)}
             placeholder="MUJER, HOMBRE…"
-            className="mt-1 w-full rounded-sm border border-white/10 bg-[#030508] px-2 py-2 text-[#e8e4dc]"
+            className="mt-1 w-full rounded-sm border border-edge/15 bg-canvas px-2 py-2 text-ink"
           />
         </label>
       </div>
@@ -155,13 +159,13 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
           id="person-search"
           type="search"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => handleQueryChange(event.target.value)}
           placeholder="Nombre, apellido o nombre completo…"
           autoComplete="off"
           spellCheck={false}
-          className="w-full max-w-xl rounded-sm border border-white/10 bg-[#030508] px-4 py-3 text-sm text-[#e8e4dc] placeholder:text-[#556070] focus:border-[#ff2d55]/40 focus:outline-none"
+          className="w-full max-w-xl rounded-sm border border-edge/15 bg-canvas px-4 py-3 text-sm text-ink placeholder:text-muted focus:border-[#c8102e]/40 focus:outline-none"
         />
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-[#556070]">
+        <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted">
           {loading ? <span>Buscando…</span> : null}
           {!loading && query.trim().length >= 2 ? (
             <span>
@@ -172,7 +176,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
             </span>
           ) : null}
           {meta ? (
-            <span className="text-[#3a4558]">
+            <span className="text-faint">
               Fuente: {meta.status === "mock" ? "datos de respaldo" : "Data Cívica"}
             </span>
           ) : null}
@@ -203,12 +207,12 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
           {results.map((result) => (
             <li
               key={result.id}
-              className="rounded-md border border-white/6 bg-white/[0.015] px-4 py-3"
+              className="rounded-md border border-edge/10 bg-surface px-4 py-3"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm font-medium text-[#e8e4dc]">
+                    <span className="text-sm font-medium text-ink">
                       {result.nombreCompleto}
                     </span>
                     <span
@@ -221,12 +225,12 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
                       {SOURCE_LABELS[result.source]}
                     </span>
                     {result.eliminado ? (
-                      <span className="rounded-sm bg-[#ff2d55]/10 px-2 py-0.5 text-[11px] tracking-wide text-[#ff2d55] uppercase">
+                      <span className="rounded-sm bg-[#c8102e]/10 px-2 py-0.5 text-[11px] tracking-wide text-[#c8102e] uppercase">
                         Enmascarado
                       </span>
                     ) : null}
                   </div>
-                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[#556070]">
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted">
                     {result.entidad ? <span>Entidad: {result.entidad}</span> : null}
                     {result.sexo ? <span>Sexo: {result.sexo}</span> : null}
                     {result.edad ? <span>Edad: {result.edad}</span> : null}
@@ -237,7 +241,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
                   <button
                     type="button"
                     onClick={() => handleOpenEstado(result.estadoId)}
-                    className="shrink-0 rounded-sm border border-white/10 px-2.5 py-1 text-[11px] text-[#aaa] transition-colors hover:bg-white/5"
+                    className="shrink-0 rounded-sm border border-edge/15 px-2.5 py-1 text-[11px] text-ink-3 transition-colors hover:bg-edge/5"
                   >
                     Ver en mapa
                   </button>

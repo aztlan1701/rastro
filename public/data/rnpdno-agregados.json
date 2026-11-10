@@ -1,0 +1,7535 @@
+{
+  "procedencia": {
+    "fuente": "Versión pública estadística del RNPDNO",
+    "proveedor": "Comisión Nacional de Búsqueda (CNB)",
+    "url": "https://versionpublicarnpdno.segob.gob.mx",
+    "metodo": "Consulta automatizada de los puntos finales del tablero público",
+    "consultado_utc": "2026-11-10T05:25:12.304439+00:00",
+    "desfase_declarado_por_la_fuente": "no mayor a cinco minutos",
+    "alcance": "Agregados estadísticos estatales y municipales (serie del tablero por entidad). No incluye datos nominales.",
+    "universos": {
+      "por_entidad": "desaparecidas_y_no_localizadas",
+      "bloques_sin_sufijo": "todos_los_registros",
+      "bloques_desaparecidas": "desaparecidas_y_no_localizadas",
+      "por_municipio": "desaparecidas_y_no_localizadas"
+    },
+    "peticiones_realizadas": 43
+  },
+  "datos": {
+    "totales": {
+      "total_global": 414736,
+      "desaparecidos_y_no_localizados": 130861,
+      "localizados": 283875,
+      "solo_desaparecidos": 126413,
+      "solo_no_localizados": 4448,
+      "localizados_con_vida": 258614,
+      "localizados_sin_vida": 25261
+    },
+    "por_entidad": [
+      {
+        "clave_inegi": "28",
+        "clave_tablero": "mx-tm",
+        "entidad": "Tamaulipas",
+        "personas": 13802
+      },
+      {
+        "clave_inegi": "15",
+        "clave_tablero": "mx-mx",
+        "entidad": "México",
+        "personas": 13538
+      },
+      {
+        "clave_inegi": "14",
+        "clave_tablero": "mx-ja",
+        "entidad": "Jalisco",
+        "personas": 13166
+      },
+      {
+        "clave_inegi": "16",
+        "clave_tablero": "mx-mi",
+        "entidad": "Michoacán",
+        "personas": 8161
+      },
+      {
+        "clave_inegi": "19",
+        "clave_tablero": "mx-nl",
+        "entidad": "Nuevo León",
+        "personas": 7425
+      },
+      {
+        "clave_inegi": "25",
+        "clave_tablero": "mx-si",
+        "entidad": "Sinaloa",
+        "personas": 7396
+      },
+      {
+        "clave_inegi": "30",
+        "clave_tablero": "mx-ve",
+        "entidad": "Veracruz",
+        "personas": 7225
+      },
+      {
+        "clave_inegi": "26",
+        "clave_tablero": "mx-so",
+        "entidad": "Sonora",
+        "personas": 5737
+      },
+      {
+        "clave_inegi": "11",
+        "clave_tablero": "mx-gj",
+        "entidad": "Guanajuato",
+        "personas": 5500
+      },
+      {
+        "clave_inegi": "09",
+        "clave_tablero": "mx-df",
+        "entidad": "Ciudad de México",
+        "personas": 5344
+      },
+      {
+        "clave_inegi": "02",
+        "clave_tablero": "mx-bc",
+        "entidad": "Baja California",
+        "personas": 5068
+      },
+      {
+        "clave_inegi": "12",
+        "clave_tablero": "mx-gr",
+        "entidad": "Guerrero",
+        "personas": 4662
+      },
+      {
+        "clave_inegi": "08",
+        "clave_tablero": "mx-ch",
+        "entidad": "Chihuahua",
+        "personas": 4405
+      },
+      {
+        "clave_inegi": "32",
+        "clave_tablero": "mx-za",
+        "entidad": "Zacatecas",
+        "personas": 3929
+      },
+      {
+        "clave_inegi": "05",
+        "clave_tablero": "mx-co",
+        "entidad": "Coahuila",
+        "personas": 3693
+      },
+      {
+        "clave_inegi": "21",
+        "clave_tablero": "mx-pu",
+        "entidad": "Puebla",
+        "personas": 2654
+      },
+      {
+        "clave_inegi": "18",
+        "clave_tablero": "mx-na",
+        "entidad": "Nayarit",
+        "personas": 2174
+      },
+      {
+        "clave_inegi": "07",
+        "clave_tablero": "mx-cs",
+        "entidad": "Chiapas",
+        "personas": 1972
+      },
+      {
+        "clave_inegi": "17",
+        "clave_tablero": "mx-mo",
+        "entidad": "Morelos",
+        "personas": 1874
+      },
+      {
+        "clave_inegi": "27",
+        "clave_tablero": "mx-tb",
+        "entidad": "Tabasco",
+        "personas": 1668
+      },
+      {
+        "clave_inegi": "23",
+        "clave_tablero": "mx-qr",
+        "entidad": "Quintana Roo",
+        "personas": 1628
+      },
+      {
+        "clave_inegi": "06",
+        "clave_tablero": "mx-cl",
+        "entidad": "Colima",
+        "personas": 1552
+      },
+      {
+        "clave_inegi": "13",
+        "clave_tablero": "mx-hg",
+        "entidad": "Hidalgo",
+        "personas": 1424
+      },
+      {
+        "clave_inegi": "24",
+        "clave_tablero": "mx-sl",
+        "entidad": "San Luis Potosí",
+        "personas": 1271
+      },
+      {
+        "clave_inegi": "03",
+        "clave_tablero": "mx-bs",
+        "entidad": "Baja California Sur",
+        "personas": 1112
+      },
+      {
+        "clave_inegi": "10",
+        "clave_tablero": "mx-dg",
+        "entidad": "Durango",
+        "personas": 1053
+      },
+      {
+        "clave_inegi": null,
+        "clave_tablero": "mx-3622",
+        "entidad": "Sin entidad determinada o extranjero",
+        "personas": 847
+      },
+      {
+        "clave_inegi": "22",
+        "clave_tablero": "mx-qt",
+        "entidad": "Querétaro",
+        "personas": 693
+      },
+      {
+        "clave_inegi": "20",
+        "clave_tablero": "mx-oa",
+        "entidad": "Oaxaca",
+        "personas": 650
+      },
+      {
+        "clave_inegi": "01",
+        "clave_tablero": "mx-ag",
+        "entidad": "Aguascalientes",
+        "personas": 502
+      },
+      {
+        "clave_inegi": "31",
+        "clave_tablero": "mx-yu",
+        "entidad": "Yucatán",
+        "personas": 382
+      },
+      {
+        "clave_inegi": "04",
+        "clave_tablero": "mx-cm",
+        "entidad": "Campeche",
+        "personas": 182
+      },
+      {
+        "clave_inegi": "29",
+        "clave_tablero": "mx-tl",
+        "entidad": "Tlaxcala",
+        "personas": 172
+      }
+    ],
+    "por_anio_y_sexo": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 18250
+          },
+          {
+            "categoria": "1952",
+            "personas": 1
+          },
+          {
+            "categoria": "1960",
+            "personas": 1
+          },
+          {
+            "categoria": "1961",
+            "personas": 1
+          },
+          {
+            "categoria": "1962",
+            "personas": 1
+          },
+          {
+            "categoria": "1964",
+            "personas": 3
+          },
+          {
+            "categoria": "1965",
+            "personas": 3
+          },
+          {
+            "categoria": "1967",
+            "personas": 5
+          },
+          {
+            "categoria": "1968",
+            "personas": 2
+          },
+          {
+            "categoria": "1969",
+            "personas": 8
+          },
+          {
+            "categoria": "1970",
+            "personas": 6
+          },
+          {
+            "categoria": "1971",
+            "personas": 20
+          },
+          {
+            "categoria": "1972",
+            "personas": 37
+          },
+          {
+            "categoria": "1973",
+            "personas": 44
+          },
+          {
+            "categoria": "1974",
+            "personas": 318
+          },
+          {
+            "categoria": "1975",
+            "personas": 72
+          },
+          {
+            "categoria": "1976",
+            "personas": 99
+          },
+          {
+            "categoria": "1977",
+            "personas": 121
+          },
+          {
+            "categoria": "1978",
+            "personas": 58
+          },
+          {
+            "categoria": "1979",
+            "personas": 24
+          },
+          {
+            "categoria": "1980",
+            "personas": 24
+          },
+          {
+            "categoria": "1981",
+            "personas": 37
+          },
+          {
+            "categoria": "1982",
+            "personas": 19
+          },
+          {
+            "categoria": "1983",
+            "personas": 17
+          },
+          {
+            "categoria": "1984",
+            "personas": 12
+          },
+          {
+            "categoria": "1985",
+            "personas": 19
+          },
+          {
+            "categoria": "1986",
+            "personas": 11
+          },
+          {
+            "categoria": "1987",
+            "personas": 19
+          },
+          {
+            "categoria": "1988",
+            "personas": 19
+          },
+          {
+            "categoria": "1989",
+            "personas": 33
+          },
+          {
+            "categoria": "1990",
+            "personas": 19
+          },
+          {
+            "categoria": "1991",
+            "personas": 24
+          },
+          {
+            "categoria": "1992",
+            "personas": 31
+          },
+          {
+            "categoria": "1993",
+            "personas": 40
+          },
+          {
+            "categoria": "1994",
+            "personas": 43
+          },
+          {
+            "categoria": "1995",
+            "personas": 38
+          },
+          {
+            "categoria": "1996",
+            "personas": 40
+          },
+          {
+            "categoria": "1997",
+            "personas": 45
+          },
+          {
+            "categoria": "1998",
+            "personas": 50
+          },
+          {
+            "categoria": "1999",
+            "personas": 59
+          },
+          {
+            "categoria": "2000",
+            "personas": 84
+          },
+          {
+            "categoria": "2001",
+            "personas": 93
+          },
+          {
+            "categoria": "2002",
+            "personas": 126
+          },
+          {
+            "categoria": "2003",
+            "personas": 129
+          },
+          {
+            "categoria": "2004",
+            "personas": 143
+          },
+          {
+            "categoria": "2005",
+            "personas": 196
+          },
+          {
+            "categoria": "2006",
+            "personas": 397
+          },
+          {
+            "categoria": "2007",
+            "personas": 1582
+          },
+          {
+            "categoria": "2008",
+            "personas": 1971
+          },
+          {
+            "categoria": "2009",
+            "personas": 2913
+          },
+          {
+            "categoria": "2010",
+            "personas": 5527
+          },
+          {
+            "categoria": "2011",
+            "personas": 7188
+          },
+          {
+            "categoria": "2012",
+            "personas": 6954
+          },
+          {
+            "categoria": "2013",
+            "personas": 9785
+          },
+          {
+            "categoria": "2014",
+            "personas": 9673
+          },
+          {
+            "categoria": "2015",
+            "personas": 7698
+          },
+          {
+            "categoria": "2016",
+            "personas": 8787
+          },
+          {
+            "categoria": "2017",
+            "personas": 10898
+          },
+          {
+            "categoria": "2018",
+            "personas": 11400
+          },
+          {
+            "categoria": "2019",
+            "personas": 16006
+          },
+          {
+            "categoria": "2020",
+            "personas": 15699
+          },
+          {
+            "categoria": "2021",
+            "personas": 16561
+          },
+          {
+            "categoria": "2022",
+            "personas": 16535
+          },
+          {
+            "categoria": "2023",
+            "personas": 20019
+          },
+          {
+            "categoria": "2024",
+            "personas": 22808
+          },
+          {
+            "categoria": "2025",
+            "personas": 23837
+          },
+          {
+            "categoria": "2026",
+            "personas": 13050
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 17871
+          },
+          {
+            "categoria": "1952",
+            "personas": 0
+          },
+          {
+            "categoria": "1960",
+            "personas": 0
+          },
+          {
+            "categoria": "1961",
+            "personas": 3
+          },
+          {
+            "categoria": "1962",
+            "personas": 1
+          },
+          {
+            "categoria": "1964",
+            "personas": 0
+          },
+          {
+            "categoria": "1965",
+            "personas": 0
+          },
+          {
+            "categoria": "1967",
+            "personas": 3
+          },
+          {
+            "categoria": "1968",
+            "personas": 1
+          },
+          {
+            "categoria": "1969",
+            "personas": 0
+          },
+          {
+            "categoria": "1970",
+            "personas": 1
+          },
+          {
+            "categoria": "1971",
+            "personas": 1
+          },
+          {
+            "categoria": "1972",
+            "personas": 7
+          },
+          {
+            "categoria": "1973",
+            "personas": 5
+          },
+          {
+            "categoria": "1974",
+            "personas": 19
+          },
+          {
+            "categoria": "1975",
+            "personas": 8
+          },
+          {
+            "categoria": "1976",
+            "personas": 15
+          },
+          {
+            "categoria": "1977",
+            "personas": 11
+          },
+          {
+            "categoria": "1978",
+            "personas": 13
+          },
+          {
+            "categoria": "1979",
+            "personas": 3
+          },
+          {
+            "categoria": "1980",
+            "personas": 3
+          },
+          {
+            "categoria": "1981",
+            "personas": 6
+          },
+          {
+            "categoria": "1982",
+            "personas": 2
+          },
+          {
+            "categoria": "1983",
+            "personas": 2
+          },
+          {
+            "categoria": "1984",
+            "personas": 0
+          },
+          {
+            "categoria": "1985",
+            "personas": 3
+          },
+          {
+            "categoria": "1986",
+            "personas": 3
+          },
+          {
+            "categoria": "1987",
+            "personas": 1
+          },
+          {
+            "categoria": "1988",
+            "personas": 4
+          },
+          {
+            "categoria": "1989",
+            "personas": 10
+          },
+          {
+            "categoria": "1990",
+            "personas": 5
+          },
+          {
+            "categoria": "1991",
+            "personas": 6
+          },
+          {
+            "categoria": "1992",
+            "personas": 10
+          },
+          {
+            "categoria": "1993",
+            "personas": 10
+          },
+          {
+            "categoria": "1994",
+            "personas": 12
+          },
+          {
+            "categoria": "1995",
+            "personas": 19
+          },
+          {
+            "categoria": "1996",
+            "personas": 16
+          },
+          {
+            "categoria": "1997",
+            "personas": 6
+          },
+          {
+            "categoria": "1998",
+            "personas": 16
+          },
+          {
+            "categoria": "1999",
+            "personas": 9
+          },
+          {
+            "categoria": "2000",
+            "personas": 23
+          },
+          {
+            "categoria": "2001",
+            "personas": 41
+          },
+          {
+            "categoria": "2002",
+            "personas": 64
+          },
+          {
+            "categoria": "2003",
+            "personas": 53
+          },
+          {
+            "categoria": "2004",
+            "personas": 51
+          },
+          {
+            "categoria": "2005",
+            "personas": 89
+          },
+          {
+            "categoria": "2006",
+            "personas": 262
+          },
+          {
+            "categoria": "2007",
+            "personas": 1460
+          },
+          {
+            "categoria": "2008",
+            "personas": 1331
+          },
+          {
+            "categoria": "2009",
+            "personas": 1963
+          },
+          {
+            "categoria": "2010",
+            "personas": 2289
+          },
+          {
+            "categoria": "2011",
+            "personas": 4153
+          },
+          {
+            "categoria": "2012",
+            "personas": 4341
+          },
+          {
+            "categoria": "2013",
+            "personas": 8257
+          },
+          {
+            "categoria": "2014",
+            "personas": 8601
+          },
+          {
+            "categoria": "2015",
+            "personas": 6426
+          },
+          {
+            "categoria": "2016",
+            "personas": 6608
+          },
+          {
+            "categoria": "2017",
+            "personas": 7144
+          },
+          {
+            "categoria": "2018",
+            "personas": 6995
+          },
+          {
+            "categoria": "2019",
+            "personas": 9341
+          },
+          {
+            "categoria": "2020",
+            "personas": 9949
+          },
+          {
+            "categoria": "2021",
+            "personas": 9899
+          },
+          {
+            "categoria": "2022",
+            "personas": 9591
+          },
+          {
+            "categoria": "2023",
+            "personas": 12501
+          },
+          {
+            "categoria": "2024",
+            "personas": 13448
+          },
+          {
+            "categoria": "2025",
+            "personas": 13627
+          },
+          {
+            "categoria": "2026",
+            "personas": 7710
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 248
+          },
+          {
+            "categoria": "1952",
+            "personas": 0
+          },
+          {
+            "categoria": "1960",
+            "personas": 0
+          },
+          {
+            "categoria": "1961",
+            "personas": 0
+          },
+          {
+            "categoria": "1962",
+            "personas": 0
+          },
+          {
+            "categoria": "1964",
+            "personas": 0
+          },
+          {
+            "categoria": "1965",
+            "personas": 0
+          },
+          {
+            "categoria": "1967",
+            "personas": 0
+          },
+          {
+            "categoria": "1968",
+            "personas": 0
+          },
+          {
+            "categoria": "1969",
+            "personas": 0
+          },
+          {
+            "categoria": "1970",
+            "personas": 0
+          },
+          {
+            "categoria": "1971",
+            "personas": 0
+          },
+          {
+            "categoria": "1972",
+            "personas": 0
+          },
+          {
+            "categoria": "1973",
+            "personas": 0
+          },
+          {
+            "categoria": "1974",
+            "personas": 3
+          },
+          {
+            "categoria": "1975",
+            "personas": 2
+          },
+          {
+            "categoria": "1976",
+            "personas": 3
+          },
+          {
+            "categoria": "1977",
+            "personas": 2
+          },
+          {
+            "categoria": "1978",
+            "personas": 2
+          },
+          {
+            "categoria": "1979",
+            "personas": 0
+          },
+          {
+            "categoria": "1980",
+            "personas": 0
+          },
+          {
+            "categoria": "1981",
+            "personas": 0
+          },
+          {
+            "categoria": "1982",
+            "personas": 0
+          },
+          {
+            "categoria": "1983",
+            "personas": 0
+          },
+          {
+            "categoria": "1984",
+            "personas": 0
+          },
+          {
+            "categoria": "1985",
+            "personas": 0
+          },
+          {
+            "categoria": "1986",
+            "personas": 0
+          },
+          {
+            "categoria": "1987",
+            "personas": 0
+          },
+          {
+            "categoria": "1988",
+            "personas": 0
+          },
+          {
+            "categoria": "1989",
+            "personas": 0
+          },
+          {
+            "categoria": "1990",
+            "personas": 0
+          },
+          {
+            "categoria": "1991",
+            "personas": 0
+          },
+          {
+            "categoria": "1992",
+            "personas": 0
+          },
+          {
+            "categoria": "1993",
+            "personas": 0
+          },
+          {
+            "categoria": "1994",
+            "personas": 0
+          },
+          {
+            "categoria": "1995",
+            "personas": 0
+          },
+          {
+            "categoria": "1996",
+            "personas": 0
+          },
+          {
+            "categoria": "1997",
+            "personas": 0
+          },
+          {
+            "categoria": "1998",
+            "personas": 0
+          },
+          {
+            "categoria": "1999",
+            "personas": 0
+          },
+          {
+            "categoria": "2000",
+            "personas": 0
+          },
+          {
+            "categoria": "2001",
+            "personas": 0
+          },
+          {
+            "categoria": "2002",
+            "personas": 0
+          },
+          {
+            "categoria": "2003",
+            "personas": 0
+          },
+          {
+            "categoria": "2004",
+            "personas": 0
+          },
+          {
+            "categoria": "2005",
+            "personas": 0
+          },
+          {
+            "categoria": "2006",
+            "personas": 0
+          },
+          {
+            "categoria": "2007",
+            "personas": 4
+          },
+          {
+            "categoria": "2008",
+            "personas": 0
+          },
+          {
+            "categoria": "2009",
+            "personas": 3
+          },
+          {
+            "categoria": "2010",
+            "personas": 2
+          },
+          {
+            "categoria": "2011",
+            "personas": 1
+          },
+          {
+            "categoria": "2012",
+            "personas": 5
+          },
+          {
+            "categoria": "2013",
+            "personas": 10
+          },
+          {
+            "categoria": "2014",
+            "personas": 11
+          },
+          {
+            "categoria": "2015",
+            "personas": 4
+          },
+          {
+            "categoria": "2016",
+            "personas": 11
+          },
+          {
+            "categoria": "2017",
+            "personas": 22
+          },
+          {
+            "categoria": "2018",
+            "personas": 46
+          },
+          {
+            "categoria": "2019",
+            "personas": 188
+          },
+          {
+            "categoria": "2020",
+            "personas": 21
+          },
+          {
+            "categoria": "2021",
+            "personas": 7
+          },
+          {
+            "categoria": "2022",
+            "personas": 26
+          },
+          {
+            "categoria": "2023",
+            "personas": 29
+          },
+          {
+            "categoria": "2024",
+            "personas": 17
+          },
+          {
+            "categoria": "2025",
+            "personas": 10
+          },
+          {
+            "categoria": "2026",
+            "personas": 5
+          }
+        ]
+      }
+    ],
+    "por_rango_edad_y_sexo": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 6204
+          },
+          {
+            "categoria": "5-9",
+            "personas": 4533
+          },
+          {
+            "categoria": "10-14",
+            "personas": 12717
+          },
+          {
+            "categoria": "15-19",
+            "personas": 31358
+          },
+          {
+            "categoria": "20-24",
+            "personas": 31689
+          },
+          {
+            "categoria": "25-29",
+            "personas": 32202
+          },
+          {
+            "categoria": "30-34",
+            "personas": 29445
+          },
+          {
+            "categoria": "35-39",
+            "personas": 24124
+          },
+          {
+            "categoria": "40-44",
+            "personas": 19189
+          },
+          {
+            "categoria": "45-49",
+            "personas": 14722
+          },
+          {
+            "categoria": "50-54",
+            "personas": 10464
+          },
+          {
+            "categoria": "55-59",
+            "personas": 7083
+          },
+          {
+            "categoria": "60-64",
+            "personas": 5061
+          },
+          {
+            "categoria": "65-69",
+            "personas": 3582
+          },
+          {
+            "categoria": "70-74",
+            "personas": 2963
+          },
+          {
+            "categoria": "75-79",
+            "personas": 2544
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 3231
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 8621
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 6106
+          },
+          {
+            "categoria": "5-9",
+            "personas": 4425
+          },
+          {
+            "categoria": "10-14",
+            "personas": 28964
+          },
+          {
+            "categoria": "15-19",
+            "personas": 58037
+          },
+          {
+            "categoria": "20-24",
+            "personas": 17143
+          },
+          {
+            "categoria": "25-29",
+            "personas": 12367
+          },
+          {
+            "categoria": "30-34",
+            "personas": 9082
+          },
+          {
+            "categoria": "35-39",
+            "personas": 6448
+          },
+          {
+            "categoria": "40-44",
+            "personas": 4591
+          },
+          {
+            "categoria": "45-49",
+            "personas": 3295
+          },
+          {
+            "categoria": "50-54",
+            "personas": 2117
+          },
+          {
+            "categoria": "55-59",
+            "personas": 1532
+          },
+          {
+            "categoria": "60-64",
+            "personas": 1148
+          },
+          {
+            "categoria": "65-69",
+            "personas": 887
+          },
+          {
+            "categoria": "70-74",
+            "personas": 750
+          },
+          {
+            "categoria": "75-79",
+            "personas": 692
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 966
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 5772
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 12
+          },
+          {
+            "categoria": "5-9",
+            "personas": 13
+          },
+          {
+            "categoria": "10-14",
+            "personas": 33
+          },
+          {
+            "categoria": "15-19",
+            "personas": 90
+          },
+          {
+            "categoria": "20-24",
+            "personas": 67
+          },
+          {
+            "categoria": "25-29",
+            "personas": 45
+          },
+          {
+            "categoria": "30-34",
+            "personas": 45
+          },
+          {
+            "categoria": "35-39",
+            "personas": 43
+          },
+          {
+            "categoria": "40-44",
+            "personas": 37
+          },
+          {
+            "categoria": "45-49",
+            "personas": 23
+          },
+          {
+            "categoria": "50-54",
+            "personas": 21
+          },
+          {
+            "categoria": "55-59",
+            "personas": 15
+          },
+          {
+            "categoria": "60-64",
+            "personas": 9
+          },
+          {
+            "categoria": "65-69",
+            "personas": 4
+          },
+          {
+            "categoria": "70-74",
+            "personas": 4
+          },
+          {
+            "categoria": "75-79",
+            "personas": 3
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 6
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 212
+          }
+        ]
+      }
+    ],
+    "por_entidad_y_sexo": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 3630
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 5990
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 2535
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 1031
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 3939
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 2763
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 5048
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 9772
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 13801
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 3937
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 13320
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 5466
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 4044
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 20873
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 32200
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 10791
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 4439
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 3684
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 15957
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 2012
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 9996
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 2358
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 3621
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 3356
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 13610
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 9097
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 2678
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 17331
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 1058
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 11230
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 3075
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 6429
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 661
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 3843
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 3099
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 1311
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 1256
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 1399
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 1956
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 4969
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 5426
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 10740
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 2682
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 10477
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 1998
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 3971
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 5948
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 33710
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 3924
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 3642
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 1646
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 10706
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 2455
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 10315
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 1719
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 2817
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 2283
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 3530
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 3621
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 2820
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 7382
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 1207
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 6132
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 4521
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 2501
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 316
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 2
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 8
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 1
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 1
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 11
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 3
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 1
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 4
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 310
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 7
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 82
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 17
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 4
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 12
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 19
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 7
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 7
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 6
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 3
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 1
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 4
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 1
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 3
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 4
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 4
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 6
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 14
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 18
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 3
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 31
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 0
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 1
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 87
+          }
+        ]
+      }
+    ],
+    "por_anio_y_sexo_desaparecidas": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 4971
+          },
+          {
+            "categoria": "1952",
+            "personas": 1
+          },
+          {
+            "categoria": "1960",
+            "personas": 1
+          },
+          {
+            "categoria": "1961",
+            "personas": 1
+          },
+          {
+            "categoria": "1962",
+            "personas": 1
+          },
+          {
+            "categoria": "1964",
+            "personas": 3
+          },
+          {
+            "categoria": "1965",
+            "personas": 3
+          },
+          {
+            "categoria": "1967",
+            "personas": 3
+          },
+          {
+            "categoria": "1968",
+            "personas": 2
+          },
+          {
+            "categoria": "1969",
+            "personas": 5
+          },
+          {
+            "categoria": "1970",
+            "personas": 4
+          },
+          {
+            "categoria": "1971",
+            "personas": 20
+          },
+          {
+            "categoria": "1972",
+            "personas": 36
+          },
+          {
+            "categoria": "1973",
+            "personas": 39
+          },
+          {
+            "categoria": "1974",
+            "personas": 316
+          },
+          {
+            "categoria": "1975",
+            "personas": 70
+          },
+          {
+            "categoria": "1976",
+            "personas": 99
+          },
+          {
+            "categoria": "1977",
+            "personas": 119
+          },
+          {
+            "categoria": "1978",
+            "personas": 55
+          },
+          {
+            "categoria": "1979",
+            "personas": 20
+          },
+          {
+            "categoria": "1980",
+            "personas": 21
+          },
+          {
+            "categoria": "1981",
+            "personas": 35
+          },
+          {
+            "categoria": "1982",
+            "personas": 18
+          },
+          {
+            "categoria": "1983",
+            "personas": 17
+          },
+          {
+            "categoria": "1984",
+            "personas": 10
+          },
+          {
+            "categoria": "1985",
+            "personas": 14
+          },
+          {
+            "categoria": "1986",
+            "personas": 9
+          },
+          {
+            "categoria": "1987",
+            "personas": 18
+          },
+          {
+            "categoria": "1988",
+            "personas": 18
+          },
+          {
+            "categoria": "1989",
+            "personas": 27
+          },
+          {
+            "categoria": "1990",
+            "personas": 18
+          },
+          {
+            "categoria": "1991",
+            "personas": 23
+          },
+          {
+            "categoria": "1992",
+            "personas": 29
+          },
+          {
+            "categoria": "1993",
+            "personas": 32
+          },
+          {
+            "categoria": "1994",
+            "personas": 35
+          },
+          {
+            "categoria": "1995",
+            "personas": 32
+          },
+          {
+            "categoria": "1996",
+            "personas": 30
+          },
+          {
+            "categoria": "1997",
+            "personas": 38
+          },
+          {
+            "categoria": "1998",
+            "personas": 41
+          },
+          {
+            "categoria": "1999",
+            "personas": 49
+          },
+          {
+            "categoria": "2000",
+            "personas": 70
+          },
+          {
+            "categoria": "2001",
+            "personas": 79
+          },
+          {
+            "categoria": "2002",
+            "personas": 101
+          },
+          {
+            "categoria": "2003",
+            "personas": 112
+          },
+          {
+            "categoria": "2004",
+            "personas": 116
+          },
+          {
+            "categoria": "2005",
+            "personas": 151
+          },
+          {
+            "categoria": "2006",
+            "personas": 219
+          },
+          {
+            "categoria": "2007",
+            "personas": 652
+          },
+          {
+            "categoria": "2008",
+            "personas": 943
+          },
+          {
+            "categoria": "2009",
+            "personas": 1423
+          },
+          {
+            "categoria": "2010",
+            "personas": 3665
+          },
+          {
+            "categoria": "2011",
+            "personas": 4234
+          },
+          {
+            "categoria": "2012",
+            "personas": 3497
+          },
+          {
+            "categoria": "2013",
+            "personas": 3769
+          },
+          {
+            "categoria": "2014",
+            "personas": 3722
+          },
+          {
+            "categoria": "2015",
+            "personas": 3298
+          },
+          {
+            "categoria": "2016",
+            "personas": 4153
+          },
+          {
+            "categoria": "2017",
+            "personas": 5401
+          },
+          {
+            "categoria": "2018",
+            "personas": 5520
+          },
+          {
+            "categoria": "2019",
+            "personas": 6815
+          },
+          {
+            "categoria": "2020",
+            "personas": 6135
+          },
+          {
+            "categoria": "2021",
+            "personas": 6059
+          },
+          {
+            "categoria": "2022",
+            "personas": 6614
+          },
+          {
+            "categoria": "2023",
+            "personas": 7681
+          },
+          {
+            "categoria": "2024",
+            "personas": 8858
+          },
+          {
+            "categoria": "2025",
+            "personas": 8865
+          },
+          {
+            "categoria": "2026",
+            "personas": 5308
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 2334
+          },
+          {
+            "categoria": "1952",
+            "personas": 0
+          },
+          {
+            "categoria": "1960",
+            "personas": 0
+          },
+          {
+            "categoria": "1961",
+            "personas": 3
+          },
+          {
+            "categoria": "1962",
+            "personas": 1
+          },
+          {
+            "categoria": "1964",
+            "personas": 0
+          },
+          {
+            "categoria": "1965",
+            "personas": 0
+          },
+          {
+            "categoria": "1967",
+            "personas": 1
+          },
+          {
+            "categoria": "1968",
+            "personas": 1
+          },
+          {
+            "categoria": "1969",
+            "personas": 0
+          },
+          {
+            "categoria": "1970",
+            "personas": 1
+          },
+          {
+            "categoria": "1971",
+            "personas": 1
+          },
+          {
+            "categoria": "1972",
+            "personas": 7
+          },
+          {
+            "categoria": "1973",
+            "personas": 5
+          },
+          {
+            "categoria": "1974",
+            "personas": 19
+          },
+          {
+            "categoria": "1975",
+            "personas": 8
+          },
+          {
+            "categoria": "1976",
+            "personas": 13
+          },
+          {
+            "categoria": "1977",
+            "personas": 11
+          },
+          {
+            "categoria": "1978",
+            "personas": 11
+          },
+          {
+            "categoria": "1979",
+            "personas": 3
+          },
+          {
+            "categoria": "1980",
+            "personas": 3
+          },
+          {
+            "categoria": "1981",
+            "personas": 5
+          },
+          {
+            "categoria": "1982",
+            "personas": 2
+          },
+          {
+            "categoria": "1983",
+            "personas": 1
+          },
+          {
+            "categoria": "1984",
+            "personas": 0
+          },
+          {
+            "categoria": "1985",
+            "personas": 2
+          },
+          {
+            "categoria": "1986",
+            "personas": 3
+          },
+          {
+            "categoria": "1987",
+            "personas": 1
+          },
+          {
+            "categoria": "1988",
+            "personas": 4
+          },
+          {
+            "categoria": "1989",
+            "personas": 6
+          },
+          {
+            "categoria": "1990",
+            "personas": 4
+          },
+          {
+            "categoria": "1991",
+            "personas": 6
+          },
+          {
+            "categoria": "1992",
+            "personas": 5
+          },
+          {
+            "categoria": "1993",
+            "personas": 9
+          },
+          {
+            "categoria": "1994",
+            "personas": 10
+          },
+          {
+            "categoria": "1995",
+            "personas": 18
+          },
+          {
+            "categoria": "1996",
+            "personas": 12
+          },
+          {
+            "categoria": "1997",
+            "personas": 5
+          },
+          {
+            "categoria": "1998",
+            "personas": 15
+          },
+          {
+            "categoria": "1999",
+            "personas": 8
+          },
+          {
+            "categoria": "2000",
+            "personas": 18
+          },
+          {
+            "categoria": "2001",
+            "personas": 25
+          },
+          {
+            "categoria": "2002",
+            "personas": 38
+          },
+          {
+            "categoria": "2003",
+            "personas": 26
+          },
+          {
+            "categoria": "2004",
+            "personas": 28
+          },
+          {
+            "categoria": "2005",
+            "personas": 54
+          },
+          {
+            "categoria": "2006",
+            "personas": 67
+          },
+          {
+            "categoria": "2007",
+            "personas": 182
+          },
+          {
+            "categoria": "2008",
+            "personas": 200
+          },
+          {
+            "categoria": "2009",
+            "personas": 311
+          },
+          {
+            "categoria": "2010",
+            "personas": 634
+          },
+          {
+            "categoria": "2011",
+            "personas": 1042
+          },
+          {
+            "categoria": "2012",
+            "personas": 873
+          },
+          {
+            "categoria": "2013",
+            "personas": 885
+          },
+          {
+            "categoria": "2014",
+            "personas": 908
+          },
+          {
+            "categoria": "2015",
+            "personas": 836
+          },
+          {
+            "categoria": "2016",
+            "personas": 1211
+          },
+          {
+            "categoria": "2017",
+            "personas": 1319
+          },
+          {
+            "categoria": "2018",
+            "personas": 1204
+          },
+          {
+            "categoria": "2019",
+            "personas": 1364
+          },
+          {
+            "categoria": "2020",
+            "personas": 1461
+          },
+          {
+            "categoria": "2021",
+            "personas": 1569
+          },
+          {
+            "categoria": "2022",
+            "personas": 1666
+          },
+          {
+            "categoria": "2023",
+            "personas": 2014
+          },
+          {
+            "categoria": "2024",
+            "personas": 2526
+          },
+          {
+            "categoria": "2025",
+            "personas": 2297
+          },
+          {
+            "categoria": "2026",
+            "personas": 1517
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "1.CIFRA SIN  AÑO DE REFERENCIA",
+            "personas": 123
+          },
+          {
+            "categoria": "1952",
+            "personas": 0
+          },
+          {
+            "categoria": "1960",
+            "personas": 0
+          },
+          {
+            "categoria": "1961",
+            "personas": 0
+          },
+          {
+            "categoria": "1962",
+            "personas": 0
+          },
+          {
+            "categoria": "1964",
+            "personas": 0
+          },
+          {
+            "categoria": "1965",
+            "personas": 0
+          },
+          {
+            "categoria": "1967",
+            "personas": 0
+          },
+          {
+            "categoria": "1968",
+            "personas": 0
+          },
+          {
+            "categoria": "1969",
+            "personas": 0
+          },
+          {
+            "categoria": "1970",
+            "personas": 0
+          },
+          {
+            "categoria": "1971",
+            "personas": 0
+          },
+          {
+            "categoria": "1972",
+            "personas": 0
+          },
+          {
+            "categoria": "1973",
+            "personas": 0
+          },
+          {
+            "categoria": "1974",
+            "personas": 3
+          },
+          {
+            "categoria": "1975",
+            "personas": 2
+          },
+          {
+            "categoria": "1976",
+            "personas": 3
+          },
+          {
+            "categoria": "1977",
+            "personas": 2
+          },
+          {
+            "categoria": "1978",
+            "personas": 2
+          },
+          {
+            "categoria": "1979",
+            "personas": 0
+          },
+          {
+            "categoria": "1980",
+            "personas": 0
+          },
+          {
+            "categoria": "1981",
+            "personas": 0
+          },
+          {
+            "categoria": "1982",
+            "personas": 0
+          },
+          {
+            "categoria": "1983",
+            "personas": 0
+          },
+          {
+            "categoria": "1984",
+            "personas": 0
+          },
+          {
+            "categoria": "1985",
+            "personas": 0
+          },
+          {
+            "categoria": "1986",
+            "personas": 0
+          },
+          {
+            "categoria": "1987",
+            "personas": 0
+          },
+          {
+            "categoria": "1988",
+            "personas": 0
+          },
+          {
+            "categoria": "1989",
+            "personas": 0
+          },
+          {
+            "categoria": "1990",
+            "personas": 0
+          },
+          {
+            "categoria": "1991",
+            "personas": 0
+          },
+          {
+            "categoria": "1992",
+            "personas": 0
+          },
+          {
+            "categoria": "1993",
+            "personas": 0
+          },
+          {
+            "categoria": "1994",
+            "personas": 0
+          },
+          {
+            "categoria": "1995",
+            "personas": 0
+          },
+          {
+            "categoria": "1996",
+            "personas": 0
+          },
+          {
+            "categoria": "1997",
+            "personas": 0
+          },
+          {
+            "categoria": "1998",
+            "personas": 0
+          },
+          {
+            "categoria": "1999",
+            "personas": 0
+          },
+          {
+            "categoria": "2000",
+            "personas": 0
+          },
+          {
+            "categoria": "2001",
+            "personas": 0
+          },
+          {
+            "categoria": "2002",
+            "personas": 0
+          },
+          {
+            "categoria": "2003",
+            "personas": 0
+          },
+          {
+            "categoria": "2004",
+            "personas": 0
+          },
+          {
+            "categoria": "2005",
+            "personas": 0
+          },
+          {
+            "categoria": "2006",
+            "personas": 0
+          },
+          {
+            "categoria": "2007",
+            "personas": 4
+          },
+          {
+            "categoria": "2008",
+            "personas": 0
+          },
+          {
+            "categoria": "2009",
+            "personas": 3
+          },
+          {
+            "categoria": "2010",
+            "personas": 2
+          },
+          {
+            "categoria": "2011",
+            "personas": 1
+          },
+          {
+            "categoria": "2012",
+            "personas": 5
+          },
+          {
+            "categoria": "2013",
+            "personas": 9
+          },
+          {
+            "categoria": "2014",
+            "personas": 7
+          },
+          {
+            "categoria": "2015",
+            "personas": 3
+          },
+          {
+            "categoria": "2016",
+            "personas": 5
+          },
+          {
+            "categoria": "2017",
+            "personas": 11
+          },
+          {
+            "categoria": "2018",
+            "personas": 19
+          },
+          {
+            "categoria": "2019",
+            "personas": 68
+          },
+          {
+            "categoria": "2020",
+            "personas": 4
+          },
+          {
+            "categoria": "2021",
+            "personas": 2
+          },
+          {
+            "categoria": "2022",
+            "personas": 12
+          },
+          {
+            "categoria": "2023",
+            "personas": 4
+          },
+          {
+            "categoria": "2024",
+            "personas": 8
+          },
+          {
+            "categoria": "2025",
+            "personas": 3
+          },
+          {
+            "categoria": "2026",
+            "personas": 0
+          }
+        ]
+      }
+    ],
+    "por_rango_edad_y_sexo_desaparecidas": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 1130
+          },
+          {
+            "categoria": "5-9",
+            "personas": 907
+          },
+          {
+            "categoria": "10-14",
+            "personas": 1764
+          },
+          {
+            "categoria": "15-19",
+            "personas": 9196
+          },
+          {
+            "categoria": "20-24",
+            "personas": 14630
+          },
+          {
+            "categoria": "25-29",
+            "personas": 15883
+          },
+          {
+            "categoria": "30-34",
+            "personas": 14926
+          },
+          {
+            "categoria": "35-39",
+            "personas": 12236
+          },
+          {
+            "categoria": "40-44",
+            "personas": 9575
+          },
+          {
+            "categoria": "45-49",
+            "personas": 7056
+          },
+          {
+            "categoria": "50-54",
+            "personas": 4619
+          },
+          {
+            "categoria": "55-59",
+            "personas": 3021
+          },
+          {
+            "categoria": "60-64",
+            "personas": 1911
+          },
+          {
+            "categoria": "65-69",
+            "personas": 1177
+          },
+          {
+            "categoria": "70-74",
+            "personas": 856
+          },
+          {
+            "categoria": "75-79",
+            "personas": 649
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 782
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 3425
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 984
+          },
+          {
+            "categoria": "5-9",
+            "personas": 907
+          },
+          {
+            "categoria": "10-14",
+            "personas": 2254
+          },
+          {
+            "categoria": "15-19",
+            "personas": 5471
+          },
+          {
+            "categoria": "20-24",
+            "personas": 3741
+          },
+          {
+            "categoria": "25-29",
+            "personas": 3318
+          },
+          {
+            "categoria": "30-34",
+            "personas": 2657
+          },
+          {
+            "categoria": "35-39",
+            "personas": 1977
+          },
+          {
+            "categoria": "40-44",
+            "personas": 1442
+          },
+          {
+            "categoria": "45-49",
+            "personas": 1014
+          },
+          {
+            "categoria": "50-54",
+            "personas": 605
+          },
+          {
+            "categoria": "55-59",
+            "personas": 422
+          },
+          {
+            "categoria": "60-64",
+            "personas": 287
+          },
+          {
+            "categoria": "65-69",
+            "personas": 183
+          },
+          {
+            "categoria": "70-74",
+            "personas": 140
+          },
+          {
+            "categoria": "75-79",
+            "personas": 130
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 172
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 1109
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "0-4",
+            "personas": 3
+          },
+          {
+            "categoria": "5-9",
+            "personas": 2
+          },
+          {
+            "categoria": "10-14",
+            "personas": 4
+          },
+          {
+            "categoria": "15-19",
+            "personas": 26
+          },
+          {
+            "categoria": "20-24",
+            "personas": 26
+          },
+          {
+            "categoria": "25-29",
+            "personas": 21
+          },
+          {
+            "categoria": "30-34",
+            "personas": 19
+          },
+          {
+            "categoria": "35-39",
+            "personas": 23
+          },
+          {
+            "categoria": "40-44",
+            "personas": 12
+          },
+          {
+            "categoria": "45-49",
+            "personas": 10
+          },
+          {
+            "categoria": "50-54",
+            "personas": 9
+          },
+          {
+            "categoria": "55-59",
+            "personas": 4
+          },
+          {
+            "categoria": "60-64",
+            "personas": 3
+          },
+          {
+            "categoria": "65-69",
+            "personas": 2
+          },
+          {
+            "categoria": "70-74",
+            "personas": 1
+          },
+          {
+            "categoria": "75-79",
+            "personas": 0
+          },
+          {
+            "categoria": "MÁS DE 80",
+            "personas": 2
+          },
+          {
+            "categoria": "CIFRA SIN EDAD DE REFERENCIA",
+            "personas": 138
+          }
+        ]
+      }
+    ],
+    "por_entidad_y_sexo_desaparecidas": [
+      {
+        "serie": "Hombre",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 394
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 3870
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 958
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 136
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 2918
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 1199
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 1563
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 3733
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 3491
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 895
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 4579
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 3895
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 991
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 11645
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 8268
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 6875
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 1375
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 1795
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 5593
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 492
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 1924
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 566
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 1281
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 1061
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 6802
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 4947
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 1123
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 11171
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 125
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 5877
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 296
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 3362
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 543
+          }
+        ]
+      },
+      {
+        "serie": "Mujer",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 107
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 1193
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 154
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 46
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 764
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 351
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 409
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 672
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 1750
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 157
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 899
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 750
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 433
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 1513
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 5263
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 1282
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 497
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 376
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 1831
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 158
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 730
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 127
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 346
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 208
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 591
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 786
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 538
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 2615
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 47
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 1334
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 86
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 567
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 233
+          }
+        ]
+      },
+      {
+        "serie": "Indeterminado",
+        "valores": [
+          {
+            "categoria": "AGUASCALIENTES",
+            "personas": 1
+          },
+          {
+            "categoria": "BAJA CALIFORNIA",
+            "personas": 5
+          },
+          {
+            "categoria": "BAJA CALIFORNIA SUR",
+            "personas": 0
+          },
+          {
+            "categoria": "CAMPECHE",
+            "personas": 0
+          },
+          {
+            "categoria": "COAHUILA",
+            "personas": 11
+          },
+          {
+            "categoria": "COLIMA",
+            "personas": 2
+          },
+          {
+            "categoria": "CHIAPAS",
+            "personas": 0
+          },
+          {
+            "categoria": "CHIHUAHUA",
+            "personas": 0
+          },
+          {
+            "categoria": "CIUDAD DE MEXICO",
+            "personas": 103
+          },
+          {
+            "categoria": "DURANGO",
+            "personas": 1
+          },
+          {
+            "categoria": "GUANAJUATO",
+            "personas": 22
+          },
+          {
+            "categoria": "GUERRERO",
+            "personas": 17
+          },
+          {
+            "categoria": "HIDALGO",
+            "personas": 0
+          },
+          {
+            "categoria": "JALISCO",
+            "personas": 8
+          },
+          {
+            "categoria": "ESTADO DE MEXICO",
+            "personas": 7
+          },
+          {
+            "categoria": "MICHOACAN ",
+            "personas": 4
+          },
+          {
+            "categoria": "MORELOS",
+            "personas": 2
+          },
+          {
+            "categoria": "NAYARIT",
+            "personas": 3
+          },
+          {
+            "categoria": "NUEVO LEON",
+            "personas": 1
+          },
+          {
+            "categoria": "OAXACA",
+            "personas": 0
+          },
+          {
+            "categoria": "PUEBLA",
+            "personas": 0
+          },
+          {
+            "categoria": "QUERETARO ",
+            "personas": 0
+          },
+          {
+            "categoria": "QUINTANA ROO",
+            "personas": 1
+          },
+          {
+            "categoria": "SAN LUIS POTOSI",
+            "personas": 2
+          },
+          {
+            "categoria": "SINALOA",
+            "personas": 3
+          },
+          {
+            "categoria": "SONORA",
+            "personas": 4
+          },
+          {
+            "categoria": "TABASCO",
+            "personas": 7
+          },
+          {
+            "categoria": "TAMAULIPAS",
+            "personas": 16
+          },
+          {
+            "categoria": "TLAXCALA",
+            "personas": 0
+          },
+          {
+            "categoria": "VERACRUZ ",
+            "personas": 14
+          },
+          {
+            "categoria": "YUCATAN",
+            "personas": 0
+          },
+          {
+            "categoria": "ZACATECAS",
+            "personas": 0
+          },
+          {
+            "categoria": "SE DESCONOCE",
+            "personas": 71
+          }
+        ]
+      }
+    ],
+    "por_municipio": [
+      {
+        "clave_inegi": "01",
+        "id_tablero_estado": "1",
+        "entidad": "Aguascalientes",
+        "municipios": [
+          {
+            "nombre": "AGUASCALIENTES",
+            "personas": 278,
+            "cvegeo": "01001"
+          },
+          {
+            "nombre": "RINCÓN DE ROMOS",
+            "personas": 47,
+            "cvegeo": "01007"
+          },
+          {
+            "nombre": "JESÚS MARÍA",
+            "personas": 32,
+            "cvegeo": "01005"
+          },
+          {
+            "nombre": "SAN FRANCISCO DE LOS ROMO",
+            "personas": 31,
+            "cvegeo": "01011"
+          },
+          {
+            "nombre": "PABELLÓN DE ARTEAGA",
+            "personas": 31,
+            "cvegeo": "01006"
+          },
+          {
+            "nombre": "ASIENTOS",
+            "personas": 20,
+            "cvegeo": "01002"
+          },
+          {
+            "nombre": "CALVILLO",
+            "personas": 14,
+            "cvegeo": "01003"
+          },
+          {
+            "nombre": "COSÍO",
+            "personas": 13,
+            "cvegeo": "01004"
+          },
+          {
+            "nombre": "TEPEZALA",
+            "personas": 8,
+            "cvegeo": "01009"
+          },
+          {
+            "nombre": "EL LLANO",
+            "personas": 7,
+            "cvegeo": "01010"
+          },
+          {
+            "nombre": "SAN JOSÉ DE GRACIA",
+            "personas": 4,
+            "cvegeo": "01008"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 3,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ZAPOTLÁN EL GRANDE",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "ZAPOTLÁN EL GRANDE"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "02",
+        "id_tablero_estado": "2",
+        "entidad": "Baja California",
+        "municipios": [
+          {
+            "nombre": "TIJUANA",
+            "personas": 3195,
+            "cvegeo": "02004"
+          },
+          {
+            "nombre": "MEXICALI",
+            "personas": 935,
+            "cvegeo": "02002"
+          },
+          {
+            "nombre": "ENSENADA",
+            "personas": 364,
+            "cvegeo": "02001"
+          },
+          {
+            "nombre": "PLAYAS DE ROSARITO",
+            "personas": 201,
+            "cvegeo": "02005"
+          },
+          {
+            "nombre": "TECATE",
+            "personas": 159,
+            "cvegeo": "02003"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 89,
+            "cvegeo": null
+          },
+          {
+            "nombre": "SAN QUINTÍN",
+            "personas": 62,
+            "cvegeo": "02006"
+          },
+          {
+            "nombre": "SAN FELIPE",
+            "personas": 8,
+            "cvegeo": "02007"
+          },
+          {
+            "nombre": "DURANGO",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "DURANGO"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "03",
+        "id_tablero_estado": "3",
+        "entidad": "Baja California Sur",
+        "municipios": [
+          {
+            "nombre": "LOS CABOS",
+            "personas": 419,
+            "cvegeo": "03008"
+          },
+          {
+            "nombre": "LA PAZ",
+            "personas": 389,
+            "cvegeo": "03003"
+          },
+          {
+            "nombre": "COMONDÚ",
+            "personas": 97,
+            "cvegeo": "03001"
+          },
+          {
+            "nombre": "MULEGÉ",
+            "personas": 85,
+            "cvegeo": "03002"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 72,
+            "cvegeo": null
+          },
+          {
+            "nombre": "LORETO",
+            "personas": 31,
+            "cvegeo": "03009"
+          },
+          {
+            "nombre": "LEÓN",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "LEÓN"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "04",
+        "id_tablero_estado": "4",
+        "entidad": "Campeche",
+        "municipios": [
+          {
+            "nombre": "CARMEN",
+            "personas": 62,
+            "cvegeo": "04003"
+          },
+          {
+            "nombre": "CAMPECHE",
+            "personas": 47,
+            "cvegeo": "04002"
+          },
+          {
+            "nombre": "ESCÁRCEGA",
+            "personas": 24,
+            "cvegeo": "04009"
+          },
+          {
+            "nombre": "CHAMPOTÓN",
+            "personas": 16,
+            "cvegeo": "04004"
+          },
+          {
+            "nombre": "CALAKMUL",
+            "personas": 9,
+            "cvegeo": "04010"
+          },
+          {
+            "nombre": "CALKINÍ",
+            "personas": 8,
+            "cvegeo": "04001"
+          },
+          {
+            "nombre": "CANDELARIA",
+            "personas": 6,
+            "cvegeo": "04011"
+          },
+          {
+            "nombre": "HOPELCHÉN",
+            "personas": 4,
+            "cvegeo": "04006"
+          },
+          {
+            "nombre": "HECELCHAKÁN",
+            "personas": 2,
+            "cvegeo": "04005"
+          },
+          {
+            "nombre": "TENABO",
+            "personas": 2,
+            "cvegeo": "04008"
+          }
+        ],
+        "sin_match": [],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "05",
+        "id_tablero_estado": "5",
+        "entidad": "Coahuila",
+        "municipios": [
+          {
+            "nombre": "TORREÓN",
+            "personas": 1033,
+            "cvegeo": "05035"
+          },
+          {
+            "nombre": "SALTILLO",
+            "personas": 643,
+            "cvegeo": "05030"
+          },
+          {
+            "nombre": "PIEDRAS NEGRAS",
+            "personas": 642,
+            "cvegeo": "05025"
+          },
+          {
+            "nombre": "MONCLOVA",
+            "personas": 235,
+            "cvegeo": "05018"
+          },
+          {
+            "nombre": "ACUÑA",
+            "personas": 235,
+            "cvegeo": "05002"
+          },
+          {
+            "nombre": "SAN PEDRO",
+            "personas": 113,
+            "cvegeo": "05033"
+          },
+          {
+            "nombre": "SABINAS",
+            "personas": 91,
+            "cvegeo": "05028"
+          },
+          {
+            "nombre": "ALLENDE",
+            "personas": 90,
+            "cvegeo": "05003"
+          },
+          {
+            "nombre": "MATAMOROS",
+            "personas": 73,
+            "cvegeo": "05017"
+          },
+          {
+            "nombre": "FRANCISCO I. MADERO",
+            "personas": 57,
+            "cvegeo": "05009"
+          },
+          {
+            "nombre": "SAN JUAN DE SABINAS",
+            "personas": 52,
+            "cvegeo": "05032"
+          },
+          {
+            "nombre": "RAMOS ARIZPE",
+            "personas": 50,
+            "cvegeo": "05027"
+          },
+          {
+            "nombre": "CANDELA",
+            "personas": 48,
+            "cvegeo": "05005"
+          },
+          {
+            "nombre": "MÚZQUIZ",
+            "personas": 38,
+            "cvegeo": "05020"
+          },
+          {
+            "nombre": "FRONTERA",
+            "personas": 38,
+            "cvegeo": "05010"
+          },
+          {
+            "nombre": "NAVA",
+            "personas": 27,
+            "cvegeo": "05022"
+          },
+          {
+            "nombre": "PARRAS",
+            "personas": 21,
+            "cvegeo": "05024"
+          },
+          {
+            "nombre": "SAN BUENAVENTURA",
+            "personas": 21,
+            "cvegeo": "05031"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 18,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CASTAÑOS",
+            "personas": 13,
+            "cvegeo": "05006"
+          },
+          {
+            "nombre": "ZARAGOZA",
+            "personas": 13,
+            "cvegeo": "05038"
+          },
+          {
+            "nombre": "ARTEAGA",
+            "personas": 9,
+            "cvegeo": "05004"
+          },
+          {
+            "nombre": "VILLA UNIÓN",
+            "personas": 6,
+            "cvegeo": "05037"
+          },
+          {
+            "nombre": "GENERAL CEPEDA",
+            "personas": 5,
+            "cvegeo": "05011"
+          },
+          {
+            "nombre": "VIESCA",
+            "personas": 4,
+            "cvegeo": "05036"
+          },
+          {
+            "nombre": "JUÁREZ",
+            "personas": 4,
+            "cvegeo": "05015"
+          },
+          {
+            "nombre": "CUATROCIÉNEGAS",
+            "personas": 4,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ABASOLO",
+            "personas": 4,
+            "cvegeo": "05001"
+          },
+          {
+            "nombre": "NADADORES",
+            "personas": 2,
+            "cvegeo": "05021"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "CUATROCIÉNEGAS"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "06",
+        "id_tablero_estado": "6",
+        "entidad": "Colima",
+        "municipios": [
+          {
+            "nombre": "TECOMÁN",
+            "personas": 454,
+            "cvegeo": "06009"
+          },
+          {
+            "nombre": "MANZANILLO",
+            "personas": 420,
+            "cvegeo": "06007"
+          },
+          {
+            "nombre": "COLIMA",
+            "personas": 284,
+            "cvegeo": "06002"
+          },
+          {
+            "nombre": "VILLA DE ALVAREZ",
+            "personas": 119,
+            "cvegeo": "06010"
+          },
+          {
+            "nombre": "CUAUHTÉMOC",
+            "personas": 102,
+            "cvegeo": "06005"
+          },
+          {
+            "nombre": "ARMERÍA",
+            "personas": 51,
+            "cvegeo": "06001"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 48,
+            "cvegeo": null
+          },
+          {
+            "nombre": "COMALA",
+            "personas": 26,
+            "cvegeo": "06003"
+          },
+          {
+            "nombre": "COQUIMATLÁN",
+            "personas": 26,
+            "cvegeo": "06004"
+          },
+          {
+            "nombre": "IXTLAHUACÁN",
+            "personas": 11,
+            "cvegeo": "06006"
+          },
+          {
+            "nombre": "MINATITLÁN",
+            "personas": 3,
+            "cvegeo": "06008"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "07",
+        "id_tablero_estado": "7",
+        "entidad": "Chiapas",
+        "municipios": [
+          {
+            "nombre": "TAPACHULA",
+            "personas": 268,
+            "cvegeo": "07089"
+          },
+          {
+            "nombre": "TUXTLA GUTIÉRREZ",
+            "personas": 252,
+            "cvegeo": "07101"
+          },
+          {
+            "nombre": "FRONTERA COMALAPA",
+            "personas": 127,
+            "cvegeo": "07034"
+          },
+          {
+            "nombre": "COMITÁN DE DOMÍNGUEZ",
+            "personas": 106,
+            "cvegeo": "07019"
+          },
+          {
+            "nombre": "PALENQUE",
+            "personas": 65,
+            "cvegeo": "07065"
+          },
+          {
+            "nombre": "BERRIOZÁBAL",
+            "personas": 57,
+            "cvegeo": "07012"
+          },
+          {
+            "nombre": "OCOZOCOAUTLA DE ESPINOSA",
+            "personas": 48,
+            "cvegeo": "07061"
+          },
+          {
+            "nombre": "ARRIAGA",
+            "personas": 48,
+            "cvegeo": "07009"
+          },
+          {
+            "nombre": "SAN CRISTÓBAL DE LAS CASAS",
+            "personas": 46,
+            "cvegeo": "07078"
+          },
+          {
+            "nombre": "CHIAPA DE CORZO",
+            "personas": 44,
+            "cvegeo": "07027"
+          },
+          {
+            "nombre": "LA CONCORDIA",
+            "personas": 40,
+            "cvegeo": "07020"
+          },
+          {
+            "nombre": "TONALÁ",
+            "personas": 37,
+            "cvegeo": "07097"
+          },
+          {
+            "nombre": "MAPASTEPEC",
+            "personas": 33,
+            "cvegeo": "07051"
+          },
+          {
+            "nombre": "OCOSINGO",
+            "personas": 32,
+            "cvegeo": "07059"
+          },
+          {
+            "nombre": "SUCHIATE",
+            "personas": 31,
+            "cvegeo": "07087"
+          },
+          {
+            "nombre": "REFORMA",
+            "personas": 31,
+            "cvegeo": "07074"
+          },
+          {
+            "nombre": "HUIXTLA",
+            "personas": 31,
+            "cvegeo": "07040"
+          },
+          {
+            "nombre": "LA TRINITARIA",
+            "personas": 24,
+            "cvegeo": "07099"
+          },
+          {
+            "nombre": "PANTELHÓ",
+            "personas": 23,
+            "cvegeo": "07066"
+          },
+          {
+            "nombre": "TUXTLA CHICO",
+            "personas": 23,
+            "cvegeo": "07102"
+          },
+          {
+            "nombre": "ANGEL ALBINO CORZO",
+            "personas": 23,
+            "cvegeo": "07008"
+          },
+          {
+            "nombre": "HUEHUETÁN",
+            "personas": 19,
+            "cvegeo": "07037"
+          },
+          {
+            "nombre": "AMATENANGO DE LA FRONTERA",
+            "personas": 18,
+            "cvegeo": "07006"
+          },
+          {
+            "nombre": "MOTOZINTLA",
+            "personas": 18,
+            "cvegeo": "07057"
+          },
+          {
+            "nombre": "CINTALAPA",
+            "personas": 18,
+            "cvegeo": "07017"
+          },
+          {
+            "nombre": "VENUSTIANO CARRANZA",
+            "personas": 17,
+            "cvegeo": "07106"
+          },
+          {
+            "nombre": "VILLAFLORES",
+            "personas": 16,
+            "cvegeo": "07108"
+          },
+          {
+            "nombre": "JIQUIPILAS",
+            "personas": 13,
+            "cvegeo": "07046"
+          },
+          {
+            "nombre": "YAJALÓN",
+            "personas": 12,
+            "cvegeo": "07109"
+          }
+        ],
+        "sin_match": [],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "08",
+        "id_tablero_estado": "8",
+        "entidad": "Chihuahua",
+        "municipios": [
+          {
+            "nombre": "JUÁREZ",
+            "personas": 1064,
+            "cvegeo": "08037"
+          },
+          {
+            "nombre": "CUAUHTÉMOC",
+            "personas": 660,
+            "cvegeo": "08017"
+          },
+          {
+            "nombre": "CHIHUAHUA",
+            "personas": 635,
+            "cvegeo": "08019"
+          },
+          {
+            "nombre": "NUEVO CASAS GRANDES",
+            "personas": 331,
+            "cvegeo": "08050"
+          },
+          {
+            "nombre": "HIDALGO DEL PARRAL",
+            "personas": 226,
+            "cvegeo": "08032"
+          },
+          {
+            "nombre": "MADERA",
+            "personas": 153,
+            "cvegeo": "08040"
+          },
+          {
+            "nombre": "OJINAGA",
+            "personas": 134,
+            "cvegeo": "08052"
+          },
+          {
+            "nombre": "ASCENSIÓN",
+            "personas": 90,
+            "cvegeo": "08005"
+          },
+          {
+            "nombre": "DELICIAS",
+            "personas": 89,
+            "cvegeo": "08021"
+          },
+          {
+            "nombre": "JIMÉNEZ",
+            "personas": 82,
+            "cvegeo": "08036"
+          },
+          {
+            "nombre": "BUENAVENTURA",
+            "personas": 61,
+            "cvegeo": "08010"
+          },
+          {
+            "nombre": "ALDAMA",
+            "personas": 57,
+            "cvegeo": "08002"
+          },
+          {
+            "nombre": "GUADALUPE Y CALVO",
+            "personas": 51,
+            "cvegeo": "08029"
+          },
+          {
+            "nombre": "BOCOYNA",
+            "personas": 51,
+            "cvegeo": "08009"
+          },
+          {
+            "nombre": "GUACHOCHI",
+            "personas": 50,
+            "cvegeo": "08027"
+          },
+          {
+            "nombre": "URIQUE",
+            "personas": 46,
+            "cvegeo": "08065"
+          },
+          {
+            "nombre": "MEOQUI",
+            "personas": 45,
+            "cvegeo": "08045"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 43,
+            "cvegeo": null
+          },
+          {
+            "nombre": "PRAXEDIS G. GUERRERO",
+            "personas": 41,
+            "cvegeo": "08053"
+          },
+          {
+            "nombre": "GUERRERO",
+            "personas": 40,
+            "cvegeo": "08031"
+          },
+          {
+            "nombre": "CAMARGO",
+            "personas": 35,
+            "cvegeo": "08011"
+          },
+          {
+            "nombre": "GUADALUPE",
+            "personas": 31,
+            "cvegeo": "08028"
+          },
+          {
+            "nombre": "BALLEZA",
+            "personas": 30,
+            "cvegeo": "08007"
+          },
+          {
+            "nombre": "CASAS GRANDES",
+            "personas": 25,
+            "cvegeo": "08013"
+          },
+          {
+            "nombre": "NAMIQUIPA",
+            "personas": 23,
+            "cvegeo": "08048"
+          },
+          {
+            "nombre": "CHÍNIPAS",
+            "personas": 23,
+            "cvegeo": "08020"
+          },
+          {
+            "nombre": "VALLE DE ZARAGOZA",
+            "personas": 22,
+            "cvegeo": "08067"
+          },
+          {
+            "nombre": "JANOS",
+            "personas": 22,
+            "cvegeo": "08035"
+          },
+          {
+            "nombre": "GÓMEZ FARÍAS",
+            "personas": 22,
+            "cvegeo": "08025"
+          },
+          {
+            "nombre": "ALLENDE",
+            "personas": 16,
+            "cvegeo": "08003"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "09",
+        "id_tablero_estado": "9",
+        "entidad": "Ciudad de México",
+        "municipios": [
+          {
+            "nombre": "IZTAPALAPA",
+            "personas": 787,
+            "cvegeo": "09007"
+          },
+          {
+            "nombre": "CUAUHTÉMOC",
+            "personas": 703,
+            "cvegeo": "09015"
+          },
+          {
+            "nombre": "GUSTAVO A. MADERO",
+            "personas": 699,
+            "cvegeo": "09005"
+          },
+          {
+            "nombre": "ÁLVARO OBREGÓN",
+            "personas": 341,
+            "cvegeo": "09010"
+          },
+          {
+            "nombre": "VENUSTIANO CARRANZA",
+            "personas": 335,
+            "cvegeo": "09017"
+          },
+          {
+            "nombre": "TLALPAN",
+            "personas": 274,
+            "cvegeo": "09012"
+          },
+          {
+            "nombre": "MIGUEL HIDALGO",
+            "personas": 267,
+            "cvegeo": "09016"
+          },
+          {
+            "nombre": "COYOACÁN",
+            "personas": 237,
+            "cvegeo": "09003"
+          },
+          {
+            "nombre": "AZCAPOTZALCO",
+            "personas": 219,
+            "cvegeo": "09002"
+          },
+          {
+            "nombre": "XOCHIMILCO",
+            "personas": 213,
+            "cvegeo": "09013"
+          },
+          {
+            "nombre": "IZTACALCO",
+            "personas": 187,
+            "cvegeo": "09006"
+          },
+          {
+            "nombre": "BENITO JUÁREZ",
+            "personas": 185,
+            "cvegeo": "09014"
+          },
+          {
+            "nombre": "TLÁHUAC",
+            "personas": 169,
+            "cvegeo": "09011"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 136,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CUAJIMALPA DE MORELOS",
+            "personas": 104,
+            "cvegeo": "09004"
+          },
+          {
+            "nombre": "MAGDALENA CONTRERAS",
+            "personas": 78,
+            "cvegeo": "09008"
+          },
+          {
+            "nombre": "MILPA ALTA",
+            "personas": 50,
+            "cvegeo": "09009"
+          },
+          {
+            "nombre": "TLAJOMULCO DE ZÚÑIGA",
+            "personas": 2,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CELAYA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "LA PIEDAD",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TORREÓN",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "JOJUTLA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "OCAMPO",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "SUCHIATE",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "QUERÉTARO",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ACAPETAHUA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ACOLMAN",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TIJUANA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CHILA",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "TLAJOMULCO DE ZÚÑIGA",
+          "CELAYA",
+          "LA PIEDAD",
+          "TORREÓN",
+          "JOJUTLA",
+          "OCAMPO",
+          "SUCHIATE",
+          "QUERÉTARO",
+          "ACAPETAHUA",
+          "ACOLMAN",
+          "TIJUANA",
+          "CHILA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "10",
+        "id_tablero_estado": "10",
+        "entidad": "Durango",
+        "municipios": [
+          {
+            "nombre": "DURANGO",
+            "personas": 640,
+            "cvegeo": "10005"
+          },
+          {
+            "nombre": "GÓMEZ PALACIO",
+            "personas": 116,
+            "cvegeo": "10007"
+          },
+          {
+            "nombre": "MEZQUITAL",
+            "personas": 39,
+            "cvegeo": "10014"
+          },
+          {
+            "nombre": "CUENCAMÉ",
+            "personas": 38,
+            "cvegeo": "10004"
+          },
+          {
+            "nombre": "PUEBLO NUEVO",
+            "personas": 36,
+            "cvegeo": "10023"
+          },
+          {
+            "nombre": "LERDO",
+            "personas": 36,
+            "cvegeo": "10012"
+          },
+          {
+            "nombre": "SANTIAGO PAPASQUIARO",
+            "personas": 22,
+            "cvegeo": "10032"
+          },
+          {
+            "nombre": "SAN DIMAS",
+            "personas": 11,
+            "cvegeo": "10026"
+          },
+          {
+            "nombre": "CANATLÁN",
+            "personas": 11,
+            "cvegeo": "10001"
+          },
+          {
+            "nombre": "VICENTE GUERRERO",
+            "personas": 11,
+            "cvegeo": "10038"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 8,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TEPEHUANES",
+            "personas": 8,
+            "cvegeo": "10035"
+          },
+          {
+            "nombre": "TAMAZULA",
+            "personas": 8,
+            "cvegeo": "10034"
+          },
+          {
+            "nombre": "GUADALUPE VICTORIA",
+            "personas": 7,
+            "cvegeo": "10008"
+          },
+          {
+            "nombre": "TLAHUALILO",
+            "personas": 6,
+            "cvegeo": "10036"
+          },
+          {
+            "nombre": "HIDALGO",
+            "personas": 5,
+            "cvegeo": "10010"
+          },
+          {
+            "nombre": "NUEVO IDEAL",
+            "personas": 5,
+            "cvegeo": "10039"
+          },
+          {
+            "nombre": "GUANACEVÍ",
+            "personas": 4,
+            "cvegeo": "10009"
+          },
+          {
+            "nombre": "MAPIMÍ",
+            "personas": 3,
+            "cvegeo": "10013"
+          },
+          {
+            "nombre": "SINALOA",
+            "personas": 3,
+            "cvegeo": null
+          },
+          {
+            "nombre": "NAZAS",
+            "personas": 2,
+            "cvegeo": "10015"
+          },
+          {
+            "nombre": "SANTA CLARA",
+            "personas": 2,
+            "cvegeo": "10031"
+          },
+          {
+            "nombre": "ZACATECAS",
+            "personas": 2,
+            "cvegeo": null
+          },
+          {
+            "nombre": "EL ORO",
+            "personas": 2,
+            "cvegeo": "10018"
+          },
+          {
+            "nombre": "POANAS",
+            "personas": 2,
+            "cvegeo": "10022"
+          },
+          {
+            "nombre": "GUADALAJARA",
+            "personas": 2,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CABORCA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "MAZAPIL",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TORREÓN",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "SINALOA",
+          "ZACATECAS",
+          "CABORCA",
+          "GUADALAJARA",
+          "MAZAPIL",
+          "TORREÓN"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "11",
+        "id_tablero_estado": "11",
+        "entidad": "Guanajuato",
+        "municipios": [
+          {
+            "nombre": "CELAYA",
+            "personas": 829,
+            "cvegeo": "11007"
+          },
+          {
+            "nombre": "LEÓN",
+            "personas": 567,
+            "cvegeo": "11020"
+          },
+          {
+            "nombre": "IRAPUATO",
+            "personas": 565,
+            "cvegeo": "11017"
+          },
+          {
+            "nombre": "VILLAGRÁN",
+            "personas": 307,
+            "cvegeo": "11044"
+          },
+          {
+            "nombre": "SALAMANCA",
+            "personas": 299,
+            "cvegeo": "11027"
+          },
+          {
+            "nombre": "PÉNJAMO",
+            "personas": 282,
+            "cvegeo": "11023"
+          },
+          {
+            "nombre": "SANTA CRUZ DE JUVENTINO ROSAS",
+            "personas": 213,
+            "cvegeo": "11035"
+          },
+          {
+            "nombre": "CORTAZAR",
+            "personas": 171,
+            "cvegeo": "11011"
+          },
+          {
+            "nombre": "SILAO",
+            "personas": 155,
+            "cvegeo": "11037"
+          },
+          {
+            "nombre": "VALLE DE SANTIAGO",
+            "personas": 146,
+            "cvegeo": "11042"
+          },
+          {
+            "nombre": "ACÁMBARO",
+            "personas": 144,
+            "cvegeo": "11002"
+          },
+          {
+            "nombre": "SALVATIERRA",
+            "personas": 137,
+            "cvegeo": "11028"
+          },
+          {
+            "nombre": "APASEO EL GRANDE",
+            "personas": 133,
+            "cvegeo": "11005"
+          },
+          {
+            "nombre": "YURIRIA",
+            "personas": 114,
+            "cvegeo": "11046"
+          },
+          {
+            "nombre": "ABASOLO",
+            "personas": 114,
+            "cvegeo": "11001"
+          },
+          {
+            "nombre": "APASEO EL ALTO",
+            "personas": 112,
+            "cvegeo": "11004"
+          },
+          {
+            "nombre": "URIANGATO",
+            "personas": 110,
+            "cvegeo": "11041"
+          },
+          {
+            "nombre": "CUERÁMARO",
+            "personas": 104,
+            "cvegeo": "11012"
+          },
+          {
+            "nombre": "GUANAJUATO",
+            "personas": 94,
+            "cvegeo": "11015"
+          },
+          {
+            "nombre": "SAN FRANCISCO DEL RINCÓN",
+            "personas": 80,
+            "cvegeo": "11031"
+          },
+          {
+            "nombre": "MOROLEÓN",
+            "personas": 76,
+            "cvegeo": "11021"
+          },
+          {
+            "nombre": "PURÍSIMA DEL RINCÓN",
+            "personas": 72,
+            "cvegeo": "11025"
+          },
+          {
+            "nombre": "JARAL DEL PROGRESO",
+            "personas": 64,
+            "cvegeo": "11018"
+          },
+          {
+            "nombre": "SAN MIGUEL DE ALLENDE",
+            "personas": 64,
+            "cvegeo": "11003"
+          },
+          {
+            "nombre": "SAN LUIS DE LA PAZ",
+            "personas": 62,
+            "cvegeo": "11033"
+          },
+          {
+            "nombre": "DOLORES HIDALGO",
+            "personas": 56,
+            "cvegeo": "11014"
+          },
+          {
+            "nombre": "MANUEL DOBLADO",
+            "personas": 46,
+            "cvegeo": "11008"
+          },
+          {
+            "nombre": "COMONFORT",
+            "personas": 45,
+            "cvegeo": "11009"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 41,
+            "cvegeo": null
+          },
+          {
+            "nombre": "SAN FELIPE",
+            "personas": 37,
+            "cvegeo": "11030"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "12",
+        "id_tablero_estado": "12",
+        "entidad": "Guerrero",
+        "municipios": [
+          {
+            "nombre": "ACAPULCO DE JUÁREZ",
+            "personas": 1330,
+            "cvegeo": "12001"
+          },
+          {
+            "nombre": "CHILPANCINGO DE LOS BRAVO",
+            "personas": 539,
+            "cvegeo": "12029"
+          },
+          {
+            "nombre": "IGUALA DE LA INDEPENDENCIA",
+            "personas": 487,
+            "cvegeo": "12035"
+          },
+          {
+            "nombre": "CHILAPA DE ALVAREZ",
+            "personas": 265,
+            "cvegeo": "12028"
+          },
+          {
+            "nombre": "ATOYAC DE ALVAREZ",
+            "personas": 256,
+            "cvegeo": "12011"
+          },
+          {
+            "nombre": "TAXCO DE ALARCÓN",
+            "personas": 160,
+            "cvegeo": "12055"
+          },
+          {
+            "nombre": "JOSÉ AZUETA",
+            "personas": 118,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TELOLOAPAN",
+            "personas": 102,
+            "cvegeo": "12058"
+          },
+          {
+            "nombre": "COYUCA DE BENÍTEZ",
+            "personas": 82,
+            "cvegeo": "12021"
+          },
+          {
+            "nombre": "TLAPA DE COMONFORT",
+            "personas": 73,
+            "cvegeo": "12066"
+          },
+          {
+            "nombre": "TÉCPAN DE GALEANA",
+            "personas": 61,
+            "cvegeo": "12057"
+          },
+          {
+            "nombre": "COCULA",
+            "personas": 53,
+            "cvegeo": "12017"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 49,
+            "cvegeo": null
+          },
+          {
+            "nombre": "EDUARDO NERI",
+            "personas": 47,
+            "cvegeo": "12075"
+          },
+          {
+            "nombre": "PETATLÁN",
+            "personas": 46,
+            "cvegeo": "12048"
+          },
+          {
+            "nombre": "HUITZUCO DE LOS FIGUEROA",
+            "personas": 32,
+            "cvegeo": "12034"
+          },
+          {
+            "nombre": "PUNGARABATO",
+            "personas": 29,
+            "cvegeo": "12050"
+          },
+          {
+            "nombre": "JUAN R. ESCUDERO",
+            "personas": 27,
+            "cvegeo": "12039"
+          },
+          {
+            "nombre": "OMETEPEC",
+            "personas": 27,
+            "cvegeo": "12046"
+          },
+          {
+            "nombre": "TEPECOACUILCO DE TRUJANO",
+            "personas": 26,
+            "cvegeo": "12059"
+          },
+          {
+            "nombre": "TIXTLA DE GUERRERO",
+            "personas": 26,
+            "cvegeo": "12061"
+          },
+          {
+            "nombre": "ARCELIA",
+            "personas": 26,
+            "cvegeo": "12007"
+          },
+          {
+            "nombre": "COYUCA DE CATALÁN",
+            "personas": 24,
+            "cvegeo": "12022"
+          },
+          {
+            "nombre": "LEONARDO BRAVO",
+            "personas": 24,
+            "cvegeo": "12040"
+          },
+          {
+            "nombre": "LA UNIÓN DE ISIDORO MONTES DE OCA",
+            "personas": 23,
+            "cvegeo": "12068"
+          },
+          {
+            "nombre": "ZITLALA",
+            "personas": 22,
+            "cvegeo": "12074"
+          },
+          {
+            "nombre": "SAN MIGUEL TOTOLAPAN",
+            "personas": 22,
+            "cvegeo": "12054"
+          },
+          {
+            "nombre": "AYUTLA DE LOS LIBRES",
+            "personas": 21,
+            "cvegeo": "12012"
+          },
+          {
+            "nombre": "AJUCHITLÁN DEL PROGRESO",
+            "personas": 20,
+            "cvegeo": "12003"
+          }
+        ],
+        "sin_match": [
+          "JOSÉ AZUETA",
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "13",
+        "id_tablero_estado": "13",
+        "entidad": "Hidalgo",
+        "municipios": [
+          {
+            "nombre": "PACHUCA DE SOTO",
+            "personas": 199,
+            "cvegeo": "13048"
+          },
+          {
+            "nombre": "TIZAYUCA",
+            "personas": 145,
+            "cvegeo": "13069"
+          },
+          {
+            "nombre": "TULANCINGO DE BRAVO",
+            "personas": 118,
+            "cvegeo": "13077"
+          },
+          {
+            "nombre": "MINERAL DE LA REFORMA",
+            "personas": 90,
+            "cvegeo": "13051"
+          },
+          {
+            "nombre": "TULA DE ALLENDE",
+            "personas": 83,
+            "cvegeo": "13076"
+          },
+          {
+            "nombre": "IXMIQUILPAN",
+            "personas": 51,
+            "cvegeo": "13030"
+          },
+          {
+            "nombre": "CUAUTEPEC DE HINOJOSA",
+            "personas": 42,
+            "cvegeo": "13016"
+          },
+          {
+            "nombre": "ATOTONILCO DE TULA",
+            "personas": 41,
+            "cvegeo": "13013"
+          },
+          {
+            "nombre": "HUEJUTLA DE REYES",
+            "personas": 38,
+            "cvegeo": "13028"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 38,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TEPEJI DEL RÍO DE OCAMPO",
+            "personas": 25,
+            "cvegeo": "13063"
+          },
+          {
+            "nombre": "TEZONTEPEC DE ALDAMA",
+            "personas": 24,
+            "cvegeo": "13067"
+          },
+          {
+            "nombre": "ATITALAQUIA",
+            "personas": 23,
+            "cvegeo": "13010"
+          },
+          {
+            "nombre": "ZEMPOALA",
+            "personas": 20,
+            "cvegeo": "13083"
+          },
+          {
+            "nombre": "HUICHAPAN",
+            "personas": 19,
+            "cvegeo": "13029"
+          },
+          {
+            "nombre": "TECOZAUTLA",
+            "personas": 17,
+            "cvegeo": "13059"
+          },
+          {
+            "nombre": "SANTIAGO TULANTEPEC DE LUGO GUERRERO",
+            "personas": 17,
+            "cvegeo": "13056"
+          },
+          {
+            "nombre": "APAN",
+            "personas": 17,
+            "cvegeo": "13008"
+          },
+          {
+            "nombre": "ACTOPAN",
+            "personas": 17,
+            "cvegeo": "13003"
+          },
+          {
+            "nombre": "TEPEAPULCO",
+            "personas": 16,
+            "cvegeo": "13061"
+          },
+          {
+            "nombre": "TLANCHINOL",
+            "personas": 16,
+            "cvegeo": "13073"
+          },
+          {
+            "nombre": "TLAXCOAPAN",
+            "personas": 15,
+            "cvegeo": "13074"
+          },
+          {
+            "nombre": "SINGUILUCAN",
+            "personas": 14,
+            "cvegeo": "13057"
+          },
+          {
+            "nombre": "ACAXOCHITLÁN",
+            "personas": 13,
+            "cvegeo": "13002"
+          },
+          {
+            "nombre": "MIXQUIAHUALA DE JUÁREZ",
+            "personas": 13,
+            "cvegeo": "13041"
+          },
+          {
+            "nombre": "ZIMAPÁN",
+            "personas": 12,
+            "cvegeo": "13084"
+          },
+          {
+            "nombre": "FRANCISCO I. MADERO",
+            "personas": 11,
+            "cvegeo": "13023"
+          },
+          {
+            "nombre": "ZACUALTIPÁN DE ÁNGELES",
+            "personas": 11,
+            "cvegeo": "13081"
+          },
+          {
+            "nombre": "NOPALA DE VILLAGRÁN",
+            "personas": 7,
+            "cvegeo": "13044"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "14",
+        "id_tablero_estado": "14",
+        "entidad": "Jalisco",
+        "municipios": [
+          {
+            "nombre": "GUADALAJARA",
+            "personas": 2393,
+            "cvegeo": "14039"
+          },
+          {
+            "nombre": "ZAPOPAN",
+            "personas": 2083,
+            "cvegeo": "14120"
+          },
+          {
+            "nombre": "TLAJOMULCO DE ZÚÑIGA",
+            "personas": 1109,
+            "cvegeo": "14097"
+          },
+          {
+            "nombre": "TLAQUEPAQUE",
+            "personas": 936,
+            "cvegeo": "14098"
+          },
+          {
+            "nombre": "TONALÁ",
+            "personas": 532,
+            "cvegeo": "14101"
+          },
+          {
+            "nombre": "PUERTO VALLARTA",
+            "personas": 504,
+            "cvegeo": "14067"
+          },
+          {
+            "nombre": "LAGOS DE MORENO",
+            "personas": 457,
+            "cvegeo": "14053"
+          },
+          {
+            "nombre": "EL SALTO",
+            "personas": 410,
+            "cvegeo": "14070"
+          },
+          {
+            "nombre": "TALA",
+            "personas": 250,
+            "cvegeo": "14083"
+          },
+          {
+            "nombre": "ENCARNACIÓN DE DÍAZ",
+            "personas": 244,
+            "cvegeo": "14035"
+          },
+          {
+            "nombre": "TEPATITLÁN DE MORELOS",
+            "personas": 234,
+            "cvegeo": "14093"
+          },
+          {
+            "nombre": "LA BARCA",
+            "personas": 186,
+            "cvegeo": "14018"
+          },
+          {
+            "nombre": "ATOTONILCO EL ALTO",
+            "personas": 159,
+            "cvegeo": "14013"
+          },
+          {
+            "nombre": "ZAPOTLÁN EL GRANDE",
+            "personas": 141,
+            "cvegeo": "14023"
+          },
+          {
+            "nombre": "ARANDAS",
+            "personas": 135,
+            "cvegeo": "14008"
+          },
+          {
+            "nombre": "IXTLAHUACÁN DE LOS MEMBRILLOS",
+            "personas": 129,
+            "cvegeo": "14044"
+          },
+          {
+            "nombre": "OCOTLÁN",
+            "personas": 122,
+            "cvegeo": "14063"
+          },
+          {
+            "nombre": "AUTLÁN DE NAVARRO",
+            "personas": 110,
+            "cvegeo": "14015"
+          },
+          {
+            "nombre": "SAN JUAN DE LOS LAGOS",
+            "personas": 107,
+            "cvegeo": "14073"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 106,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CHAPALA",
+            "personas": 99,
+            "cvegeo": "14030"
+          },
+          {
+            "nombre": "CIHUATLÁN",
+            "personas": 98,
+            "cvegeo": "14022"
+          },
+          {
+            "nombre": "SAN MIGUEL EL ALTO",
+            "personas": 95,
+            "cvegeo": "14078"
+          },
+          {
+            "nombre": "AMECA",
+            "personas": 92,
+            "cvegeo": "14006"
+          },
+          {
+            "nombre": "JOCOTEPEC",
+            "personas": 92,
+            "cvegeo": "14050"
+          },
+          {
+            "nombre": "LA HUERTA",
+            "personas": 80,
+            "cvegeo": "14043"
+          },
+          {
+            "nombre": "TOMATLÁN",
+            "personas": 72,
+            "cvegeo": "14100"
+          },
+          {
+            "nombre": "TEOCALTICHE",
+            "personas": 70,
+            "cvegeo": "14091"
+          },
+          {
+            "nombre": "TEQUILA",
+            "personas": 69,
+            "cvegeo": "14094"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "15",
+        "id_tablero_estado": "15",
+        "entidad": "México",
+        "municipios": [
+          {
+            "nombre": "ATLAUTLA",
+            "personas": 1739,
+            "cvegeo": "15015"
+          },
+          {
+            "nombre": "ECATEPEC DE MORELOS",
+            "personas": 1131,
+            "cvegeo": "15033"
+          },
+          {
+            "nombre": "TOLUCA",
+            "personas": 846,
+            "cvegeo": "15106"
+          },
+          {
+            "nombre": "NEZAHUALCÓYOTL",
+            "personas": 683,
+            "cvegeo": "15058"
+          },
+          {
+            "nombre": "CHIMALHUACÁN",
+            "personas": 500,
+            "cvegeo": "15031"
+          },
+          {
+            "nombre": "NAUCALPAN DE JUÁREZ",
+            "personas": 414,
+            "cvegeo": "15057"
+          },
+          {
+            "nombre": "CHALCO",
+            "personas": 379,
+            "cvegeo": "15025"
+          },
+          {
+            "nombre": "TECÁMAC",
+            "personas": 363,
+            "cvegeo": "15081"
+          },
+          {
+            "nombre": "TLALNEPANTLA DE BAZ",
+            "personas": 351,
+            "cvegeo": "15104"
+          },
+          {
+            "nombre": "CUAUTITLÁN IZCALLI",
+            "personas": 298,
+            "cvegeo": "15121"
+          },
+          {
+            "nombre": "ATIZAPÁN DE ZARAGOZA",
+            "personas": 294,
+            "cvegeo": "15013"
+          },
+          {
+            "nombre": "VALLE DE CHALCO SOLIDARIDAD",
+            "personas": 290,
+            "cvegeo": "15122"
+          },
+          {
+            "nombre": "TULTITLÁN",
+            "personas": 258,
+            "cvegeo": "15109"
+          },
+          {
+            "nombre": "IXTAPALUCA",
+            "personas": 253,
+            "cvegeo": "15039"
+          },
+          {
+            "nombre": "ZUMPANGO",
+            "personas": 231,
+            "cvegeo": "15120"
+          },
+          {
+            "nombre": "HUEHUETOCA",
+            "personas": 210,
+            "cvegeo": "15035"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 194,
+            "cvegeo": null
+          },
+          {
+            "nombre": "NICOLÁS ROMERO",
+            "personas": 190,
+            "cvegeo": "15060"
+          },
+          {
+            "nombre": "LA PAZ",
+            "personas": 181,
+            "cvegeo": "15070"
+          },
+          {
+            "nombre": "ZINACANTEPEC",
+            "personas": 170,
+            "cvegeo": "15118"
+          },
+          {
+            "nombre": "CHICOLOAPAN",
+            "personas": 146,
+            "cvegeo": "15029"
+          },
+          {
+            "nombre": "TEXCOCO",
+            "personas": 144,
+            "cvegeo": "15099"
+          },
+          {
+            "nombre": "COACALCO DE BERRIOZÁBAL",
+            "personas": 139,
+            "cvegeo": "15020"
+          },
+          {
+            "nombre": "METEPEC",
+            "personas": 124,
+            "cvegeo": "15054"
+          },
+          {
+            "nombre": "CUAUTITLÁN",
+            "personas": 124,
+            "cvegeo": "15024"
+          },
+          {
+            "nombre": "HUIXQUILUCAN",
+            "personas": 117,
+            "cvegeo": "15037"
+          },
+          {
+            "nombre": "TENANCINGO",
+            "personas": 113,
+            "cvegeo": "15088"
+          },
+          {
+            "nombre": "TEPOTZOTLÁN",
+            "personas": 111,
+            "cvegeo": "15095"
+          },
+          {
+            "nombre": "TULTEPEC",
+            "personas": 105,
+            "cvegeo": "15108"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "16",
+        "id_tablero_estado": "16",
+        "entidad": "Michoacán",
+        "municipios": [
+          {
+            "nombre": "MORELIA",
+            "personas": 948,
+            "cvegeo": "16053"
+          },
+          {
+            "nombre": "URUAPAN",
+            "personas": 803,
+            "cvegeo": "16102"
+          },
+          {
+            "nombre": "ZAMORA",
+            "personas": 711,
+            "cvegeo": "16108"
+          },
+          {
+            "nombre": "APATZINGÁN",
+            "personas": 391,
+            "cvegeo": "16006"
+          },
+          {
+            "nombre": "LA PIEDAD",
+            "personas": 371,
+            "cvegeo": "16069"
+          },
+          {
+            "nombre": "LÁZARO CÁRDENAS",
+            "personas": 355,
+            "cvegeo": "16052"
+          },
+          {
+            "nombre": "ZITÁCUARO",
+            "personas": 269,
+            "cvegeo": "16112"
+          },
+          {
+            "nombre": "PURUÁNDIRO",
+            "personas": 231,
+            "cvegeo": "16071"
+          },
+          {
+            "nombre": "JACONA",
+            "personas": 228,
+            "cvegeo": "16043"
+          },
+          {
+            "nombre": "SAHUAYO",
+            "personas": 207,
+            "cvegeo": "16076"
+          },
+          {
+            "nombre": "HIDALGO",
+            "personas": 193,
+            "cvegeo": "16034"
+          },
+          {
+            "nombre": "PÁTZCUARO",
+            "personas": 183,
+            "cvegeo": "16066"
+          },
+          {
+            "nombre": "ZACAPU",
+            "personas": 143,
+            "cvegeo": "16107"
+          },
+          {
+            "nombre": "JIQUILPAN",
+            "personas": 127,
+            "cvegeo": "16045"
+          },
+          {
+            "nombre": "LOS REYES",
+            "personas": 116,
+            "cvegeo": "16075"
+          },
+          {
+            "nombre": "TACÁMBARO",
+            "personas": 115,
+            "cvegeo": "16082"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 109,
+            "cvegeo": null
+          },
+          {
+            "nombre": "COENEO",
+            "personas": 104,
+            "cvegeo": "16016"
+          },
+          {
+            "nombre": "JOSÉ SIXTO VERDUZCO",
+            "personas": 91,
+            "cvegeo": "16113"
+          },
+          {
+            "nombre": "YURÉCUARO",
+            "personas": 89,
+            "cvegeo": "16106"
+          },
+          {
+            "nombre": "MARAVATÍO",
+            "personas": 86,
+            "cvegeo": "16050"
+          },
+          {
+            "nombre": "BUENAVISTA",
+            "personas": 82,
+            "cvegeo": "16012"
+          },
+          {
+            "nombre": "TANGANCÍCUARO",
+            "personas": 80,
+            "cvegeo": "16085"
+          },
+          {
+            "nombre": "TARÍMBARO",
+            "personas": 76,
+            "cvegeo": "16088"
+          },
+          {
+            "nombre": "VENUSTIANO CARRANZA",
+            "personas": 71,
+            "cvegeo": "16103"
+          },
+          {
+            "nombre": "ZINAPÉCUARO",
+            "personas": 66,
+            "cvegeo": "16110"
+          },
+          {
+            "nombre": "TANGAMANDAPIO",
+            "personas": 63,
+            "cvegeo": "16084"
+          },
+          {
+            "nombre": "COTIJA",
+            "personas": 57,
+            "cvegeo": "16019"
+          },
+          {
+            "nombre": "MÚGICA",
+            "personas": 56,
+            "cvegeo": "16055"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "17",
+        "id_tablero_estado": "17",
+        "entidad": "Morelos",
+        "municipios": [
+          {
+            "nombre": "CUERNAVACA",
+            "personas": 373,
+            "cvegeo": "17007"
+          },
+          {
+            "nombre": "CUAUTLA",
+            "personas": 222,
+            "cvegeo": "17006"
+          },
+          {
+            "nombre": "TEMIXCO",
+            "personas": 150,
+            "cvegeo": "17018"
+          },
+          {
+            "nombre": "JIUTEPEC",
+            "personas": 140,
+            "cvegeo": "17011"
+          },
+          {
+            "nombre": "YAUTEPEC",
+            "personas": 121,
+            "cvegeo": "17029"
+          },
+          {
+            "nombre": "XOCHITEPEC",
+            "personas": 91,
+            "cvegeo": "17028"
+          },
+          {
+            "nombre": "EMILIANO ZAPATA",
+            "personas": 83,
+            "cvegeo": "17008"
+          },
+          {
+            "nombre": "PUENTE DE IXTLA",
+            "personas": 75,
+            "cvegeo": "17017"
+          },
+          {
+            "nombre": "JOJUTLA",
+            "personas": 56,
+            "cvegeo": "17012"
+          },
+          {
+            "nombre": "YECAPIXTLA",
+            "personas": 56,
+            "cvegeo": "17030"
+          },
+          {
+            "nombre": "AYALA",
+            "personas": 53,
+            "cvegeo": "17004"
+          },
+          {
+            "nombre": "TLALTIZAPÁN",
+            "personas": 45,
+            "cvegeo": "17024"
+          },
+          {
+            "nombre": "TLAQUILTENANGO",
+            "personas": 44,
+            "cvegeo": "17025"
+          },
+          {
+            "nombre": "ZACATEPEC DE HIDALGO",
+            "personas": 41,
+            "cvegeo": "17031"
+          },
+          {
+            "nombre": "TEPOZTLÁN",
+            "personas": 38,
+            "cvegeo": "17020"
+          },
+          {
+            "nombre": "AMACUZAC",
+            "personas": 37,
+            "cvegeo": "17001"
+          },
+          {
+            "nombre": "TEPALCINGO",
+            "personas": 37,
+            "cvegeo": "17019"
+          },
+          {
+            "nombre": "HUITZILAC",
+            "personas": 25,
+            "cvegeo": "17009"
+          },
+          {
+            "nombre": "ATLATLAHUCAN",
+            "personas": 23,
+            "cvegeo": "17002"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 17,
+            "cvegeo": null
+          },
+          {
+            "nombre": "MIACATLÁN",
+            "personas": 17,
+            "cvegeo": "17015"
+          },
+          {
+            "nombre": "COATLÁN DEL RÍO",
+            "personas": 16,
+            "cvegeo": "17005"
+          },
+          {
+            "nombre": "JANTETELCO",
+            "personas": 14,
+            "cvegeo": "17010"
+          },
+          {
+            "nombre": "TLAYACAPAN",
+            "personas": 14,
+            "cvegeo": "17026"
+          },
+          {
+            "nombre": "TETECALA",
+            "personas": 10,
+            "cvegeo": "17021"
+          },
+          {
+            "nombre": "TOTOLAPAN",
+            "personas": 10,
+            "cvegeo": "17027"
+          },
+          {
+            "nombre": "JONACATEPEC",
+            "personas": 9,
+            "cvegeo": "17013"
+          },
+          {
+            "nombre": "AXOCHIAPAN",
+            "personas": 8,
+            "cvegeo": "17003"
+          },
+          {
+            "nombre": "MAZATEPEC",
+            "personas": 6,
+            "cvegeo": "17014"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "18",
+        "id_tablero_estado": "18",
+        "entidad": "Nayarit",
+        "municipios": [
+          {
+            "nombre": "TEPIC",
+            "personas": 824,
+            "cvegeo": "18017"
+          },
+          {
+            "nombre": "BAHÍA DE BANDERAS",
+            "personas": 263,
+            "cvegeo": "18020"
+          },
+          {
+            "nombre": "TUXPAN",
+            "personas": 184,
+            "cvegeo": "18018"
+          },
+          {
+            "nombre": "COMPOSTELA",
+            "personas": 120,
+            "cvegeo": "18004"
+          },
+          {
+            "nombre": "ACAPONETA",
+            "personas": 84,
+            "cvegeo": "18001"
+          },
+          {
+            "nombre": "SANTIAGO IXCUINTLA",
+            "personas": 81,
+            "cvegeo": "18015"
+          },
+          {
+            "nombre": "XALISCO",
+            "personas": 75,
+            "cvegeo": "18008"
+          },
+          {
+            "nombre": "TECUALA",
+            "personas": 59,
+            "cvegeo": "18016"
+          },
+          {
+            "nombre": "SAN BLAS",
+            "personas": 51,
+            "cvegeo": "18012"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 51,
+            "cvegeo": null
+          },
+          {
+            "nombre": "IXTLÁN DEL RÍO",
+            "personas": 41,
+            "cvegeo": "18006"
+          },
+          {
+            "nombre": "HUAJICORI",
+            "personas": 40,
+            "cvegeo": "18005"
+          },
+          {
+            "nombre": "ROSAMORADA",
+            "personas": 34,
+            "cvegeo": "18010"
+          },
+          {
+            "nombre": "DEL NAYAR",
+            "personas": 27,
+            "cvegeo": "18009"
+          },
+          {
+            "nombre": "RUÍZ",
+            "personas": 22,
+            "cvegeo": "18011"
+          },
+          {
+            "nombre": "AHUACATLÁN",
+            "personas": 15,
+            "cvegeo": "18002"
+          },
+          {
+            "nombre": "LA YESCA",
+            "personas": 12,
+            "cvegeo": "18019"
+          },
+          {
+            "nombre": "JALA",
+            "personas": 10,
+            "cvegeo": "18007"
+          },
+          {
+            "nombre": "SANTA MARÍA DEL ORO",
+            "personas": 9,
+            "cvegeo": "18014"
+          },
+          {
+            "nombre": "SAN PEDRO LAGUNILLAS",
+            "personas": 5,
+            "cvegeo": "18013"
+          },
+          {
+            "nombre": "AMATLÁN DE CAÑAS",
+            "personas": 2,
+            "cvegeo": "18003"
+          },
+          {
+            "nombre": "DURANGO",
+            "personas": 2,
+            "cvegeo": null
+          },
+          {
+            "nombre": "PUERTO VALLARTA",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TIJUANA",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "DURANGO",
+          "PUERTO VALLARTA",
+          "TIJUANA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "19",
+        "id_tablero_estado": "19",
+        "entidad": "Nuevo León",
+        "municipios": [
+          {
+            "nombre": "MONTERREY",
+            "personas": 2156,
+            "cvegeo": "19039"
+          },
+          {
+            "nombre": "GUADALUPE",
+            "personas": 566,
+            "cvegeo": "19026"
+          },
+          {
+            "nombre": "GRAL. ESCOBEDO",
+            "personas": 438,
+            "cvegeo": null
+          },
+          {
+            "nombre": "APODACA",
+            "personas": 428,
+            "cvegeo": "19006"
+          },
+          {
+            "nombre": "JUÁREZ",
+            "personas": 336,
+            "cvegeo": "19031"
+          },
+          {
+            "nombre": "CADEREYTA JIMÉNEZ",
+            "personas": 307,
+            "cvegeo": "19009"
+          },
+          {
+            "nombre": "SAN NICOLÁS DE LOS GARZA",
+            "personas": 298,
+            "cvegeo": "19046"
+          },
+          {
+            "nombre": "GARCÍA",
+            "personas": 287,
+            "cvegeo": "19018"
+          },
+          {
+            "nombre": "SANTA CATARINA",
+            "personas": 233,
+            "cvegeo": "19048"
+          },
+          {
+            "nombre": "CIÉNEGA DE FLORES",
+            "personas": 213,
+            "cvegeo": "19012"
+          },
+          {
+            "nombre": "SABINAS HIDALGO",
+            "personas": 208,
+            "cvegeo": "19044"
+          },
+          {
+            "nombre": "PESQUERÍA",
+            "personas": 172,
+            "cvegeo": "19041"
+          },
+          {
+            "nombre": "SALINAS VICTORIA",
+            "personas": 166,
+            "cvegeo": "19045"
+          },
+          {
+            "nombre": "MONTEMORELOS",
+            "personas": 146,
+            "cvegeo": "19038"
+          },
+          {
+            "nombre": "LINARES",
+            "personas": 138,
+            "cvegeo": "19033"
+          },
+          {
+            "nombre": "SAN PEDRO GARZA GARCÍA",
+            "personas": 136,
+            "cvegeo": "19019"
+          },
+          {
+            "nombre": "CARMEN",
+            "personas": 112,
+            "cvegeo": "19010"
+          },
+          {
+            "nombre": "SANTIAGO",
+            "personas": 96,
+            "cvegeo": "19049"
+          },
+          {
+            "nombre": "GRAL. ZUAZUA",
+            "personas": 92,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CHINA",
+            "personas": 88,
+            "cvegeo": "19013"
+          },
+          {
+            "nombre": "ANÁHUAC",
+            "personas": 80,
+            "cvegeo": "19005"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 75,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CERRALVO",
+            "personas": 68,
+            "cvegeo": "19011"
+          },
+          {
+            "nombre": "ALLENDE",
+            "personas": 68,
+            "cvegeo": "19004"
+          },
+          {
+            "nombre": "DR. ARROYO",
+            "personas": 49,
+            "cvegeo": null
+          },
+          {
+            "nombre": "GRAL. BRAVO",
+            "personas": 45,
+            "cvegeo": null
+          },
+          {
+            "nombre": "GALEANA",
+            "personas": 38,
+            "cvegeo": "19017"
+          },
+          {
+            "nombre": "GRAL. TERÁN",
+            "personas": 32,
+            "cvegeo": null
+          },
+          {
+            "nombre": "LOS RAMONES",
+            "personas": 31,
+            "cvegeo": "19042"
+          }
+        ],
+        "sin_match": [
+          "GRAL. ESCOBEDO",
+          "GRAL. ZUAZUA",
+          "SIN MUNICIPIO DE REFERENCIA",
+          "GRAL. BRAVO",
+          "DR. ARROYO",
+          "GRAL. TERÁN"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "20",
+        "id_tablero_estado": "20",
+        "entidad": "Oaxaca",
+        "municipios": [
+          {
+            "nombre": "OAXACA DE JUÁREZ",
+            "personas": 102,
+            "cvegeo": "20067"
+          },
+          {
+            "nombre": "SAN JUAN BAUTISTA TUXTEPEC",
+            "personas": 50,
+            "cvegeo": "20184"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 26,
+            "cvegeo": null
+          },
+          {
+            "nombre": "JUCHITÁN DE ZARAGOZA",
+            "personas": 20,
+            "cvegeo": "20043"
+          },
+          {
+            "nombre": "SANTA CRUZ XOXOCOTLÁN",
+            "personas": 20,
+            "cvegeo": "20385"
+          },
+          {
+            "nombre": "LOMA BONITA",
+            "personas": 16,
+            "cvegeo": "20044"
+          },
+          {
+            "nombre": "SAN PEDRO MIXTEPEC-JUQUILA",
+            "personas": 12,
+            "cvegeo": null
+          },
+          {
+            "nombre": "HUAJUAPAN DE LEÓN",
+            "personas": 11,
+            "cvegeo": "20039"
+          },
+          {
+            "nombre": "SANTA LUCÍA DEL CAMINO",
+            "personas": 10,
+            "cvegeo": "20390"
+          },
+          {
+            "nombre": "MATÍAS ROMERO AVENDAÑO",
+            "personas": 8,
+            "cvegeo": "20057"
+          },
+          {
+            "nombre": "SAN AGUSTÍN ATENANGO",
+            "personas": 8,
+            "cvegeo": "20081"
+          },
+          {
+            "nombre": "SANTA MARÍA ATZOMPA",
+            "personas": 8,
+            "cvegeo": "20399"
+          },
+          {
+            "nombre": "SALINA CRUZ",
+            "personas": 8,
+            "cvegeo": "20079"
+          },
+          {
+            "nombre": "PUTLA VILLA DE GUERRERO",
+            "personas": 8,
+            "cvegeo": "20073"
+          },
+          {
+            "nombre": "SANTA MARÍA COLOTEPEC",
+            "personas": 8,
+            "cvegeo": "20401"
+          },
+          {
+            "nombre": "SANTIAGO PINOTEPA NACIONAL",
+            "personas": 8,
+            "cvegeo": "20482"
+          },
+          {
+            "nombre": "OCOTLÁN DE MORELOS",
+            "personas": 7,
+            "cvegeo": "20068"
+          },
+          {
+            "nombre": "COSOLAPA",
+            "personas": 7,
+            "cvegeo": "20021"
+          },
+          {
+            "nombre": "HUAUTLA DE JIMÉNEZ",
+            "personas": 7,
+            "cvegeo": "20041"
+          },
+          {
+            "nombre": "SAN ANTONIO DE LA CAL",
+            "personas": 7,
+            "cvegeo": "20107"
+          },
+          {
+            "nombre": "SANTO DOMINGO TEHUANTEPEC",
+            "personas": 7,
+            "cvegeo": "20515"
+          },
+          {
+            "nombre": "ZIMATLÁN DE ALVAREZ",
+            "personas": 5,
+            "cvegeo": "20570"
+          },
+          {
+            "nombre": "SAN JUAN COTZOCÓN",
+            "personas": 5,
+            "cvegeo": "20190"
+          },
+          {
+            "nombre": "SANTA MARÍA CHILCHOTLA",
+            "personas": 5,
+            "cvegeo": "20406"
+          },
+          {
+            "nombre": "CIUDAD IXTEPEC",
+            "personas": 4,
+            "cvegeo": "20014"
+          },
+          {
+            "nombre": "SANTIAGO YAVEO",
+            "personas": 4,
+            "cvegeo": "20498"
+          },
+          {
+            "nombre": "SANTA CRUZ ZENZONTEPEC",
+            "personas": 4,
+            "cvegeo": "20386"
+          },
+          {
+            "nombre": "SANTA MARÍA HUATULCO",
+            "personas": 4,
+            "cvegeo": "20413"
+          },
+          {
+            "nombre": "SAN PEDRO TOTOLAPA",
+            "personas": 4,
+            "cvegeo": "20333"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "SAN PEDRO MIXTEPEC-JUQUILA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "21",
+        "id_tablero_estado": "21",
+        "entidad": "Puebla",
+        "municipios": [
+          {
+            "nombre": "PUEBLA",
+            "personas": 841,
+            "cvegeo": "21114"
+          },
+          {
+            "nombre": "TEHUACÁN",
+            "personas": 189,
+            "cvegeo": "21156"
+          },
+          {
+            "nombre": "TEPEACA",
+            "personas": 103,
+            "cvegeo": "21164"
+          },
+          {
+            "nombre": "SAN MARTÍN TEXMELUCAN",
+            "personas": 84,
+            "cvegeo": "21132"
+          },
+          {
+            "nombre": "TECAMACHALCO",
+            "personas": 79,
+            "cvegeo": "21154"
+          },
+          {
+            "nombre": "ATLIXCO",
+            "personas": 76,
+            "cvegeo": "21019"
+          },
+          {
+            "nombre": "HUAUCHINANGO",
+            "personas": 72,
+            "cvegeo": "21071"
+          },
+          {
+            "nombre": "ACATZINGO",
+            "personas": 56,
+            "cvegeo": "21004"
+          },
+          {
+            "nombre": "IZÚCAR DE MATAMOROS",
+            "personas": 50,
+            "cvegeo": "21085"
+          },
+          {
+            "nombre": "SAN ANDRÉS CHOLULA",
+            "personas": 50,
+            "cvegeo": "21119"
+          },
+          {
+            "nombre": "SAN PEDRO CHOLULA",
+            "personas": 48,
+            "cvegeo": "21140"
+          },
+          {
+            "nombre": "TEZIUTLÁN",
+            "personas": 46,
+            "cvegeo": "21174"
+          },
+          {
+            "nombre": "ZACATLÁN",
+            "personas": 39,
+            "cvegeo": "21208"
+          },
+          {
+            "nombre": "HUEJOTZINGO",
+            "personas": 39,
+            "cvegeo": "21074"
+          },
+          {
+            "nombre": "AMOZOC",
+            "personas": 34,
+            "cvegeo": "21015"
+          },
+          {
+            "nombre": "CHALCHICOMULA DE SESMA",
+            "personas": 34,
+            "cvegeo": "21045"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 32,
+            "cvegeo": null
+          },
+          {
+            "nombre": "XICOTEPEC",
+            "personas": 30,
+            "cvegeo": "21197"
+          },
+          {
+            "nombre": "CHIGNAHUAPAN",
+            "personas": 24,
+            "cvegeo": "21053"
+          },
+          {
+            "nombre": "CUAUTLANCINGO",
+            "personas": 23,
+            "cvegeo": "21041"
+          },
+          {
+            "nombre": "LOS REYES DE JUÁREZ",
+            "personas": 21,
+            "cvegeo": "21118"
+          },
+          {
+            "nombre": "VENUSTIANO CARRANZA",
+            "personas": 18,
+            "cvegeo": "21194"
+          },
+          {
+            "nombre": "ACAJETE",
+            "personas": 17,
+            "cvegeo": "21001"
+          },
+          {
+            "nombre": "CHIETLA",
+            "personas": 17,
+            "cvegeo": "21051"
+          },
+          {
+            "nombre": "QUECHOLAC",
+            "personas": 16,
+            "cvegeo": "21115"
+          },
+          {
+            "nombre": "ESPERANZA",
+            "personas": 15,
+            "cvegeo": "21063"
+          },
+          {
+            "nombre": "PALMAR DE BRAVO",
+            "personas": 15,
+            "cvegeo": "21110"
+          },
+          {
+            "nombre": "CORONANGO",
+            "personas": 13,
+            "cvegeo": "21034"
+          },
+          {
+            "nombre": "TLAHUAPAN",
+            "personas": 12,
+            "cvegeo": "21180"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "22",
+        "id_tablero_estado": "22",
+        "entidad": "Querétaro",
+        "municipios": [
+          {
+            "nombre": "QUERÉTARO",
+            "personas": 338,
+            "cvegeo": "22014"
+          },
+          {
+            "nombre": "SAN JUAN DEL RÍO",
+            "personas": 79,
+            "cvegeo": "22016"
+          },
+          {
+            "nombre": "CORREGIDORA",
+            "personas": 57,
+            "cvegeo": "22006"
+          },
+          {
+            "nombre": "EL MARQUÉS",
+            "personas": 41,
+            "cvegeo": "22011"
+          },
+          {
+            "nombre": "AMEALCO DE BONFIL",
+            "personas": 22,
+            "cvegeo": "22001"
+          },
+          {
+            "nombre": "TEQUISQUIAPAN",
+            "personas": 19,
+            "cvegeo": "22017"
+          },
+          {
+            "nombre": "JALPAN DE SERRA",
+            "personas": 16,
+            "cvegeo": "22009"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 15,
+            "cvegeo": null
+          },
+          {
+            "nombre": "HUIMILPAN",
+            "personas": 14,
+            "cvegeo": "22008"
+          },
+          {
+            "nombre": "PEDRO ESCOBEDO",
+            "personas": 14,
+            "cvegeo": "22012"
+          },
+          {
+            "nombre": "EZEQUIEL MONTES",
+            "personas": 13,
+            "cvegeo": "22007"
+          },
+          {
+            "nombre": "LANDA DE MATAMOROS",
+            "personas": 9,
+            "cvegeo": "22010"
+          },
+          {
+            "nombre": "CADEREYTA DE MONTES",
+            "personas": 8,
+            "cvegeo": "22004"
+          },
+          {
+            "nombre": "COLÓN",
+            "personas": 7,
+            "cvegeo": "22005"
+          },
+          {
+            "nombre": "ARROYO SECO",
+            "personas": 5,
+            "cvegeo": "22003"
+          },
+          {
+            "nombre": "PINAL DE AMOLES",
+            "personas": 4,
+            "cvegeo": "22002"
+          },
+          {
+            "nombre": "TOLIMÁN",
+            "personas": 3,
+            "cvegeo": "22018"
+          },
+          {
+            "nombre": "PEÑAMILLER",
+            "personas": 3,
+            "cvegeo": "22013"
+          },
+          {
+            "nombre": "SAN JOAQUÍN",
+            "personas": 2,
+            "cvegeo": "22015"
+          },
+          {
+            "nombre": "CHIHUAHUA",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "CHIHUAHUA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "23",
+        "id_tablero_estado": "23",
+        "entidad": "Quintana Roo",
+        "municipios": [
+          {
+            "nombre": "BENITO JUÁREZ",
+            "personas": 678,
+            "cvegeo": "23005"
+          },
+          {
+            "nombre": "OTHÓN P. BLANCO",
+            "personas": 321,
+            "cvegeo": "23004"
+          },
+          {
+            "nombre": "SOLIDARIDAD",
+            "personas": 252,
+            "cvegeo": null
+          },
+          {
+            "nombre": "FELIPE CARRILLO PUERTO",
+            "personas": 103,
+            "cvegeo": "23002"
+          },
+          {
+            "nombre": "BACALAR",
+            "personas": 39,
+            "cvegeo": "23010"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 30,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ISLA MUJERES",
+            "personas": 28,
+            "cvegeo": "23003"
+          },
+          {
+            "nombre": "TULUM",
+            "personas": 24,
+            "cvegeo": "23009"
+          },
+          {
+            "nombre": "LÁZARO CÁRDENAS",
+            "personas": 22,
+            "cvegeo": "23007"
+          },
+          {
+            "nombre": "COZUMEL",
+            "personas": 18,
+            "cvegeo": "23001"
+          },
+          {
+            "nombre": "JOSÉ MARÍA MORELOS",
+            "personas": 9,
+            "cvegeo": "23006"
+          },
+          {
+            "nombre": "PUERTO MORELOS",
+            "personas": 8,
+            "cvegeo": "23011"
+          },
+          {
+            "nombre": "PLAYA DEL CARMEN",
+            "personas": 3,
+            "cvegeo": "23008"
+          },
+          {
+            "nombre": "CAMPECHE",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SOLIDARIDAD",
+          "SIN MUNICIPIO DE REFERENCIA",
+          "CAMPECHE"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "24",
+        "id_tablero_estado": "24",
+        "entidad": "San Luis Potosí",
+        "municipios": [
+          {
+            "nombre": "SAN LUIS POTOSÍ",
+            "personas": 283,
+            "cvegeo": "24028"
+          },
+          {
+            "nombre": "CIUDAD VALLES",
+            "personas": 128,
+            "cvegeo": "24013"
+          },
+          {
+            "nombre": "MATEHUALA",
+            "personas": 84,
+            "cvegeo": "24020"
+          },
+          {
+            "nombre": "RIOVERDE",
+            "personas": 81,
+            "cvegeo": "24024"
+          },
+          {
+            "nombre": "TAMUÍN",
+            "personas": 63,
+            "cvegeo": "24040"
+          },
+          {
+            "nombre": "SOLEDAD DE GRACIANO SÁNCHEZ",
+            "personas": 45,
+            "cvegeo": "24035"
+          },
+          {
+            "nombre": "TAMASOPO",
+            "personas": 40,
+            "cvegeo": "24036"
+          },
+          {
+            "nombre": "CÁRDENAS",
+            "personas": 39,
+            "cvegeo": "24005"
+          },
+          {
+            "nombre": "CIUDAD FERNÁNDEZ",
+            "personas": 35,
+            "cvegeo": "24011"
+          },
+          {
+            "nombre": "VILLA DE REYES",
+            "personas": 28,
+            "cvegeo": "24050"
+          },
+          {
+            "nombre": "RAYÓN",
+            "personas": 27,
+            "cvegeo": "24023"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 26,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CERRITOS",
+            "personas": 24,
+            "cvegeo": "24008"
+          },
+          {
+            "nombre": "EBANO",
+            "personas": 20,
+            "cvegeo": "24016"
+          },
+          {
+            "nombre": "GUADALCÁZAR",
+            "personas": 20,
+            "cvegeo": "24017"
+          },
+          {
+            "nombre": "TAMAZUNCHALE",
+            "personas": 17,
+            "cvegeo": "24037"
+          },
+          {
+            "nombre": "ZARAGOZA",
+            "personas": 16,
+            "cvegeo": "24055"
+          },
+          {
+            "nombre": "CIUDAD DEL MAÍZ",
+            "personas": 15,
+            "cvegeo": "24010"
+          },
+          {
+            "nombre": "MOCTEZUMA",
+            "personas": 15,
+            "cvegeo": "24022"
+          },
+          {
+            "nombre": "CHARCAS",
+            "personas": 13,
+            "cvegeo": "24015"
+          },
+          {
+            "nombre": "VILLA DE ARISTA",
+            "personas": 12,
+            "cvegeo": "24056"
+          },
+          {
+            "nombre": "AXTLA DE TERRAZAS",
+            "personas": 11,
+            "cvegeo": "24053"
+          },
+          {
+            "nombre": "VENADO",
+            "personas": 10,
+            "cvegeo": "24045"
+          },
+          {
+            "nombre": "SAN CIRO DE ACOSTA",
+            "personas": 10,
+            "cvegeo": "24027"
+          },
+          {
+            "nombre": "VILLA DE RAMOS",
+            "personas": 8,
+            "cvegeo": "24049"
+          },
+          {
+            "nombre": "CEDRAL",
+            "personas": 8,
+            "cvegeo": "24007"
+          },
+          {
+            "nombre": "XILITLA",
+            "personas": 8,
+            "cvegeo": "24054"
+          },
+          {
+            "nombre": "SALINAS",
+            "personas": 8,
+            "cvegeo": "24025"
+          },
+          {
+            "nombre": "AQUISMÓN",
+            "personas": 7,
+            "cvegeo": "24003"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "25",
+        "id_tablero_estado": "25",
+        "entidad": "Sinaloa",
+        "municipios": [
+          {
+            "nombre": "CULIACÁN",
+            "personas": 2246,
+            "cvegeo": "25006"
+          },
+          {
+            "nombre": "MAZATLÁN",
+            "personas": 1832,
+            "cvegeo": "25012"
+          },
+          {
+            "nombre": "AHOME",
+            "personas": 1036,
+            "cvegeo": "25001"
+          },
+          {
+            "nombre": "NAVOLATO",
+            "personas": 425,
+            "cvegeo": "25018"
+          },
+          {
+            "nombre": "GUASAVE",
+            "personas": 384,
+            "cvegeo": "25011"
+          },
+          {
+            "nombre": "EL FUERTE",
+            "personas": 234,
+            "cvegeo": "25010"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 155,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ROSARIO",
+            "personas": 154,
+            "cvegeo": "25014"
+          },
+          {
+            "nombre": "ELOTA",
+            "personas": 132,
+            "cvegeo": "25008"
+          },
+          {
+            "nombre": "ESCUINAPA",
+            "personas": 124,
+            "cvegeo": "25009"
+          },
+          {
+            "nombre": "SALVADOR ALVARADO",
+            "personas": 112,
+            "cvegeo": "25015"
+          },
+          {
+            "nombre": "CONCORDIA",
+            "personas": 103,
+            "cvegeo": "25004"
+          },
+          {
+            "nombre": "SINALOA",
+            "personas": 99,
+            "cvegeo": "25017"
+          },
+          {
+            "nombre": "ANGOSTURA",
+            "personas": 78,
+            "cvegeo": "25002"
+          },
+          {
+            "nombre": "MOCORITO",
+            "personas": 62,
+            "cvegeo": "25013"
+          },
+          {
+            "nombre": "CHOIX",
+            "personas": 58,
+            "cvegeo": "25007"
+          },
+          {
+            "nombre": "SAN IGNACIO",
+            "personas": 57,
+            "cvegeo": "25016"
+          },
+          {
+            "nombre": "BADIRAGUATO",
+            "personas": 32,
+            "cvegeo": "25003"
+          },
+          {
+            "nombre": "COSALÁ",
+            "personas": 15,
+            "cvegeo": "25005"
+          },
+          {
+            "nombre": "EL DORADO",
+            "personas": 8,
+            "cvegeo": null
+          },
+          {
+            "nombre": "PUEBLO NUEVO",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "MULEGÉ",
+            "personas": 1,
+            "cvegeo": null
+          },
+          {
+            "nombre": "JUAN JOSE RIOS",
+            "personas": 1,
+            "cvegeo": "25020"
+          },
+          {
+            "nombre": "NOGALES",
+            "personas": 1,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA",
+          "EL DORADO",
+          "PUEBLO NUEVO",
+          "MULEGÉ",
+          "NOGALES"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "26",
+        "id_tablero_estado": "26",
+        "entidad": "Sonora",
+        "municipios": [
+          {
+            "nombre": "HERMOSILLO",
+            "personas": 1233,
+            "cvegeo": "26030"
+          },
+          {
+            "nombre": "CAJEME",
+            "personas": 670,
+            "cvegeo": "26018"
+          },
+          {
+            "nombre": "NOGALES",
+            "personas": 637,
+            "cvegeo": "26043"
+          },
+          {
+            "nombre": "GUAYMAS",
+            "personas": 454,
+            "cvegeo": "26029"
+          },
+          {
+            "nombre": "CABORCA",
+            "personas": 317,
+            "cvegeo": "26017"
+          },
+          {
+            "nombre": "SAN LUIS RÍO COLORADO",
+            "personas": 305,
+            "cvegeo": "26055"
+          },
+          {
+            "nombre": "AGUA PRIETA",
+            "personas": 247,
+            "cvegeo": "26002"
+          },
+          {
+            "nombre": "PUERTO PEÑASCO",
+            "personas": 207,
+            "cvegeo": "26048"
+          },
+          {
+            "nombre": "GENERAL PLUTARCO ELÍAS CALLES",
+            "personas": 200,
+            "cvegeo": "26070"
+          },
+          {
+            "nombre": "NAVOJOA",
+            "personas": 199,
+            "cvegeo": "26042"
+          },
+          {
+            "nombre": "EMPALME",
+            "personas": 149,
+            "cvegeo": "26025"
+          },
+          {
+            "nombre": "ALTAR",
+            "personas": 146,
+            "cvegeo": "26004"
+          },
+          {
+            "nombre": "MAGDALENA",
+            "personas": 104,
+            "cvegeo": "26036"
+          },
+          {
+            "nombre": "HUATABAMPO",
+            "personas": 86,
+            "cvegeo": "26033"
+          },
+          {
+            "nombre": "CANANEA",
+            "personas": 75,
+            "cvegeo": "26019"
+          },
+          {
+            "nombre": "BÁCUM",
+            "personas": 63,
+            "cvegeo": "26012"
+          },
+          {
+            "nombre": "SANTA ANA",
+            "personas": 49,
+            "cvegeo": "26058"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 49,
+            "cvegeo": null
+          },
+          {
+            "nombre": "IMURIS",
+            "personas": 48,
+            "cvegeo": "26035"
+          },
+          {
+            "nombre": "SÁRIC",
+            "personas": 36,
+            "cvegeo": "26060"
+          },
+          {
+            "nombre": "BENITO JUÁREZ",
+            "personas": 34,
+            "cvegeo": "26071"
+          },
+          {
+            "nombre": "ALAMOS",
+            "personas": 31,
+            "cvegeo": "26003"
+          },
+          {
+            "nombre": "SAN IGNACIO RÍO MUERTO",
+            "personas": 27,
+            "cvegeo": "26072"
+          },
+          {
+            "nombre": "ETCHOJOA",
+            "personas": 26,
+            "cvegeo": "26026"
+          },
+          {
+            "nombre": "PITIQUITO",
+            "personas": 20,
+            "cvegeo": "26047"
+          },
+          {
+            "nombre": "SAN MIGUEL DE HORCASITAS",
+            "personas": 20,
+            "cvegeo": "26056"
+          },
+          {
+            "nombre": "URES",
+            "personas": 19,
+            "cvegeo": "26066"
+          },
+          {
+            "nombre": "CUCURPE",
+            "personas": 16,
+            "cvegeo": "26022"
+          },
+          {
+            "nombre": "NACOZARI DE GARCÍA",
+            "personas": 15,
+            "cvegeo": "26041"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "27",
+        "id_tablero_estado": "27",
+        "entidad": "Tabasco",
+        "municipios": [
+          {
+            "nombre": "CENTRO",
+            "personas": 751,
+            "cvegeo": "27004"
+          },
+          {
+            "nombre": "CÁRDENAS",
+            "personas": 196,
+            "cvegeo": "27002"
+          },
+          {
+            "nombre": "HUIMANGUILLO",
+            "personas": 128,
+            "cvegeo": "27008"
+          },
+          {
+            "nombre": "COMALCALCO",
+            "personas": 92,
+            "cvegeo": "27005"
+          },
+          {
+            "nombre": "NACAJUCA",
+            "personas": 85,
+            "cvegeo": "27013"
+          },
+          {
+            "nombre": "MACUSPANA",
+            "personas": 78,
+            "cvegeo": "27012"
+          },
+          {
+            "nombre": "PARAÍSO",
+            "personas": 65,
+            "cvegeo": "27014"
+          },
+          {
+            "nombre": "CUNDUACÁN",
+            "personas": 60,
+            "cvegeo": "27006"
+          },
+          {
+            "nombre": "TENOSIQUE",
+            "personas": 41,
+            "cvegeo": "27017"
+          },
+          {
+            "nombre": "TEAPA",
+            "personas": 38,
+            "cvegeo": "27016"
+          },
+          {
+            "nombre": "CENTLA",
+            "personas": 37,
+            "cvegeo": "27003"
+          },
+          {
+            "nombre": "BALANCÁN",
+            "personas": 17,
+            "cvegeo": "27001"
+          },
+          {
+            "nombre": "TACOTALPA",
+            "personas": 15,
+            "cvegeo": "27015"
+          },
+          {
+            "nombre": "JALAPA",
+            "personas": 14,
+            "cvegeo": "27009"
+          },
+          {
+            "nombre": "EMILIANO ZAPATA",
+            "personas": 12,
+            "cvegeo": "27007"
+          },
+          {
+            "nombre": "JALPA DE MÉNDEZ",
+            "personas": 11,
+            "cvegeo": "27010"
+          },
+          {
+            "nombre": "JONUTA",
+            "personas": 9,
+            "cvegeo": "27011"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 5,
+            "cvegeo": null
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "28",
+        "id_tablero_estado": "28",
+        "entidad": "Tamaulipas",
+        "municipios": [
+          {
+            "nombre": "REYNOSA",
+            "personas": 2906,
+            "cvegeo": "28032"
+          },
+          {
+            "nombre": "NUEVO LAREDO",
+            "personas": 2767,
+            "cvegeo": "28027"
+          },
+          {
+            "nombre": "MATAMOROS",
+            "personas": 2490,
+            "cvegeo": "28022"
+          },
+          {
+            "nombre": "VICTORIA",
+            "personas": 987,
+            "cvegeo": "28041"
+          },
+          {
+            "nombre": "TAMPICO",
+            "personas": 763,
+            "cvegeo": "28038"
+          },
+          {
+            "nombre": "ALTAMIRA",
+            "personas": 431,
+            "cvegeo": "28003"
+          },
+          {
+            "nombre": "VALLE HERMOSO",
+            "personas": 318,
+            "cvegeo": "28040"
+          },
+          {
+            "nombre": "SAN FERNANDO",
+            "personas": 309,
+            "cvegeo": "28035"
+          },
+          {
+            "nombre": "MIGUEL ALEMÁN",
+            "personas": 309,
+            "cvegeo": "28025"
+          },
+          {
+            "nombre": "CIUDAD MADERO",
+            "personas": 305,
+            "cvegeo": "28009"
+          },
+          {
+            "nombre": "EL MANTE",
+            "personas": 295,
+            "cvegeo": "28021"
+          },
+          {
+            "nombre": "RÍO BRAVO",
+            "personas": 260,
+            "cvegeo": "28033"
+          },
+          {
+            "nombre": "MIER",
+            "personas": 153,
+            "cvegeo": "28024"
+          },
+          {
+            "nombre": "SOTO LA MARINA",
+            "personas": 128,
+            "cvegeo": "28037"
+          },
+          {
+            "nombre": "ALDAMA",
+            "personas": 112,
+            "cvegeo": "28002"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 111,
+            "cvegeo": null
+          },
+          {
+            "nombre": "CAMARGO",
+            "personas": 100,
+            "cvegeo": "28007"
+          },
+          {
+            "nombre": "GONZÁLEZ",
+            "personas": 98,
+            "cvegeo": "28012"
+          },
+          {
+            "nombre": "JIMÉNEZ",
+            "personas": 94,
+            "cvegeo": "28018"
+          },
+          {
+            "nombre": "ABASOLO",
+            "personas": 85,
+            "cvegeo": "28001"
+          },
+          {
+            "nombre": "HIDALGO",
+            "personas": 74,
+            "cvegeo": "28016"
+          },
+          {
+            "nombre": "PADILLA",
+            "personas": 68,
+            "cvegeo": "28030"
+          },
+          {
+            "nombre": "GUSTAVO DÍAZ ORDAZ",
+            "personas": 61,
+            "cvegeo": "28015"
+          },
+          {
+            "nombre": "GUERRERO",
+            "personas": 57,
+            "cvegeo": "28014"
+          },
+          {
+            "nombre": "XICOTÉNCATL",
+            "personas": 56,
+            "cvegeo": "28043"
+          },
+          {
+            "nombre": "LLERA",
+            "personas": 48,
+            "cvegeo": "28019"
+          },
+          {
+            "nombre": "GÜÉMEZ",
+            "personas": 43,
+            "cvegeo": "28013"
+          },
+          {
+            "nombre": "JAUMAVE",
+            "personas": 26,
+            "cvegeo": "28017"
+          },
+          {
+            "nombre": "TULA",
+            "personas": 21,
+            "cvegeo": "28039"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "29",
+        "id_tablero_estado": "29",
+        "entidad": "Tlaxcala",
+        "municipios": [
+          {
+            "nombre": "APIZACO",
+            "personas": 26,
+            "cvegeo": "29005"
+          },
+          {
+            "nombre": "TLAXCALA",
+            "personas": 20,
+            "cvegeo": "29033"
+          },
+          {
+            "nombre": "CALPULALPAN",
+            "personas": 11,
+            "cvegeo": "29006"
+          },
+          {
+            "nombre": "HUAMANTLA",
+            "personas": 7,
+            "cvegeo": "29013"
+          },
+          {
+            "nombre": "SAN PABLO DEL MONTE",
+            "personas": 7,
+            "cvegeo": "29025"
+          },
+          {
+            "nombre": "ZACATELCO",
+            "personas": 7,
+            "cvegeo": "29044"
+          },
+          {
+            "nombre": "CHIAUTEMPAN",
+            "personas": 7,
+            "cvegeo": "29010"
+          },
+          {
+            "nombre": "TETLA DE LA SOLIDARIDAD",
+            "personas": 6,
+            "cvegeo": "29031"
+          },
+          {
+            "nombre": "IXTACUIXTLA DE MARIANO MATAMOROS",
+            "personas": 5,
+            "cvegeo": "29015"
+          },
+          {
+            "nombre": "XALOZTOC",
+            "personas": 4,
+            "cvegeo": "29039"
+          },
+          {
+            "nombre": "YAUHQUEMECAN",
+            "personas": 4,
+            "cvegeo": null
+          },
+          {
+            "nombre": "TEOLOCHOLCO",
+            "personas": 4,
+            "cvegeo": "29028"
+          },
+          {
+            "nombre": "TEPETITLA DE LARDIZÁBAL",
+            "personas": 4,
+            "cvegeo": "29019"
+          },
+          {
+            "nombre": "NANACAMILPA DE MARIANO ARISTA",
+            "personas": 4,
+            "cvegeo": "29021"
+          },
+          {
+            "nombre": "TLAXCO",
+            "personas": 4,
+            "cvegeo": "29034"
+          },
+          {
+            "nombre": "TOTOLAC",
+            "personas": 3,
+            "cvegeo": "29036"
+          },
+          {
+            "nombre": "PANOTLA",
+            "personas": 3,
+            "cvegeo": "29024"
+          },
+          {
+            "nombre": "NATÍVITAS",
+            "personas": 3,
+            "cvegeo": "29023"
+          },
+          {
+            "nombre": "PAPALOTLA DE XICOHTÉNCATL",
+            "personas": 3,
+            "cvegeo": "29041"
+          },
+          {
+            "nombre": "AMAXAC DE GUERRERO",
+            "personas": 3,
+            "cvegeo": "29001"
+          },
+          {
+            "nombre": "EL CARMEN TEQUEXQUITLA",
+            "personas": 3,
+            "cvegeo": "29007"
+          },
+          {
+            "nombre": "TETLATLAHUCA",
+            "personas": 2,
+            "cvegeo": "29032"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 2,
+            "cvegeo": null
+          },
+          {
+            "nombre": "SAN LUCAS TECOPILCO",
+            "personas": 2,
+            "cvegeo": "29055"
+          },
+          {
+            "nombre": "SAN JERÓNIMO ZACUALPAN",
+            "personas": 1,
+            "cvegeo": "29051"
+          },
+          {
+            "nombre": "SANTA CRUZ QUILEHTLA",
+            "personas": 1,
+            "cvegeo": "29059"
+          },
+          {
+            "nombre": "MUÑOZ DE DOMINGO ARENAS",
+            "personas": 1,
+            "cvegeo": "29011"
+          },
+          {
+            "nombre": "SAN LORENZO AXOCOMANITLA",
+            "personas": 1,
+            "cvegeo": "29054"
+          },
+          {
+            "nombre": "SANTA CRUZ TLAXCALA",
+            "personas": 1,
+            "cvegeo": "29026"
+          }
+        ],
+        "sin_match": [
+          "YAUHQUEMECAN",
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "30",
+        "id_tablero_estado": "30",
+        "entidad": "Veracruz",
+        "municipios": [
+          {
+            "nombre": "VERACRUZ",
+            "personas": 1064,
+            "cvegeo": "30193"
+          },
+          {
+            "nombre": "XALAPA",
+            "personas": 508,
+            "cvegeo": "30087"
+          },
+          {
+            "nombre": "CÓRDOBA",
+            "personas": 294,
+            "cvegeo": "30044"
+          },
+          {
+            "nombre": "POZA RICA DE HIDALGO",
+            "personas": 264,
+            "cvegeo": "30131"
+          },
+          {
+            "nombre": "COATZACOALCOS",
+            "personas": 221,
+            "cvegeo": "30039"
+          },
+          {
+            "nombre": "ORIZABA",
+            "personas": 188,
+            "cvegeo": "30118"
+          },
+          {
+            "nombre": "BOCA DEL RÍO",
+            "personas": 162,
+            "cvegeo": "30028"
+          },
+          {
+            "nombre": "PÁNUCO",
+            "personas": 131,
+            "cvegeo": "30123"
+          },
+          {
+            "nombre": "TIERRA BLANCA",
+            "personas": 113,
+            "cvegeo": "30174"
+          },
+          {
+            "nombre": "COSAMALOAPAN DE CARPIO",
+            "personas": 112,
+            "cvegeo": "30045"
+          },
+          {
+            "nombre": "TÚXPAM",
+            "personas": 100,
+            "cvegeo": null
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 92,
+            "cvegeo": null
+          },
+          {
+            "nombre": "ISLA",
+            "personas": 89,
+            "cvegeo": "30077"
+          },
+          {
+            "nombre": "LA ANTIGUA",
+            "personas": 71,
+            "cvegeo": "30016"
+          },
+          {
+            "nombre": "PLAYA VICENTE",
+            "personas": 70,
+            "cvegeo": "30130"
+          },
+          {
+            "nombre": "TEZONAPA",
+            "personas": 69,
+            "cvegeo": "30173"
+          },
+          {
+            "nombre": "TEMAPACHE",
+            "personas": 68,
+            "cvegeo": "30160"
+          },
+          {
+            "nombre": "MEDELLÍN",
+            "personas": 67,
+            "cvegeo": "30105"
+          },
+          {
+            "nombre": "ACTOPAN",
+            "personas": 63,
+            "cvegeo": "30004"
+          },
+          {
+            "nombre": "PAPANTLA",
+            "personas": 61,
+            "cvegeo": "30124"
+          },
+          {
+            "nombre": "MARTÍNEZ DE LA TORRE",
+            "personas": 61,
+            "cvegeo": "30102"
+          },
+          {
+            "nombre": "CAMERINO Z. MENDOZA",
+            "personas": 59,
+            "cvegeo": "30030"
+          },
+          {
+            "nombre": "IXTACZOQUITLÁN",
+            "personas": 59,
+            "cvegeo": "30085"
+          },
+          {
+            "nombre": "PUEBLO VIEJO",
+            "personas": 58,
+            "cvegeo": "30133"
+          },
+          {
+            "nombre": "TIHUATLÁN",
+            "personas": 53,
+            "cvegeo": "30175"
+          },
+          {
+            "nombre": "NOGALES",
+            "personas": 53,
+            "cvegeo": "30115"
+          },
+          {
+            "nombre": "COATEPEC",
+            "personas": 52,
+            "cvegeo": "30038"
+          },
+          {
+            "nombre": "ACAYUCAN",
+            "personas": 50,
+            "cvegeo": "30003"
+          },
+          {
+            "nombre": "ALVARADO",
+            "personas": 46,
+            "cvegeo": "30011"
+          }
+        ],
+        "sin_match": [
+          "TÚXPAM",
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "31",
+        "id_tablero_estado": "31",
+        "entidad": "Yucatán",
+        "municipios": [
+          {
+            "nombre": "MÉRIDA",
+            "personas": 188,
+            "cvegeo": "31050"
+          },
+          {
+            "nombre": "PROGRESO",
+            "personas": 41,
+            "cvegeo": "31059"
+          },
+          {
+            "nombre": "KANASÍN",
+            "personas": 22,
+            "cvegeo": "31041"
+          },
+          {
+            "nombre": "TIZIMÍN",
+            "personas": 18,
+            "cvegeo": "31096"
+          },
+          {
+            "nombre": "VALLADOLID",
+            "personas": 15,
+            "cvegeo": "31102"
+          },
+          {
+            "nombre": "UMÁN",
+            "personas": 10,
+            "cvegeo": "31101"
+          },
+          {
+            "nombre": "MOTUL",
+            "personas": 8,
+            "cvegeo": "31052"
+          },
+          {
+            "nombre": "IZAMAL",
+            "personas": 6,
+            "cvegeo": "31040"
+          },
+          {
+            "nombre": "TICUL",
+            "personas": 5,
+            "cvegeo": "31089"
+          },
+          {
+            "nombre": "MAXCANÚ",
+            "personas": 5,
+            "cvegeo": "31048"
+          },
+          {
+            "nombre": "OXKUTZCAB",
+            "personas": 4,
+            "cvegeo": "31056"
+          },
+          {
+            "nombre": "QUINTANA ROO",
+            "personas": 4,
+            "cvegeo": "31060"
+          },
+          {
+            "nombre": "HALACHÓ",
+            "personas": 3,
+            "cvegeo": "31033"
+          },
+          {
+            "nombre": "HOCTÚN",
+            "personas": 2,
+            "cvegeo": "31035"
+          },
+          {
+            "nombre": "SAMAHIL",
+            "personas": 2,
+            "cvegeo": "31063"
+          },
+          {
+            "nombre": "XOCCHEL",
+            "personas": 2,
+            "cvegeo": "31103"
+          },
+          {
+            "nombre": "TEMOZÓN",
+            "personas": 2,
+            "cvegeo": "31085"
+          },
+          {
+            "nombre": "HUNUCMÁ",
+            "personas": 2,
+            "cvegeo": "31038"
+          },
+          {
+            "nombre": "KINCHIL",
+            "personas": 2,
+            "cvegeo": "31044"
+          },
+          {
+            "nombre": "CANTAMAYEC",
+            "personas": 2,
+            "cvegeo": "31010"
+          },
+          {
+            "nombre": "YAXCABÁ",
+            "personas": 2,
+            "cvegeo": "31104"
+          },
+          {
+            "nombre": "CHICHIMILÁ",
+            "personas": 2,
+            "cvegeo": "31021"
+          },
+          {
+            "nombre": "UCÚ",
+            "personas": 2,
+            "cvegeo": "31100"
+          },
+          {
+            "nombre": "YOBAÍN",
+            "personas": 1,
+            "cvegeo": "31106"
+          },
+          {
+            "nombre": "TIXKOKOB",
+            "personas": 1,
+            "cvegeo": "31093"
+          },
+          {
+            "nombre": "TETIZ",
+            "personas": 1,
+            "cvegeo": "31087"
+          },
+          {
+            "nombre": "TEABO",
+            "personas": 1,
+            "cvegeo": "31075"
+          },
+          {
+            "nombre": "CACALCHÉN",
+            "personas": 1,
+            "cvegeo": "31007"
+          },
+          {
+            "nombre": "DZILAM DE BRAVO",
+            "personas": 1,
+            "cvegeo": "31028"
+          }
+        ],
+        "sin_match": [],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      },
+      {
+        "clave_inegi": "32",
+        "id_tablero_estado": "32",
+        "entidad": "Zacatecas",
+        "municipios": [
+          {
+            "nombre": "FRESNILLO",
+            "personas": 903,
+            "cvegeo": "32010"
+          },
+          {
+            "nombre": "ZACATECAS",
+            "personas": 371,
+            "cvegeo": "32056"
+          },
+          {
+            "nombre": "GUADALUPE",
+            "personas": 345,
+            "cvegeo": "32017"
+          },
+          {
+            "nombre": "JEREZ",
+            "personas": 256,
+            "cvegeo": "32020"
+          },
+          {
+            "nombre": "RÍO GRANDE",
+            "personas": 172,
+            "cvegeo": "32039"
+          },
+          {
+            "nombre": "CALERA",
+            "personas": 170,
+            "cvegeo": "32005"
+          },
+          {
+            "nombre": "OJOCALIENTE",
+            "personas": 142,
+            "cvegeo": "32036"
+          },
+          {
+            "nombre": "LORETO",
+            "personas": 111,
+            "cvegeo": "32024"
+          },
+          {
+            "nombre": "VALPARAÍSO",
+            "personas": 104,
+            "cvegeo": "32049"
+          },
+          {
+            "nombre": "PINOS",
+            "personas": 103,
+            "cvegeo": "32038"
+          },
+          {
+            "nombre": "VILLA DE COS",
+            "personas": 99,
+            "cvegeo": "32051"
+          },
+          {
+            "nombre": "VILLANUEVA",
+            "personas": 90,
+            "cvegeo": "32055"
+          },
+          {
+            "nombre": "SOMBRERETE",
+            "personas": 81,
+            "cvegeo": "32042"
+          },
+          {
+            "nombre": "CUAUHTÉMOC",
+            "personas": 74,
+            "cvegeo": "32008"
+          },
+          {
+            "nombre": "TLALTENANGO DE SÁNCHEZ ROMÁN",
+            "personas": 59,
+            "cvegeo": "32048"
+          },
+          {
+            "nombre": "TRANCOSO",
+            "personas": 58,
+            "cvegeo": "32057"
+          },
+          {
+            "nombre": "SIN MUNICIPIO DE REFERENCIA",
+            "personas": 52,
+            "cvegeo": null
+          },
+          {
+            "nombre": "MONTE ESCOBEDO",
+            "personas": 47,
+            "cvegeo": "32031"
+          },
+          {
+            "nombre": "JALPA",
+            "personas": 42,
+            "cvegeo": "32019"
+          },
+          {
+            "nombre": "NOCHISTLÁN DE MEJÍA",
+            "personas": 41,
+            "cvegeo": "32034"
+          },
+          {
+            "nombre": "TEPETONGO",
+            "personas": 39,
+            "cvegeo": "32046"
+          },
+          {
+            "nombre": "LUIS MOYA",
+            "personas": 37,
+            "cvegeo": "32025"
+          },
+          {
+            "nombre": "JUAN ALDAMA",
+            "personas": 36,
+            "cvegeo": "32022"
+          },
+          {
+            "nombre": "GENERAL ENRIQUE ESTRADA",
+            "personas": 33,
+            "cvegeo": "32013"
+          },
+          {
+            "nombre": "PÁNUCO",
+            "personas": 32,
+            "cvegeo": "32037"
+          },
+          {
+            "nombre": "SAIN ALTO",
+            "personas": 28,
+            "cvegeo": "32040"
+          },
+          {
+            "nombre": "TABASCO",
+            "personas": 27,
+            "cvegeo": "32044"
+          },
+          {
+            "nombre": "MORELOS",
+            "personas": 26,
+            "cvegeo": "32032"
+          },
+          {
+            "nombre": "GENERAL PÁNFILO NATERA",
+            "personas": 24,
+            "cvegeo": "32016"
+          }
+        ],
+        "sin_match": [
+          "SIN MUNICIPIO DE REFERENCIA"
+        ],
+        "universo": "desaparecidas_y_no_localizadas",
+        "nota": "Serie del tablero (BarChartSexoMunicipio); en entidades grandes suele limitarse a los municipios con más registros."
+      }
+    ]
+  },
+  "bloques_no_obtenidos": {}
+}

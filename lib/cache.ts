@@ -1,3 +1,5 @@
+import { kvGet, kvSet } from "@/lib/kv";
+
 export type DataStatus = "live" | "cached" | "stale" | "mock";
 
 export interface CacheEntry<T> {
@@ -7,51 +9,68 @@ export interface CacheEntry<T> {
   source?: string;
 }
 
-const store = new Map<string, CacheEntry<unknown>>();
+/**
+ * Caché con estrategia stale-while-revalidate respaldada por el KV compartido
+ * (`lib/kv.ts`): en memoria por defecto, o Upstash Redis si está configurado.
+ * Con Upstash la caché se comparte entre instancias serverless y sobrevive a
+ * cold starts, reduciendo los golpes al origen.
+ *
+ * Los datos cacheados son objetos planos serializables a JSON (no Map/Date),
+ * por lo que el round-trip por el KV es seguro.
+ */
+const CACHE_PREFIX = "rastro:cache:";
 
-export function getCached<T>(key: string): CacheEntry<T> | null {
-  return (store.get(key) as CacheEntry<T> | undefined) ?? null;
+// Retención física en el KV. Es deliberadamente mayor que la ventana "stale"
+// (que se calcula con `fetchedAt`), para conservar la última copia conocida y
+// poder servirla como último recurso si el origen está caído pasada la ventana.
+const HARD_RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
+
+async function readEntry<T>(key: string): Promise<CacheEntry<T> | null> {
+  const raw = await kvGet(CACHE_PREFIX + key);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as CacheEntry<T>;
+  } catch {
+    return null;
+  }
 }
 
-export function setCached<T>(
-  key: string,
-  data: T,
-  status: DataStatus,
-  source?: string,
-): CacheEntry<T> {
-  const entry: CacheEntry<T> = { data, fetchedAt: Date.now(), status, source };
-  store.set(key, entry);
-  return entry;
+async function writeEntry<T>(key: string, entry: CacheEntry<T>, staleTtlMs: number): Promise<void> {
+  await kvSet(CACHE_PREFIX + key, JSON.stringify(entry), Math.max(staleTtlMs, HARD_RETENTION_MS));
 }
 
-export function withCache<T>(
+export async function withCache<T>(
   key: string,
   ttlMs: number,
   staleTtlMs: number,
   fetcher: () => Promise<{ data: T; status: DataStatus; source?: string }>,
 ): Promise<CacheEntry<T>> {
-  const existing = getCached<T>(key);
+  const existing = await readEntry<T>(key);
   const age = existing ? Date.now() - existing.fetchedAt : Infinity;
 
   if (existing && age < ttlMs) {
-    return Promise.resolve({ ...existing, status: existing.status === "mock" ? "mock" : "live" });
+    return { ...existing, status: existing.status === "mock" ? "mock" : "live" };
   }
 
   if (existing && age < staleTtlMs) {
-    fetcher()
-      .then(({ data, status, source }) => setCached(key, data, status, source))
+    // Revalidación en segundo plano; la entrada vive hasta `staleTtlMs` en el KV.
+    void fetcher()
+      .then(({ data, status, source }) =>
+        writeEntry(key, { data, fetchedAt: Date.now(), status, source }, staleTtlMs),
+      )
       .catch(() => undefined);
-    return Promise.resolve({ ...existing, status: "cached" });
+    return { ...existing, status: "cached" };
   }
 
-  return fetcher()
-    .then(({ data, status, source }) => setCached(key, data, status, source))
-    .catch(() => {
-      if (existing) {
-        return { ...existing, status: "stale" as DataStatus };
-      }
-      throw new Error(`No cache for ${key}`);
-    });
+  try {
+    const { data, status, source } = await fetcher();
+    const entry: CacheEntry<T> = { data, fetchedAt: Date.now(), status, source };
+    await writeEntry(key, entry, staleTtlMs);
+    return entry;
+  } catch {
+    if (existing) return { ...existing, status: "stale" };
+    throw new Error(`No cache for ${key}`);
+  }
 }
 
 export function cacheAgeLabel(fetchedAt: number): string {

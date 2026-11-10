@@ -3,11 +3,22 @@ export interface EstadoData {
   nombre: string;
   lat: number;
   lng: number;
+  /** Personas desaparecidas y no localizadas. */
   total: number;
-  nuevos30d: number;
-  localizados: number;
+  /** null cuando la fuente no lo publica (el tablero agregado no lo hace). */
+  nuevos30d: number | null;
+  /** null cuando no puede obtenerse de la fuente. */
+  localizados: number | null;
   mujeres: number;
   hombres: number;
+  /** Registros cuyo sexo viene vacío, "indeterminado" o no clasificable. */
+  noEspecificado: number;
+  /**
+   * Población a la que se refiere el desglose por sexo. "todos" = todos los
+   * registros de la entidad, incluidas las personas localizadas, por lo que no
+   * suma `total`. Ausente cuando coincide con `total`.
+   */
+  sexoUniverso?: "desaparecidas" | "todos";
   municipioAlto: string;
 }
 
@@ -29,24 +40,18 @@ export interface MunicipioPoint {
   total: number;
 }
 
-export interface AlertaAmber {
-  id: number;
+/** Agregado municipal unido a CVEGEO (capa CSV 2023). */
+export interface MunicipioAgg {
+  cvegeo: string;
   nombre: string;
-  edad: number;
-  estado: string;
-  municipio: string;
-  fecha: string;
-  activa: boolean;
-  descripcion: string;
-  lat?: number;
-  lng?: number;
+  estadoId: string;
+  total: number;
 }
 
 export type NoticiaTipo =
   | "hallazgo"
   | "denuncia"
   | "institucional"
-  | "alerta"
   | "estadistica";
 
 export interface Noticia {
@@ -64,18 +69,6 @@ export interface Noticia {
 
 export type GeoConfidence = "exact" | "state" | "inferred" | "none";
 
-export interface TelegramPost {
-  id: string;
-  channel: string;
-  text: string;
-  url: string;
-  hora: string;
-  lat?: number;
-  lng?: number;
-  lugar?: string;
-  geoConfidence?: GeoConfidence;
-}
-
 export type DataStatus = "live" | "cached" | "stale" | "mock";
 
 export interface ApiMeta {
@@ -84,13 +77,11 @@ export interface ApiMeta {
   source?: string;
 }
 
-export type TabId = "mapa" | "alertas" | "noticias" | "datos" | "buscar";
-export type AlertaFilter = "todas" | "activas" | "cerradas";
+export type TabId = "mapa" | "noticias" | "datos" | "buscar";
 
 export type LayerId =
   | "rnpdno_estados"
   | "rnpdno_municipios"
-  | "amber_activas"
   | "noticias_geo";
 
 export interface LayerState {
@@ -103,17 +94,13 @@ export interface LayerState {
 
 export interface DashboardData {
   estados: EstadoData[];
-  alertas: AlertaAmber[];
   noticias: Noticia[];
-  telegram: TelegramPost[];
   municipios: MunicipioPoint[];
   meta: {
     rnpdno: ApiMeta;
     vad: ApiMeta;
-    amber: ApiMeta;
     news: ApiMeta;
     gdelt: ApiMeta;
-    telegram: ApiMeta;
   };
 }
 

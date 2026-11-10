@@ -1,11 +1,11 @@
 import type { RefObject } from "react";
 import type maplibregl from "maplibre-gl";
 import type { ExpressionSpecification } from "maplibre-gl";
-import type { AlertaAmber, EstadoData, MunicipioPoint, Noticia, TelegramPost } from "@/lib/types";
-import { formatNum } from "@/lib/utils";
+import type { EstadoData, MunicipioPoint, Noticia } from "@/lib/types";
+import { escapeHtml, formatNum } from "@/lib/utils";
 
 export function buildEstadoPopupHtml(estado: EstadoData): string {
-  return `<div class="rastro-popup-inner"><strong>${estado.nombre}</strong><span>${formatNum(estado.total)} registradas</span><span>+${estado.nuevos30d} este mes</span></div>`;
+  return `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} desaparecidas y no localizadas</span>${estado.nuevos30d !== null ? `<span>+${formatNum(estado.nuevos30d)} este mes</span>` : ""}</div>`;
 }
 
 export function getEstadoPopupLngLat(
@@ -60,59 +60,23 @@ export function bindPointLayerHover(
   });
 }
 
-export function buildAlertGeoJson(alertas: AlertaAmber[]) {
+export function buildNewsGeoJson(noticias: Noticia[]) {
   return {
     type: "FeatureCollection" as const,
-    features: alertas
-      .filter((alerta) => alerta.activa && alerta.lat && alerta.lng)
-      .map((alerta) => ({
+    features: noticias
+      .filter((item) => item.lat && item.lng)
+      .map((item) => ({
         type: "Feature" as const,
         geometry: {
           type: "Point" as const,
-          coordinates: [alerta.lng!, alerta.lat!],
+          coordinates: [item.lng!, item.lat!],
         },
         properties: {
-          id: alerta.id,
-          nombre: alerta.nombre,
+          id: item.id,
+          titulo: item.titulo,
+          tipo: item.tipo,
         },
       })),
-  };
-}
-
-export function buildNewsGeoJson(noticias: Noticia[], telegram: TelegramPost[]) {
-  const newsFeatures = noticias
-    .filter((item) => item.lat && item.lng)
-    .map((item) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [item.lng!, item.lat!],
-      },
-      properties: {
-        id: item.id,
-        titulo: item.titulo,
-        tipo: item.tipo,
-      },
-    }));
-
-  const tgFeatures = telegram
-    .filter((post) => post.lat && post.lng)
-    .map((post) => ({
-      type: "Feature" as const,
-      geometry: {
-        type: "Point" as const,
-        coordinates: [post.lng!, post.lat!],
-      },
-      properties: {
-        id: post.id,
-        titulo: post.text.slice(0, 80),
-        tipo: "telegram",
-      },
-    }));
-
-  return {
-    type: "FeatureCollection" as const,
-    features: [...newsFeatures, ...tgFeatures],
   };
 }
 
@@ -138,10 +102,6 @@ export const NEWS_DOT_COLOR_EXPRESSION: ExpressionSpecification = [
   "match",
   ["get", "tipo"],
   "hallazgo",
-  "#ff2d55",
-  "alerta",
-  "#ffb300",
-  "telegram",
-  "#00e5ff",
-  "#00d084",
+  "#c8102e",
+  "#0b7a52",
 ];

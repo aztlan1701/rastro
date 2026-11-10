@@ -62,15 +62,15 @@ export function InconsistenciesSection({ meta, estadoId }: InconsistenciesSectio
         extra="Vista de inconsistencias a nivel registro (muestra)."
       />
 
-      <h3 className="mb-3 font-display text-base font-bold text-white">Inconsistencias detectadas</h3>
+      <h3 className="mb-3 font-display text-base font-bold text-ink-strong">Inconsistencias detectadas</h3>
       <div className="mb-4 grid gap-3 sm:grid-cols-3">
         {[
-          { label: "ELIMINADO en público", value: summary.eliminados, color: "#ff2d55" },
-          { label: "Nombres borrados", value: summary.borrados, color: "#ff6b35" },
-          { label: "Borrados sin entidad", value: summary.borradosSinEntidad, color: "#ffb300" },
+          { label: "ELIMINADO en público", value: summary.eliminados, color: "#c8102e" },
+          { label: "Nombres borrados", value: summary.borrados, color: "#c2410c" },
+          { label: "Borrados sin entidad", value: summary.borradosSinEntidad, color: "#a16207" },
         ].map((item) => (
-          <div key={item.label} className="rounded-md border border-white/6 bg-white/[0.015] px-4 py-3">
-            <div className="text-[11px] text-[#556070] uppercase">{item.label}</div>
+          <div key={item.label} className="rounded-md border border-edge/10 bg-surface px-4 py-3">
+            <div className="text-[11px] text-muted uppercase">{item.label}</div>
             <div className="font-display mt-1 text-xl font-black" style={{ color: item.color }}>
               {formatNum(item.value)}
             </div>
@@ -78,7 +78,7 @@ export function InconsistenciesSection({ meta, estadoId }: InconsistenciesSectio
         ))}
       </div>
 
-      <p className="mb-3 text-[11px] text-[#556070]">
+      <p className="mb-3 text-[11px] text-muted">
         {loading
           ? "Cargando inconsistencias…"
           : `${formatNum(total)} registros inconsistentes · mostrando ${records.length}`}
@@ -88,15 +88,15 @@ export function InconsistenciesSection({ meta, estadoId }: InconsistenciesSectio
         {records.map((record) => (
           <li
             key={record.id}
-            className="rounded-md border border-white/6 bg-white/[0.015] px-4 py-3 text-[11px]"
+            className="rounded-md border border-edge/10 bg-surface px-4 py-3 text-[11px]"
           >
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm text-[#e8e4dc]">{record.nombreCompleto}</span>
-              <span className="rounded-sm bg-[#ff2d55]/10 px-2 py-0.5 text-[#ff2d55] uppercase">
+              <span className="text-sm text-ink">{record.nombreCompleto}</span>
+              <span className="rounded-sm bg-[#c8102e]/10 px-2 py-0.5 text-[#c8102e] uppercase">
                 {TYPE_LABELS[record.type]}
               </span>
             </div>
-            <div className="mt-1 text-[#556070]">
+            <div className="mt-1 text-muted">
               {record.entidad ? `Entidad: ${record.entidad}` : "Entidad desconocida"}
               {record.sexo ? ` · ${record.sexo}` : ""}
               {record.fecha ? ` · ${record.fecha}` : ""}

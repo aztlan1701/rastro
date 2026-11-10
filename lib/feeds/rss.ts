@@ -1,12 +1,12 @@
 import Parser from "rss-parser";
-import { RSS_FEEDS } from "@/lib/config";
+import { RSS_FEEDS, USER_AGENT } from "@/lib/config";
 import { NOTICIAS } from "@/lib/mock-data";
 import { normalizeNewsItem } from "@/lib/feeds/news-utils";
 import type { Noticia } from "@/lib/types";
 
 const parser = new Parser({
   timeout: 10000,
-  headers: { "User-Agent": "RASTRO/0.2 (+https://github.com/rastro-mx)" },
+  headers: { "User-Agent": USER_AGENT },
 });
 
 export async function fetchRssNews(): Promise<{ items: Noticia[]; usedMock: boolean }> {

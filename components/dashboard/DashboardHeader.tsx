@@ -20,23 +20,23 @@ export function DashboardHeader({
   onShowShortcuts,
 }: DashboardHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-white/7 bg-[#030508]/95 px-4 py-3 backdrop-blur-md lg:px-6">
+    <header className="sticky top-0 z-50 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-edge/12 bg-canvas/95 px-4 py-3 backdrop-blur-md lg:px-6">
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3 lg:gap-4">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#ff2d55]">
-            <div className="h-2 w-2 animate-pulse-dot rounded-full bg-[#ff2d55]" />
+          <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#c8102e]">
+            <div className="h-2 w-2 animate-pulse-dot rounded-full bg-[#c8102e]" />
           </div>
           <div className="min-w-0">
-            <div className="font-display text-lg font-black tracking-widest text-white lg:text-xl">
+            <div className="font-display text-lg font-black tracking-widest text-ink-strong lg:text-xl">
               RASTRO
             </div>
-            <div className="hidden text-[11px] tracking-[0.15em] text-[#556070] uppercase sm:block">
+            <div className="hidden text-[11px] tracking-[0.15em] text-muted uppercase sm:block">
               Personas desaparecidas · México
             </div>
           </div>
         </div>
 
-        <div className="hidden h-8 w-px bg-white/8 lg:block" />
+        <div className="hidden h-8 w-px bg-edge/8 lg:block" />
 
         <nav
           className="hidden gap-1 lg:flex"
@@ -55,8 +55,8 @@ export function DashboardHeader({
               onClick={() => onTabChange(tab.id)}
               className={`border-b-2 px-3 py-2 text-[11px] tracking-widest uppercase transition-colors ${
                 activeTab === tab.id
-                  ? "border-[#ff2d55] text-[#e8e4dc]"
-                  : "border-transparent text-[#556070] hover:text-[#aaa]"
+                  ? "border-[#c8102e] text-ink"
+                  : "border-transparent text-muted hover:text-ink-3"
               }`}
             >
               {tab.label}
@@ -66,13 +66,13 @@ export function DashboardHeader({
       </div>
 
       <div className="flex shrink-0 items-center gap-3 text-[11px]">
-        <span className="hidden text-[#556070] xl:inline">
+        <span className="hidden text-muted xl:inline">
           Fuente: RNPDNO · CNB ·{" "}
           <a
             href="https://volveradesaparecer.datacivica.org"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#556070] underline decoration-white/20 underline-offset-2 hover:text-[#aaa]"
+            className="text-muted underline decoration-edge/30 underline-offset-2 hover:text-ink-3"
           >
             Data Cívica
           </a>
@@ -83,13 +83,13 @@ export function DashboardHeader({
             onClick={onShowShortcuts}
             aria-label="Atajos de teclado"
             title="Atajos de teclado (?)"
-            className="rounded-sm border border-white/10 px-2 py-1 text-[#556070] hover:text-[#aaa]"
+            className="rounded-sm border border-edge/15 px-2 py-1 text-muted hover:text-ink-3"
           >
             ?
           </button>
         ) : null}
         {loading ? (
-          <span className="tracking-widest text-[#556070] uppercase">Cargando…</span>
+          <span className="tracking-widest text-muted uppercase">Cargando…</span>
         ) : hideStatusBadge ? null : (
           <DataStatusBadge meta={meta} />
         )}

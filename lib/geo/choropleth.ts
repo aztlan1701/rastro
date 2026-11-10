@@ -11,20 +11,17 @@ export interface ChoroplethStop {
 
 /** Shared choropleth thresholds — keep in sync with getColor() in lib/utils.ts */
 export const CHOROPLETH_STOPS: ChoroplethStop[] = [
-  { threshold: 0, color: "#4a9eff", label: "<2,000", desc: "Incidencia baja" },
-  { threshold: 2000, color: "#ffd700", label: "2,000–3,500", desc: "Incidencia media" },
-  { threshold: 3500, color: "#ffb347", label: "3,500–5,000", desc: "Incidencia media-alta" },
-  { threshold: 5000, color: "#ff6b35", label: "5,000–7,000", desc: "Incidencia alta" },
-  { threshold: 7000, color: "#ff2d55", label: ">7,000", desc: "Incidencia muy alta" },
+  { threshold: 0, color: "#fcd9b6", label: "<2,000", desc: "Incidencia baja" },
+  { threshold: 2000, color: "#f9a86c", label: "2,000–3,500", desc: "Incidencia media" },
+  { threshold: 3500, color: "#ee7440", label: "3,500–5,000", desc: "Incidencia media-alta" },
+  { threshold: 5000, color: "#d43d2a", label: "5,000–7,000", desc: "Incidencia alta" },
+  { threshold: 7000, color: "#9f1239", label: ">7,000", desc: "Incidencia muy alta" },
 ];
 
 export const MAP_MARKER_LEGEND = [
-  { color: "#ffb300", label: "Alerta AMBER" },
-  { color: "#4a9eff", label: "Municipio RNPDNO" },
-  { color: "#ff2d55", label: "Noticia hallazgo" },
-  { color: "#ffb300", label: "Noticia alerta" },
-  { color: "#00e5ff", label: "Telegram geo" },
-  { color: "#00d084", label: "Otras noticias geo" },
+  { color: "#1f6fd0", label: "Municipio RNPDNO" },
+  { color: "#c8102e", label: "Noticia hallazgo" },
+  { color: "#0b7a52", label: "Otras noticias geo" },
 ] as const;
 
 export function maplibreChoroplethExpression(): ExpressionSpecification {
@@ -36,13 +33,35 @@ export function maplibreChoroplethExpression(): ExpressionSpecification {
   return expression as ExpressionSpecification;
 }
 
+/** Escala para conteos municipales (órdenes de magnitud menores que estatales). */
+export const MUNICIPAL_CHOROPLETH_STOPS: ChoroplethStop[] = [
+  { threshold: 0, color: "#fcd9b6", label: "<50", desc: "Incidencia baja" },
+  { threshold: 50, color: "#f9a86c", label: "50–150", desc: "Incidencia media" },
+  { threshold: 150, color: "#ee7440", label: "150–400", desc: "Incidencia media-alta" },
+  { threshold: 400, color: "#d43d2a", label: "400–1,000", desc: "Incidencia alta" },
+  { threshold: 1000, color: "#9f1239", label: ">1,000", desc: "Incidencia muy alta" },
+];
+
+export function maplibreMunicipalChoroplethExpression(): ExpressionSpecification {
+  const [, ...steps] = MUNICIPAL_CHOROPLETH_STOPS;
+  const expression: unknown[] = [
+    "step",
+    ["coalesce", ["get", "total"], 0],
+    MUNICIPAL_CHOROPLETH_STOPS[0].color,
+  ];
+  for (const stop of steps) {
+    expression.push(stop.threshold, stop.color);
+  }
+  return expression as ExpressionSpecification;
+}
+
 export function getChoroplethLegendItems() {
   return [
-    { color: "#ff2d55", label: ">7,000", desc: "Incidencia muy alta" },
-    { color: "#ff6b35", label: "5,000–7,000", desc: "Incidencia alta" },
-    { color: "#ffb347", label: "3,500–5,000", desc: "Incidencia media-alta" },
-    { color: "#ffd700", label: "2,000–3,500", desc: "Incidencia media" },
-    { color: "#4a9eff", label: "<2,000", desc: "Incidencia baja" },
+    { color: "#9f1239", label: ">7,000", desc: "Incidencia muy alta" },
+    { color: "#d43d2a", label: "5,000–7,000", desc: "Incidencia alta" },
+    { color: "#ee7440", label: "3,500–5,000", desc: "Incidencia media-alta" },
+    { color: "#f9a86c", label: "2,000–3,500", desc: "Incidencia media" },
+    { color: "#fcd9b6", label: "<2,000", desc: "Incidencia baja" },
   ];
 }
 

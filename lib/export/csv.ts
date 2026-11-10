@@ -1,6 +1,8 @@
 export function escapeCsvValue(value: string | number | boolean | undefined | null): string {
   if (value === undefined || value === null) return "";
-  const text = String(value);
+  let text = String(value);
+  // Spreadsheets run cells starting with these characters as formulas; names come from third-party files.
+  if (typeof value === "string" && /^[=+\-@\t\r]/.test(text)) text = `'${text}`;
   if (/[",\n\r]/.test(text)) return `"${text.replace(/"/g, '""')}"`;
   return text;
 }

@@ -5,7 +5,6 @@ const KEYWORDS: Record<NoticiaTipo, string[]> = {
   hallazgo: ["hallazgo", "fosa", "restos", "localiz", "encontrad"],
   denuncia: ["denuncia", "obstaculiz", "amenaza", "exige", "presunto"],
   institucional: ["cnbp", "cndh", "convenio", "plataforma", "gobierno", "fiscal"],
-  alerta: ["alerta amber", "alerta alba", "amber", "alba"],
   estadistica: ["aumento", "reporte", "estadist", "porcentaje", "semestre"],
 };
 
@@ -59,7 +58,7 @@ export function normalizeNewsItem(input: {
     hora: relativeTime(input.publishedAt),
     estado: extractEstadoFromText(titulo),
     tipo: classifyNews(titulo),
-    url: input.url,
+    url: input.url && /^https?:\/\//i.test(input.url) ? input.url : undefined,
     lat: input.lat,
     lng: input.lng,
     geoConfidence: input.lat && input.lng ? inferred ?? "state" : inferred ?? "none",

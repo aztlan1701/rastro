@@ -1,6 +1,5 @@
-import { buildMeta, jsonResponse } from "@/lib/api-response";
-import { withCache } from "@/lib/cache";
-import { CACHE_STALE, CACHE_TTL, DATACIVICA } from "@/lib/config";
+import { buildMeta, jsonResponseNoIndex as jsonResponse } from "@/lib/api-response";
+import { DATACIVICA } from "@/lib/config";
 import { checkRateLimit } from "@/lib/rate-limit";
 import type { PersonSearchFilters } from "@/lib/types";
 import {
@@ -16,7 +15,7 @@ function clientKey(request: Request): string {
 
 export async function GET(request: Request) {
   try {
-    if (!checkRateLimit(`buscar:${clientKey(request)}`, 30, 60_000)) {
+    if (!(await checkRateLimit(`buscar:${clientKey(request)}`, 30, 60_000))) {
       return jsonResponse({ error: "Demasiadas búsquedas. Intente de nuevo en un minuto." }, { status: 429 });
     }
 
@@ -43,29 +42,19 @@ export async function GET(request: Request) {
       });
     }
 
-    const cacheKey = `buscar:${query.toLowerCase()}:${limit}:${JSON.stringify(filters)}`;
-
-    const entry = await withCache(
-      cacheKey,
-      CACHE_TTL.rnpdno,
-      CACHE_STALE.rnpdno,
-      async () => {
-        const result = await searchPersonRecords(query, limit, filters);
-        return {
-          data: result,
-          status: result.usedMock ? ("mock" as const) : ("live" as const),
-          source: result.usedMock ? "mock-data" : DATACIVICA.site,
-        };
-      },
+    // Las consultas se responden desde el índice en memoria y nunca se guardan
+    // en caché: la caché puede residir en un KV externo y conservaría los nombres buscados.
+    const { results, total, query: normalizedQuery, usedMock } = await searchPersonRecords(
+      query,
+      limit,
+      filters,
     );
-
-    const { results, total, query: normalizedQuery, usedMock } = entry.data;
 
     return jsonResponse({
       results,
       total,
       query: normalizedQuery,
-      meta: buildMeta(entry.status, entry.fetchedAt, entry.source),
+      meta: buildMeta(usedMock ? "mock" : "live", Date.now(), usedMock ? "mock-data" : DATACIVICA.site),
       mock: usedMock,
     });
   } catch (error) {

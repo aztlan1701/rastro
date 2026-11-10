@@ -12,10 +12,10 @@ const STATUS_LABEL: Record<DataStatus, string> = {
 };
 
 const STATUS_COLOR: Record<DataStatus, string> = {
-  live: "#00ff88",
-  cached: "#4a9eff",
-  stale: "#ffb300",
-  mock: "#ffb300",
+  live: "#0b7a52",
+  cached: "#1f6fd0",
+  stale: "#a16207",
+  mock: "#a16207",
 };
 
 interface DataStatusBadgeProps {
