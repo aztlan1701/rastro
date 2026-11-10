@@ -3,13 +3,22 @@ export interface EstadoData {
   nombre: string;
   lat: number;
   lng: number;
+  /** Personas desaparecidas y no localizadas. */
   total: number;
-  nuevos30d: number;
-  localizados: number;
+  /** null cuando la fuente no lo publica (el tablero agregado no lo hace). */
+  nuevos30d: number | null;
+  /** null cuando no puede obtenerse de la fuente. */
+  localizados: number | null;
   mujeres: number;
   hombres: number;
   /** Registros cuyo sexo viene vacío, "indeterminado" o no clasificable. */
   noEspecificado: number;
+  /**
+   * Población a la que se refiere el desglose por sexo. "todos" = todos los
+   * registros de la entidad, incluidas las personas localizadas, por lo que no
+   * suma `total`. Ausente cuando coincide con `total`.
+   */
+  sexoUniverso?: "desaparecidas" | "todos";
   municipioAlto: string;
 }
 

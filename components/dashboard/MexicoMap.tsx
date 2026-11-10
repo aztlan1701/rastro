@@ -183,6 +183,7 @@ export function MexicoMap({
   const onMunicipiosLoadedRef = useRef(onMunicipiosLoaded);
   const lastMunicipiosCountRef = useRef<number | null>(null);
   const municipalFuenteRef = useRef("CSV sep-2023");
+  const municipalUnidadRef = useRef("registros (incluye localizadas)");
 
   useEffect(() => {
     onMunicipiosLoadedRef.current = onMunicipiosLoaded;
@@ -324,6 +325,7 @@ export function MexicoMap({
               return response.json() as Promise<{
                 municipios: MunicipioAgg[];
                 fuente?: string;
+                universo?: string;
               }>;
             },
           ),
@@ -337,6 +339,10 @@ export function MexicoMap({
         source?.setData(merged);
         municipalFuenteRef.current =
           aggResponse.fuente === "cnb-tablero" ? "tablero CNB" : "CSV sep-2023";
+        municipalUnidadRef.current =
+          aggResponse.universo === "desaparecidas_y_no_localizadas"
+            ? "desaparecidas y no localizadas"
+            : "registros (incluye localizadas)";
         reportCount(aggResponse.municipios.length);
         syncMapLayers();
       } catch {
@@ -466,7 +472,7 @@ export function MexicoMap({
         popup
           .setLngLat(event.lngLat)
           .setHTML(
-            `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} registradas · clic para fijar</span></div>`,
+            `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} desaparecidas y no localizadas · clic para fijar</span></div>`,
           )
           .addTo(map);
       });
@@ -497,7 +503,7 @@ export function MexicoMap({
           popup
             .setLngLat(event.lngLat)
             .setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} registradas · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
             )
             .addTo(map);
           return;
@@ -541,7 +547,7 @@ export function MexicoMap({
         popup
           .setLngLat(event.lngLat)
           .setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} registradas · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
           )
           .addTo(map);
       });

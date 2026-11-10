@@ -59,6 +59,13 @@ export function MethodologyPageContent() {
         <h2 className="font-display text-lg font-bold text-ink-strong">Limitaciones conocidas</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-3">
           <li>
+            El total por estado cuenta personas desaparecidas y no localizadas. En el corte del 16
+            de septiembre de 2026, el desglose por sexo y los totales municipales cuentan todos los
+            registros, incluidas las personas localizadas, y la interfaz lo señala. Las personas
+            localizadas se calculan restando ambas cifras. La ingesta ya solicita el mismo universo
+            para todos los bloques; aplicará al regenerar el corte.
+          </li>
+          <li>
             Mapa y ranking usan agregados del tablero CNB (snapshot). La búsqueda por nombre y las
             inconsistencias siguen en CSV con corte sep 2023 / reconstrucciones Data Cívica.
           </li>

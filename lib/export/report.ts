@@ -1,7 +1,7 @@
 import { rowsToCsv } from "@/lib/export/csv";
 import { SOURCE_CATALOG, USAGE_DISCLAIMER } from "@/lib/source-catalog";
 import type { EstadoData, PersonSearchResult, VadSummary } from "@/lib/types";
-import { formatNum } from "@/lib/utils";
+import { formatNum, formatNumOrDash } from "@/lib/utils";
 
 /** Escapa texto que se interpola en el HTML del informe para evitar inyección. */
 function escapeHtml(value: string): string {
@@ -28,6 +28,7 @@ export function buildEstadoReportHtml({
   simulated = false,
 }: EstadoReportInput): string {
   const borrados = vad?.porEstado.find((item) => item.estadoId === estado.id)?.borrados ?? 0;
+  const sexoNota = estado.sexoUniverso === "todos" ? " *" : "";
   const generatedAt = new Date().toLocaleString("es-MX", { timeZone: "America/Mexico_City" });
 
   return `<!DOCTYPE html>
@@ -57,12 +58,17 @@ ${
 }  <h2>RNPDNO (${simulated ? "datos simulados" : "agregados tablero CNB"})</h2>
   <table>
     <tr><th>Indicador</th><th>Valor</th></tr>
-    <tr><td>Total registradas (agregado estatal)</td><td>${formatNum(estado.total)}</td></tr>
-    <tr><td>Mujeres</td><td>${formatNum(estado.mujeres)}</td></tr>
-    <tr><td>Hombres</td><td>${formatNum(estado.hombres)}</td></tr>
-    <tr><td>Sexo no especificado</td><td>${formatNum(estado.noEspecificado)}</td></tr>
+    <tr><td>Personas desaparecidas y no localizadas</td><td>${formatNum(estado.total)}</td></tr>
+    <tr><td>Personas localizadas</td><td>${formatNumOrDash(estado.localizados)}</td></tr>
+    <tr><td>Mujeres${sexoNota}</td><td>${formatNum(estado.mujeres)}</td></tr>
+    <tr><td>Hombres${sexoNota}</td><td>${formatNum(estado.hombres)}</td></tr>
+    <tr><td>Sexo no especificado${sexoNota}</td><td>${formatNum(estado.noEspecificado)}</td></tr>
   </table>
-  <p class="meta">Nota: el tablero agregado no publica “nuevos 30 días”, localizados ni municipio alto en este snapshot. La búsqueda por nombre sigue usando el CSV público sep 2023.</p>
+  <p class="meta">Nota: “localizadas” se obtiene restando las personas desaparecidas y no localizadas a todos los registros de la entidad; una raya indica que no pudo calcularse.${
+    sexoNota
+      ? " * El desglose por sexo cuenta todos los registros de la entidad, incluidas las personas localizadas, por lo que no suma el total de desaparecidas."
+      : ""
+  } El tablero agregado no publica “nuevos 30 días” ni municipio con más registros. La búsqueda por nombre sigue usando el CSV público sep 2023.</p>
 
   <h2>Data Cívica — Volver a Desaparecer</h2>
   <table>
@@ -107,23 +113,27 @@ export function buildSearchResultsCsv(results: PersonSearchResult[]): string {
 export function buildEstadosTableCsv(estados: EstadoData[]): string {
   const headers = [
     "estado",
-    "total",
+    "desaparecidas_y_no_localizadas",
     "nuevos_30d",
     "mujeres",
     "hombres",
     "no_especificado",
-    "localizados",
-    "pct_localizados",
+    "universo_sexo",
+    "localizadas",
+    "pct_localizadas_sobre_registros",
   ];
   const rows = estados.map((estado) => [
     estado.nombre,
     estado.total,
-    estado.nuevos30d,
+    estado.nuevos30d ?? "",
     estado.mujeres,
     estado.hombres,
     estado.noEspecificado,
-    estado.localizados,
-    estado.total > 0 ? ((estado.localizados / estado.total) * 100).toFixed(1) : "0",
+    estado.sexoUniverso === "todos" ? "todos_los_registros" : "desaparecidas_y_no_localizadas",
+    estado.localizados ?? "",
+    estado.localizados !== null && estado.total + estado.localizados > 0
+      ? ((estado.localizados / (estado.total + estado.localizados)) * 100).toFixed(1)
+      : "",
   ]);
   return rowsToCsv(headers, rows);
 }

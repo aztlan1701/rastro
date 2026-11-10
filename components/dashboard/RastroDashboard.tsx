@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 
 import { useDashboardKeyboard } from "@/hooks/useDashboardKeyboard";
 import { useRastroData } from "@/hooks/useRastroData";
 import type { EstadoData, TabId } from "@/lib/types";
+import { sumOrNull } from "@/lib/utils";
 import { DashboardHeader } from "./DashboardHeader";
 import { DataFallbackBanner } from "./DataFallbackBanner";
 import { DataTab } from "./DataTab";
@@ -90,8 +91,8 @@ export function RastroDashboard() {
 
   const totals = useMemo(() => {
     const totalNacional = estados.reduce((sum, estado) => sum + estado.total, 0);
-    const totalNuevos = estados.reduce((sum, estado) => sum + estado.nuevos30d, 0);
-    const totalLocalizados = estados.reduce((sum, estado) => sum + estado.localizados, 0);
+    const totalNuevos = sumOrNull(estados.map((estado) => estado.nuevos30d));
+    const totalLocalizados = sumOrNull(estados.map((estado) => estado.localizados));
 
     return buildStats(
       totalNacional,

@@ -82,6 +82,19 @@ FILTRO_NEUTRO: dict[str, str] = {
 }
 
 
+# Valores de `idEstatusVictima` según el selector "Estatus" del propio tablero.
+ESTATUS_TODOS = "0"  # desaparecidas, no localizadas y localizadas
+ESTATUS_DESAPARECIDAS = "7"  # desaparecidas y no localizadas
+
+UNIVERSO_TODOS = "todos_los_registros"
+UNIVERSO_DESAPARECIDAS = "desaparecidas_y_no_localizadas"
+
+
+def _filtro(estatus: str = ESTATUS_TODOS, **extra: str) -> dict[str, str]:
+    """Filtro del tablero para un estatus dado; el resto queda sin recorte."""
+    return dict(FILTRO_NEUTRO, idEstatusVictima=estatus, **extra)
+
+
 class ErrorIngesta(RuntimeError):
     """Falla irrecuperable durante la ingesta."""
 
@@ -266,20 +279,26 @@ def _serie_por_categoria(crudo: dict[str, Any]) -> list[dict[str, Any]]:
     return salida
 
 
-def obtener_por_anio(cliente: Cliente) -> list[dict[str, Any]]:
-    cuerpo = dict(FILTRO_NEUTRO, subtitulo="POR AÑO")
+def obtener_por_anio(
+    cliente: Cliente, estatus: str = ESTATUS_TODOS,
+) -> list[dict[str, Any]]:
+    cuerpo = _filtro(estatus, subtitulo="POR AÑO")
     crudo = cliente.post_json("/SocioDemografico/AreaChartSexoAnio", cuerpo)
     return _serie_por_categoria(crudo)
 
 
-def obtener_por_rango_edad(cliente: Cliente) -> list[dict[str, Any]]:
-    cuerpo = dict(FILTRO_NEUTRO, subtitulo="POR RANGO DE EDAD")
+def obtener_por_rango_edad(
+    cliente: Cliente, estatus: str = ESTATUS_TODOS,
+) -> list[dict[str, Any]]:
+    cuerpo = _filtro(estatus, subtitulo="POR RANGO DE EDAD")
     crudo = cliente.post_json("/SocioDemografico/AreaChartSexoRango", cuerpo)
     return _serie_por_categoria(crudo)
 
 
-def obtener_por_entidad_y_sexo(cliente: Cliente) -> list[dict[str, Any]]:
-    cuerpo = dict(FILTRO_NEUTRO, subtitulo="POR ENTIDAD")
+def obtener_por_entidad_y_sexo(
+    cliente: Cliente, estatus: str = ESTATUS_TODOS,
+) -> list[dict[str, Any]]:
+    cuerpo = _filtro(estatus, subtitulo="POR ENTIDAD")
     crudo = cliente.post_json("/SocioDemografico/BarChartSexoEstados", cuerpo)
     return _serie_por_categoria(crudo)
 
@@ -345,6 +364,9 @@ def obtener_por_municipio_por_entidad(
     """
     Una petición por entidad a BarChartSexoMunicipio.
 
+    Se piden solo personas desaparecidas y no localizadas, el mismo universo que
+    el mapa estatal (`por_entidad`), para que ambos niveles sean comparables.
+
     El tablero suele devolver todos los municipios en entidades pequeñas y
     ~top 30 en las grandes. Los nombres se unen a CVEGEO vía el catálogo local.
     """
@@ -353,7 +375,9 @@ def obtener_por_municipio_por_entidad(
 
     for n in range(1, 33):
         cve_ent = f"{n:02d}"
-        cuerpo = dict(FILTRO_NEUTRO, subtitulo="POR MUNICIPIO", idEstado=str(n))
+        cuerpo = _filtro(
+            ESTATUS_DESAPARECIDAS, subtitulo="POR MUNICIPIO", idEstado=str(n),
+        )
         crudo = cliente.post_json("/SocioDemografico/BarChartSexoMunicipio", cuerpo)
         categorias = crudo.get("XAxisCategories") or []
         series = crudo.get("Series") or []
@@ -390,6 +414,7 @@ def obtener_por_municipio_por_entidad(
             "entidad": NOMBRE_ENTIDAD[cve_ent],
             "municipios": municipios,
             "sin_match": sin_match,
+            "universo": UNIVERSO_DESAPARECIDAS,
             "nota": (
                 "Serie del tablero (BarChartSexoMunicipio); en entidades grandes "
                 "suele limitarse a los municipios con más registros."
@@ -415,12 +440,22 @@ def ingerir(
     bloques: dict[str, Any] = {}
     fallas: dict[str, str] = {}
 
+    # Los bloques sin sufijo cuentan todos los registros (incluye localizadas);
+    # los `_desaparecidas` cuentan solo personas desaparecidas y no localizadas,
+    # el universo de `por_entidad`. Se guardan ambos para no mezclarlos.
     tareas = {
         "totales": obtener_totales,
         "por_entidad": obtener_entidades,
         "por_anio_y_sexo": obtener_por_anio,
         "por_rango_edad_y_sexo": obtener_por_rango_edad,
         "por_entidad_y_sexo": obtener_por_entidad_y_sexo,
+        "por_anio_y_sexo_desaparecidas": lambda c: obtener_por_anio(c, ESTATUS_DESAPARECIDAS),
+        "por_rango_edad_y_sexo_desaparecidas": lambda c: obtener_por_rango_edad(
+            c, ESTATUS_DESAPARECIDAS,
+        ),
+        "por_entidad_y_sexo_desaparecidas": lambda c: obtener_por_entidad_y_sexo(
+            c, ESTATUS_DESAPARECIDAS,
+        ),
     }
     for nombre, funcion in tareas.items():
         try:
@@ -457,6 +492,12 @@ def ingerir(
             "consultado_utc": consultado,
             "desfase_declarado_por_la_fuente": "no mayor a cinco minutos",
             "alcance": alcance,
+            "universos": {
+                "por_entidad": UNIVERSO_DESAPARECIDAS,
+                "bloques_sin_sufijo": UNIVERSO_TODOS,
+                "bloques_desaparecidas": UNIVERSO_DESAPARECIDAS,
+                "por_municipio": UNIVERSO_DESAPARECIDAS,
+            },
             "peticiones_realizadas": cliente._peticiones,
         },
         "datos": bloques,

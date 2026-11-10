@@ -1,7 +1,7 @@
 import { EmptyState } from "@/components/ui/EmptyState";
 import { buildEstadosTableCsv } from "@/lib/export/report";
 import type { ApiMeta, EstadoData, VadSummary } from "@/lib/types";
-import { formatNum, getColor, sortEstadosByTotal } from "@/lib/utils";
+import { formatNum, formatNumOrDash, getColor, sortEstadosByTotal } from "@/lib/utils";
 import { ExportButton } from "./ExportButton";
 import { InconsistenciesSection } from "./InconsistenciesSection";
 import { SourceMetaBar } from "./SourceMetaBar";
@@ -15,6 +15,13 @@ interface DataTabProps {
   onGoToMap: () => void;
 }
 
+/** Proporción de localizadas sobre todos los registros de la entidad. */
+function pctLocalizados(estado: EstadoData): string {
+  if (estado.localizados === null) return "—";
+  const registros = estado.total + estado.localizados;
+  return registros > 0 ? `${((estado.localizados / registros) * 100).toFixed(1)}%` : "—";
+}
+
 export function DataTab({
   estados,
   vad,
@@ -24,6 +31,7 @@ export function DataTab({
   onGoToMap,
 }: DataTabProps) {
   const ranked = sortEstadosByTotal(estados);
+  const sexoNota = estados.some((estado) => estado.sexoUniverso === "todos") ? " *" : "";
   const pctEliminados =
     vad && vad.totalRegistrosPublico > 0
       ? ((vad.totalEliminadosEnPublico / vad.totalRegistrosPublico) * 100).toFixed(1)
@@ -248,6 +256,14 @@ export function DataTab({
         />
       </div>
       <SourceMetaBar sourceId="rnpdno" meta={rnpdnoMeta} />
+      <p className="mb-4 text-[11px] leading-relaxed text-muted">
+        “Desaparecidas” son personas desaparecidas y no localizadas. “Localizadas” se obtiene
+        restando esa cifra a todos los registros de la entidad. “% Loc.” es la proporción de
+        localizadas sobre todos los registros. Una raya indica que la fuente no publica el dato.
+        {sexoNota
+          ? " * Mujeres y hombres cuentan todos los registros, incluidas las personas localizadas."
+          : ""}
+      </p>
 
       {ranked.length === 0 ? (
         <EmptyState
@@ -260,7 +276,7 @@ export function DataTab({
           <table className="w-full min-w-[640px] border-collapse text-[11px]">
             <thead>
               <tr className="border-b border-edge/12">
-                {["Estado", "Total", "Nuevos 30d", "Mujeres", "Hombres", "Localizados", "% Loc."].map(
+                {["Estado", "Desaparecidas", "Nuevos 30d", `Mujeres${sexoNota}`, `Hombres${sexoNota}`, "Localizadas", "% Loc."].map(
                   (header) => (
                     <th
                       key={header}
@@ -312,7 +328,7 @@ export function DataTab({
                     {formatNum(estado.total)}
                   </td>
                   <td className="px-3 py-2.5 text-right text-[#c2410c]">
-                    +{estado.nuevos30d}
+                    {estado.nuevos30d === null ? "—" : `+${formatNum(estado.nuevos30d)}`}
                   </td>
                   <td className="px-3 py-2.5 text-right text-[#be3d7a]">
                     {formatNum(estado.mujeres)}
@@ -321,10 +337,10 @@ export function DataTab({
                     {formatNum(estado.hombres)}
                   </td>
                   <td className="px-3 py-2.5 text-right text-[#0b7a52]">
-                    {formatNum(estado.localizados)}
+                    {formatNumOrDash(estado.localizados)}
                   </td>
                   <td className="px-3 py-2.5 text-right text-ink-4">
-                    {((estado.localizados / estado.total) * 100).toFixed(1)}%
+                    {pctLocalizados(estado)}
                   </td>
                 </tr>
               ))}

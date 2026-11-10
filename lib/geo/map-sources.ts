@@ -5,7 +5,7 @@ import type { EstadoData, MunicipioPoint, Noticia } from "@/lib/types";
 import { escapeHtml, formatNum } from "@/lib/utils";
 
 export function buildEstadoPopupHtml(estado: EstadoData): string {
-  return `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} registradas</span><span>+${estado.nuevos30d} este mes</span></div>`;
+  return `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} desaparecidas y no localizadas</span>${estado.nuevos30d !== null ? `<span>+${formatNum(estado.nuevos30d)} este mes</span>` : ""}</div>`;
 }
 
 export function getEstadoPopupLngLat(

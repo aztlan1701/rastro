@@ -46,10 +46,10 @@ export function MapLegend({ defaultCollapsedOnMobile = true }: MapLegendProps) {
       {open ? (
         <div id={panelId} className="border-t border-edge/10 px-3 pt-2 pb-3">
           <div className="mb-1 text-[11px] font-medium text-ink-2">
-            Casos registradas por estado (RNPDNO)
+            Personas desaparecidas y no localizadas por estado (RNPDNO)
           </div>
           <p className="mb-2 text-[11px] leading-snug text-faint">
-            Límites estatales oficiales (GeoJSON) · datos RNPDNO sep 2023
+            Límites estatales oficiales (GeoJSON) · agregados del tablero de la CNB
           </p>
           {LEGEND.map((item) => (
             <div key={item.label} className="mb-1.5">

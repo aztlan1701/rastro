@@ -64,6 +64,14 @@ export interface RnpdnoAgregadosProcedencia {
   peticiones_realizadas: number;
 }
 
+export interface SeriePorCategoria {
+  serie: string;
+  valores: Array<{ categoria: string; personas: number | null }>;
+}
+
+/** Universo de un bloque del snapshot: quiénes cuentan en sus cifras. */
+export type UniversoRnpdno = "desaparecidas_y_no_localizadas" | "todos_los_registros";
+
 export interface RnpdnoAgregadosSnapshot {
   procedencia: RnpdnoAgregadosProcedencia;
   datos: {
@@ -74,10 +82,10 @@ export interface RnpdnoAgregadosSnapshot {
       entidad: string;
       personas: number | null;
     }>;
-    por_entidad_y_sexo?: Array<{
-      serie: string;
-      valores: Array<{ categoria: string; personas: number | null }>;
-    }>;
+    /** Todos los registros de la entidad, incluidas las personas localizadas. */
+    por_entidad_y_sexo?: SeriePorCategoria[];
+    /** Solo personas desaparecidas y no localizadas (ingestas posteriores a nov. 2026). */
+    por_entidad_y_sexo_desaparecidas?: SeriePorCategoria[];
     por_anio_y_sexo?: unknown;
     por_rango_edad_y_sexo?: unknown;
     por_municipio?: Array<{
@@ -91,6 +99,8 @@ export interface RnpdnoAgregadosSnapshot {
       }>;
       sin_match?: string[];
       nota?: string;
+      /** Ausente en snapshots antiguos, que se pidieron sin filtro de estatus. */
+      universo?: UniversoRnpdno;
     }>;
   };
   bloques_no_obtenidos?: Record<string, string>;
@@ -132,7 +142,13 @@ function sexoMapFromSeries(
 }
 
 export function mapAgregadosToEstados(snapshot: RnpdnoAgregadosSnapshot): EstadoData[] {
-  const sexoPorEstado = sexoMapFromSeries(snapshot.datos.por_entidad_y_sexo);
+  // Dos universos distintos: `por_entidad` cuenta personas desaparecidas y no
+  // localizadas; `por_entidad_y_sexo` cuenta todos los registros (incluye
+  // localizadas). No deben mezclarse sin rotularlos.
+  const sexoTodos = sexoMapFromSeries(snapshot.datos.por_entidad_y_sexo);
+  const sexoDesaparecidas = sexoMapFromSeries(snapshot.datos.por_entidad_y_sexo_desaparecidas);
+  const haySexoDesaparecidas = sexoDesaparecidas.size > 0;
+  const sexoPorEstado = haySexoDesaparecidas ? sexoDesaparecidas : sexoTodos;
   const estados: EstadoData[] = [];
 
   for (const fila of snapshot.datos.por_entidad ?? []) {
@@ -147,18 +163,28 @@ export function mapAgregadosToEstados(snapshot: RnpdnoAgregadosSnapshot): Estado
       noEspecificado: 0,
     };
 
+    const total = fila.personas ?? 0;
+
+    // Localizadas = todos los registros de la entidad − desaparecidas y no
+    // localizadas. A nivel nacional la resta reproduce el total que publica el
+    // tablero; si falta el bloque o la resta no es coherente, queda sin dato.
+    const todos = sexoTodos.get(catalog.id);
+    const registros = todos ? todos.mujeres + todos.hombres + todos.noEspecificado : null;
+    const localizados = registros !== null && registros >= total ? registros - total : null;
+
     estados.push({
       id: catalog.id,
       nombre: catalog.nombre,
       lat: catalog.lat,
       lng: catalog.lng,
-      total: fila.personas ?? 0,
+      total,
       // El tablero agregado no publica “nuevos 30 días” ni municipio alto.
-      nuevos30d: 0,
-      localizados: 0,
+      nuevos30d: null,
+      localizados,
       mujeres: sexo.mujeres,
       hombres: sexo.hombres,
       noEspecificado: sexo.noEspecificado,
+      sexoUniverso: haySexoDesaparecidas ? "desaparecidas" : "todos",
       municipioAlto: "",
     });
   }

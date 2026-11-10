@@ -2,6 +2,7 @@ import { parseRnpdnoCsv } from "@/lib/aggregators/rnpdno";
 import {
   loadRnpdnoAgregadosSnapshot,
   type RnpdnoAgregadosSnapshot,
+  type UniversoRnpdno,
 } from "@/lib/aggregators/rnpdno-live";
 import { RNPDNO_CSV_URL } from "@/lib/config";
 import {
@@ -50,6 +51,8 @@ export interface MunicipiosAggResult {
   fuente: MunicipiosFuente;
   corte: string;
   nota?: string;
+  /** Quiénes cuentan en los totales municipales. */
+  universo: UniversoRnpdno;
 }
 
 function isUnknownMunicipio(name: string): boolean {
@@ -76,7 +79,7 @@ export function aggregateMunicipiosForEstado(
   records: RnpdnoRecord[],
   catalog: MunicipioCatalogEntry[],
   cveEnt: string,
-): Omit<MunicipiosAggResult, "fuente" | "corte" | "nota"> {
+): Omit<MunicipiosAggResult, "fuente" | "corte" | "nota" | "universo"> {
   const estadoId = INEGI_TO_STATE_ID[cveEnt];
   if (!estadoId) {
     return {
@@ -193,6 +196,8 @@ export function mapLiveMunicipiosFromSnapshot(
     fuente: MUNICIPIOS_FUENTE_CNB,
     corte: snapshot.procedencia.consultado_utc.slice(0, 10),
     nota: bloque.nota,
+    // Los snapshots sin marca se pidieron sin filtro de estatus.
+    universo: bloque.universo ?? "todos_los_registros",
   };
 }
 
@@ -233,5 +238,6 @@ export async function fetchMunicipiosAggForEstado(
     ...agg,
     fuente: MUNICIPIOS_FUENTE_CSV,
     corte: MUNICIPIOS_CORTE_CSV,
+    universo: "todos_los_registros",
   };
 }

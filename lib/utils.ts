@@ -41,6 +41,21 @@ export function getIntensity(total: number, max = 8500): number {
   return Math.min(total / max, 1);
 }
 
+/** Como `formatNum`, pero muestra una raya cuando la fuente no publica el dato. */
+export function formatNumOrDash(n: number | null | undefined): string {
+  return n === null || n === undefined ? "—" : formatNum(n);
+}
+
+/** Suma solo si todos los valores existen; un solo faltante deja el total sin dato. */
+export function sumOrNull(values: Array<number | null>): number | null {
+  let total = 0;
+  for (const value of values) {
+    if (value === null) return null;
+    total += value;
+  }
+  return values.length > 0 ? total : null;
+}
+
 export function formatNum(n: number): string {
   return n.toLocaleString("es-MX");
 }

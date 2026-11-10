@@ -42,34 +42,45 @@ export function StatsBar({ stats }: StatsBarProps) {
 
 export function buildStats(
   totalNacional: number,
-  totalNuevos: number,
-  totalLocalizados: number,
+  totalNuevos: number | null,
+  totalLocalizados: number | null,
   estadosCount: number,
 ): StatItem[] {
-  return [
+  const stats: StatItem[] = [
     {
-      label: "Total registradas",
+      label: "Desaparecidas y no localizadas",
       value: formatNum(totalNacional),
       color: "#c8102e",
-      sub: "RNPDNO acumulado",
+      sub: "RNPDNO · suma de las entidades",
     },
-    {
+  ];
+
+  // Solo se muestran los indicadores que la fuente publica; un cero inventado
+  // se leería como "no hubo casos".
+  if (totalNuevos !== null) {
+    stats.push({
       label: "Últimos 30 días",
       value: `+${formatNum(totalNuevos)}`,
       color: "#c2410c",
       sub: "nuevas desapariciones",
-    },
-    {
+    });
+  }
+
+  if (totalLocalizados !== null) {
+    stats.push({
       label: "Localizadas",
       value: formatNum(totalLocalizados),
       color: "#0b7a52",
-      sub: "del total registrado",
-    },
-    {
-      label: "Estados monitoreados",
-      value: estadosCount,
-      color: "#1f6fd0",
-      sub: `${estadosCount} con datos RNPDNO · 32 entidades`,
-    },
-  ];
+      sub: "registros totales menos desaparecidas",
+    });
+  }
+
+  stats.push({
+    label: "Estados monitoreados",
+    value: estadosCount,
+    color: "#1f6fd0",
+    sub: `${estadosCount} con datos RNPDNO · 32 entidades`,
+  });
+
+  return stats;
 }

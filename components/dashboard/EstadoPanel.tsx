@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import type { EstadoData, VadSummary } from "@/lib/types";
-import { formatNum, getColor, getIntensity, sortEstadosByTotal } from "@/lib/utils";
+import { formatNum, formatNumOrDash, getColor, getIntensity, sortEstadosByTotal } from "@/lib/utils";
 
 interface EstadoPanelProps {
   hoveredEstado: EstadoData | null;
@@ -12,6 +12,10 @@ interface EstadoPanelProps {
   onSelectEstado: (estado: EstadoData | null) => void;
   /** Announce selection changes to screen readers */
   onAnnounce?: (message: string) => void;
+}
+
+function displayEstadoSexoTodos(estado: EstadoData | null): boolean {
+  return estado?.sexoUniverso === "todos";
 }
 
 export function EstadoPanel({
@@ -25,6 +29,7 @@ export function EstadoPanel({
   const [rankingExpanded, setRankingExpanded] = useState(false);
   const ranked = sortEstadosByTotal(estados);
 
+  const sexoNota = displayEstadoSexoTodos(selectedEstado ?? hoveredEstado) ? " *" : "";
   const isHoverOnly = Boolean(hoveredEstado && !selectedEstado);
   const isSelected = Boolean(selectedEstado);
   const displayEstado = selectedEstado ?? hoveredEstado;
@@ -43,7 +48,7 @@ export function EstadoPanel({
       onSelectEstado(next);
       if (next && onAnnounce) {
         onAnnounce(
-          `${next.nombre} seleccionado desde ranking, ${formatNum(next.total)} casos registradas`,
+          `${next.nombre} seleccionado desde ranking, ${formatNum(next.total)} personas desaparecidas y no localizadas`,
         );
       }
     },
@@ -98,11 +103,13 @@ export function EstadoPanel({
 
             <div className="grid grid-cols-2 gap-2">
               {[
-                { l: "Total", v: formatNum(displayEstado.total), c: "#0b0d10" },
-                { l: "Este mes", v: `+${displayEstado.nuevos30d}`, c: "#c2410c" },
-                { l: "Mujeres", v: formatNum(displayEstado.mujeres), c: "#be3d7a" },
-                { l: "Hombres", v: formatNum(displayEstado.hombres), c: "#1f6fd0" },
-                { l: "Localizadas", v: formatNum(displayEstado.localizados), c: "#0b7a52" },
+                { l: "Desaparecidas", v: formatNum(displayEstado.total), c: "#0b0d10" },
+                ...(displayEstado.nuevos30d !== null
+                  ? [{ l: "Este mes", v: `+${formatNum(displayEstado.nuevos30d)}`, c: "#c2410c" }]
+                  : []),
+                { l: "Localizadas", v: formatNumOrDash(displayEstado.localizados), c: "#0b7a52" },
+                { l: `Mujeres${sexoNota}`, v: formatNum(displayEstado.mujeres), c: "#be3d7a" },
+                { l: `Hombres${sexoNota}`, v: formatNum(displayEstado.hombres), c: "#1f6fd0" },
                 { l: "Borrados VAD", v: formatNum(borradosEstado), c: "#c2410c" },
               ].map((item) => (
                 <div
@@ -118,6 +125,12 @@ export function EstadoPanel({
                 </div>
               ))}
             </div>
+            {displayEstado.sexoUniverso === "todos" ? (
+              <p className="mt-2 text-[11px] leading-snug text-faint">
+                * Mujeres y hombres cuentan todos los registros de la entidad, incluidas las
+                personas localizadas; por eso no suman el total de desaparecidas.
+              </p>
+            ) : null}
             {isSelected ? (
               <div className="mt-3 flex flex-wrap gap-2">
                 <button
@@ -153,7 +166,7 @@ export function EstadoPanel({
       <div className="lg:flex lg:flex-1 lg:flex-col lg:overflow-auto">
         <div className="flex items-center justify-between px-5 py-2.5 lg:py-2.5">
           <div className="text-[11px] tracking-[0.12em] text-muted uppercase">
-            Ranking por total registradas
+            Ranking por desaparecidas y no localizadas
           </div>
           <button
             type="button"
@@ -169,7 +182,7 @@ export function EstadoPanel({
         <div
           id="estado-ranking-list"
           role="listbox"
-          aria-label="Ranking de estados por casos registradas"
+          aria-label="Ranking de estados por personas desaparecidas y no localizadas"
           aria-activedescendant={
             selectedEstado ? `estado-rank-${selectedEstado.id}` : undefined
           }
