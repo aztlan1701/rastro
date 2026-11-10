@@ -159,6 +159,8 @@ export function MexicoMap({
   const layersInitializedRef = useRef(false);
   const styleFallbackUsedRef = useRef(false);
   const lastFocusedIdRef = useRef<string | null>(null);
+  /** Qué hay bajo el cursor (estado, municipio o noticia), para reaccionar solo al cambiar. */
+  const hoverKeyRef = useRef<string | null>(null);
   const userMovedMapRef = useRef(false);
   const layoutFitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -457,37 +459,93 @@ export function MexicoMap({
         },
       });
 
-      map.on("mouseenter", "estados-fill", (event) => {
-        map.getCanvas().style.cursor = "pointer";
-        const feature = event.features?.[0];
-        if (!feature?.properties) return;
+      // Con la capa municipal a la vista el popup del estado no se fija: taparía
+      // los municipios, y el panel lateral ya muestra sus cifras.
+      const municipiosVisibles = () =>
+        Boolean(map.getLayer("municipios-fill")) &&
+        map.getLayoutProperty("municipios-fill", "visibility") === "visible";
 
-        const estado = estadosRef.current.find((item) => item.id === feature.properties?.id);
-        if (!estado) return;
-
-        onHoverRef.current(estado);
-
-        if (selectedEstadoRef.current?.id === estado.id) return;
-
-        popup
-          .setLngLat(event.lngLat)
-          .setHTML(
-            `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} desaparecidas y no localizadas · clic para fijar</span></div>`,
-          )
-          .addTo(map);
-      });
-
-      map.on("mouseleave", "estados-fill", () => {
-        map.getCanvas().style.cursor = "";
-        onHoverRef.current(null);
-
+      const showRestingPopup = () => {
         const selected = selectedEstadoRef.current;
-        if (selected) {
+        if (selected && !municipiosVisibles()) {
           showEstadoPopup(map, popup, selected, estadoCentroidsRef.current);
           return;
         }
         popup.remove();
+      };
+
+      const clearHover = () => {
+        if (hoverKeyRef.current === null) return;
+        hoverKeyRef.current = null;
+        map.getCanvas().style.cursor = "";
+        onHoverRef.current(null);
+        showRestingPopup();
+      };
+
+      // `mouseenter`/`mouseleave` solo avisan al entrar o salir de la capa
+      // completa, no al pasar de un polígono al contiguo. Por eso el hover se
+      // resuelve en cada movimiento, consultando qué hay bajo el cursor.
+      map.on("mousemove", (event) => {
+        if (
+          map.getLayer("noticias-geo-dots") &&
+          map.queryRenderedFeatures(event.point, { layers: ["noticias-geo-dots"] }).length > 0
+        ) {
+          // Los puntos de noticias gestionan su propio popup.
+          hoverKeyRef.current = "noticia";
+          return;
+        }
+
+        const capas = ["municipios-fill", "estados-fill"].filter((id) => map.getLayer(id));
+        const features = map.queryRenderedFeatures(event.point, { layers: capas });
+
+        const municipio = features.find((feature) => feature.layer.id === "municipios-fill");
+        if (municipio?.properties) {
+          const nombre = String(municipio.properties.NOM_MUN ?? "Municipio");
+          const key = `municipio:${municipio.properties.CVEGEO ?? nombre}`;
+          map.getCanvas().style.cursor = "pointer";
+          if (hoverKeyRef.current !== key) {
+            hoverKeyRef.current = key;
+            onHoverRef.current(null);
+            const total = Number(municipio.properties.total ?? 0);
+            const detalle = municipio.properties.hasData
+              ? `${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}`
+              : `Sin dato en ${escapeHtml(municipalFuenteRef.current)}`;
+            popup.setHTML(
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${detalle}</span></div>`,
+            );
+          }
+          popup.setLngLat(event.lngLat).addTo(map);
+          return;
+        }
+
+        const estadoFeature = features.find((feature) => feature.layer.id === "estados-fill");
+        const estado = estadoFeature
+          ? estadosRef.current.find((item) => item.id === estadoFeature.properties?.id)
+          : undefined;
+        if (estado) {
+          const key = `estado:${estado.id}`;
+          const isSelected = selectedEstadoRef.current?.id === estado.id;
+          map.getCanvas().style.cursor = "pointer";
+          if (hoverKeyRef.current !== key) {
+            hoverKeyRef.current = key;
+            onHoverRef.current(estado);
+            if (isSelected) {
+              showRestingPopup();
+            } else {
+              popup.setHTML(
+                `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} desaparecidas y no localizadas · clic para fijar</span></div>`,
+              );
+            }
+          }
+          if (!isSelected) popup.setLngLat(event.lngLat).addTo(map);
+          return;
+        }
+
+        clearHover();
       });
+
+      // El cursor salió del mapa (hacia un panel, por ejemplo).
+      map.on("mouseout", clearHover);
 
       map.on("click", (event) => {
         const municipioFeature = map.queryRenderedFeatures(event.point, {
@@ -520,7 +578,8 @@ export function MexicoMap({
           if (estado) {
             onHoverRef.current(estado);
             onSelectRef.current(estado);
-            showEstadoPopup(map, popup, estado, estadoCentroidsRef.current);
+            // El efecto de selección decide si el popup queda fijo.
+            hoverKeyRef.current = `estado:${estado.id}`;
             return;
           }
         }
@@ -536,30 +595,6 @@ export function MexicoMap({
             )
             .addTo(map);
         }
-      });
-
-      map.on("mouseenter", "municipios-fill", (event) => {
-        map.getCanvas().style.cursor = "pointer";
-        const feature = event.features?.[0];
-        if (!feature?.properties) return;
-        const nombre = String(feature.properties.NOM_MUN ?? "Municipio");
-        const total = Number(feature.properties.total ?? 0);
-        popup
-          .setLngLat(event.lngLat)
-          .setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
-          )
-          .addTo(map);
-      });
-
-      map.on("mouseleave", "municipios-fill", () => {
-        map.getCanvas().style.cursor = "";
-        const selected = selectedEstadoRef.current;
-        if (selected) {
-          showEstadoPopup(map, popup, selected, estadoCentroidsRef.current);
-          return;
-        }
-        popup.remove();
       });
 
       bindPointLayerHover(
@@ -711,9 +746,6 @@ export function MexicoMap({
       lastFocusedIdRef.current = selectedEstado.id;
     }
 
-    if (selectedEstado && popup) {
-      showEstadoPopup(map, popup, selectedEstado, estadoCentroids);
-    }
 
     map.setPaintProperty("estados-outline", "line-width", [
       "case",
@@ -728,6 +760,18 @@ export function MexicoMap({
       0.6,
     ]);
   }, [estadoCentroids, hoveredEstado, mapReady, selectedEstado]);
+
+  // Popup fijo del estado seleccionado. Va en su propio efecto para que dependa
+  // solo de la selección: si reaccionara al hover, borraría el popup que el
+  // cursor acaba de abrir sobre otro estado o municipio.
+  useEffect(() => {
+    const map = mapRef.current;
+    const popup = popupRef.current;
+    if (!mapReady || !map || !popup || !selectedEstado) return;
+    // Con municipios a la vista el popup fijo los taparía; ver `showRestingPopup`.
+    if (showMunicipios) popup.remove();
+    else showEstadoPopup(map, popup, selectedEstado, estadoCentroids);
+  }, [estadoCentroids, mapReady, selectedEstado, showMunicipios]);
 
   const hasMapFocus = Boolean(selectedEstado || hoveredEstado);
 
