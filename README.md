@@ -98,3 +98,14 @@ docker compose up -d --build
 ```
 
 Abre `http://localhost:${RASTRO_PORT:-3000}`.
+
+## Licencia
+
+Copyright (C) 2026 Jorge Antonio Montiel Romero.
+
+RASTRO es software libre: puedes redistribuirlo y modificarlo bajo los términos de la [GNU Affero General Public License, versión 3](LICENSE). Si ofreces una versión modificada como servicio en red, debes poner su código fuente a disposición de quienes la usen, bajo la misma licencia. El programa se distribuye sin garantía alguna.
+
+La licencia cubre el código de este repositorio. No cubre:
+
+- **Los datos**, que pertenecen a sus fuentes: Comisión Nacional de Búsqueda (RNPDNO), Data Cívica (Volver a Desaparecer) e INEGI (límites geoestadísticos). Su reutilización se rige por los términos de cada fuente.
+- **Publicaciones académicas** sobre RASTRO, que conservan los derechos de su autor.

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SOURCE_CODE_URL } from "@/lib/config";
 import { THIRD_PARTY_SERVICES, USAGE_DISCLAIMER } from "@/lib/source-catalog";
 
 export function MethodologyPageContent() {
@@ -87,6 +88,24 @@ export function MethodologyPageContent() {
             romperse si la CNB cambia la interfaz.
           </li>
         </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="font-display text-lg font-bold text-ink-strong">Código abierto</h2>
+        <p className="mt-2 text-sm leading-relaxed text-ink-3">
+          RASTRO es software libre bajo la licencia GNU Affero General Public License, versión 3.
+          Cualquiera puede revisar, usar y modificar el{" "}
+          <a
+            href={SOURCE_CODE_URL}
+            className="text-[#1f6fd0] underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            código fuente
+          </a>
+          ; quien ofrezca una versión modificada como servicio debe publicar sus cambios bajo la
+          misma licencia. La licencia cubre el código, no los datos, que pertenecen a sus fuentes.
+        </p>
       </section>
 
       <p className="mt-10 text-sm">

@@ -92,6 +92,10 @@ export const ALERT_WEBHOOK_URL = process.env.RASTRO_ALERT_WEBHOOK_URL ?? "";
 export const MONITOR_TOKEN = process.env.RASTRO_MONITOR_TOKEN ?? "";
 
 /** Identifica a RASTRO ante los servidores que consulta, con una vía de contacto. */
+/** Repositorio público del código. La AGPL exige ofrecer el código a quien use el servicio. */
+export const SOURCE_CODE_URL =
+  process.env.NEXT_PUBLIC_RASTRO_SOURCE_URL ?? "https://github.com/aztlan1701/rastro";
+
 export const USER_AGENT =
   process.env.RASTRO_USER_AGENT ?? "RASTRO/0.3 (+https://github.com/aztlan1701/rastro)";
 
