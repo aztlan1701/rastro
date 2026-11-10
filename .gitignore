@@ -46,3 +46,6 @@ next-env.d.ts
 __pycache__/
 *.pyc
 .venv/
+
+# borradores de la ponencia: no forman parte del repositorio
+*.docx
