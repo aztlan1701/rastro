@@ -29,21 +29,8 @@ export function MethodologyPageContent() {
             nombres borrados y registros enmascarados como ELIMINADO entre versiones del RNPDNO.
           </li>
           <li>
-            <strong className="text-[#d4d0c8]">Alertas AMBER</strong> — Modo demostración con
-            datos ficticios. Consulte siempre{" "}
-            <a
-              href="https://alertaamber.fgr.org.mx/"
-              className="text-[#4a9eff] underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              alertaamber.fgr.org.mx
-            </a>
-            .
-          </li>
-          <li>
-            <strong className="text-[#d4d0c8]">Noticias y OSINT</strong> — RSS, GDELT y Telegram
-            público con geoparse heurístico. Revise la confianza geográfica antes de usar en campo.
+            <strong className="text-[#d4d0c8]">Noticias y OSINT</strong> — RSS y GDELT con
+            geoparse heurístico. Revise la confianza geográfica antes de usar en campo.
           </li>
         </ul>
       </section>
@@ -67,6 +54,33 @@ export function MethodologyPageContent() {
             responsabilidad.
           </li>
           <li>Sin autenticación: no apto para datos no públicos ni casos en curso no publicados.</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="font-display text-lg font-bold text-white">Salvaguardas</h2>
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[#aaa]">
+          <li>RASTRO no permite alta ni edición de casos y no guarda las consultas de búsqueda.</li>
+          <li>
+            La búsqueda por nombre y la lista de inconsistencias devuelven como máximo 100
+            registros por consulta, con un límite de 30 consultas por minuto por dirección IP.
+          </li>
+          <li>
+            Los informes por estado contienen solo cifras agregadas, se limitan a 10 por minuto y
+            escapan todo valor insertado para que el navegador lo lea como texto.
+          </li>
+          <li>
+            Las respuestas de búsqueda, inconsistencias, informes y monitoreo incluyen la cabecera
+            X-Robots-Tag para evitar su indexación.
+          </li>
+          <li>
+            El monitoreo solo envía avisos al webhook cuando el operador configuró un token y la
+            petición lo presenta; sin token, ninguna petición pública puede dispararlo.
+          </li>
+          <li>
+            Las consultas a fuentes externas se identifican con un agente que enlaza al
+            repositorio del proyecto.
+          </li>
         </ul>
       </section>
 

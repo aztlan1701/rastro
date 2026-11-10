@@ -10,11 +10,10 @@ interface KeyboardShortcutsModalProps {
 }
 
 const SHORTCUTS = [
-  { keys: "1 – 5", action: "Cambiar pestaña (Mapa, Alertas, Noticias, Datos, Buscar)" },
+  { keys: "1 – 4", action: "Cambiar pestaña (Mapa, Noticias, Datos, Buscar)" },
   { keys: "← →", action: "Pestaña anterior / siguiente" },
   { keys: "Home / End", action: "Primera / última pestaña" },
   { keys: "L", action: "Abrir / cerrar capas del mapa" },
-  { keys: "A", action: "Alternar capa AMBER (en Mapa)" },
   { keys: "N", action: "Alternar noticias geo (en Mapa)" },
   { keys: "Esc", action: "Cerrar panel / limpiar selección" },
   { keys: "?", action: "Mostrar esta ayuda" },

@@ -1,4 +1,4 @@
-import type { AlertaAmber, EstadoData, Noticia } from "./types";
+import type { EstadoData, Noticia } from "./types";
 
 export const ESTADOS_DATA: EstadoData[] = [
   { id: "MX-JAL", nombre: "Jalisco", lat: 20.6597, lng: -103.3496, total: 8421, nuevos30d: 312, localizados: 1204, mujeres: 3820, hombres: 4601, municipioAlto: "Guadalajara" },
@@ -16,14 +16,6 @@ export const ESTADOS_DATA: EstadoData[] = [
   { id: "MX-SON", nombre: "Sonora", lat: 29.2972, lng: -110.3309, total: 2834, nuevos30d: 89, localizados: 367, mujeres: 1102, hombres: 1732, municipioAlto: "Hermosillo" },
   { id: "MX-COA", nombre: "Coahuila", lat: 27.0587, lng: -101.7068, total: 2561, nuevos30d: 77, localizados: 312, mujeres: 1043, hombres: 1518, municipioAlto: "Saltillo" },
   { id: "MX-BCS", nombre: "Baja California", lat: 30.8406, lng: -115.2838, total: 2312, nuevos30d: 94, localizados: 298, mujeres: 987, hombres: 1325, municipioAlto: "Tijuana" },
-];
-
-export const ALERTAS_AMBER: AlertaAmber[] = [
-  { id: 1, nombre: "Sofía R. M.", edad: 14, estado: "Jalisco", municipio: "Guadalajara", fecha: "2026-06-05", activa: true, descripcion: "Cabello negro, tez morena, 1.58m. Última vez vista en Av. Patria" },
-  { id: 2, nombre: "Kevin A. L.", edad: 9, estado: "Estado de México", municipio: "Ecatepec", fecha: "2026-06-04", activa: true, descripcion: "Cabello castaño, ojos cafés, 1.32m. Desapareció en Blvd. Aztecas" },
-  { id: 3, nombre: "Valentina C.", edad: 16, estado: "Veracruz", municipio: "Xalapa", fecha: "2026-06-03", activa: true, descripcion: "Cabello rubio, tez blanca, 1.62m. Lleva uniforme escolar azul" },
-  { id: 4, nombre: "Diego F. R.", edad: 11, estado: "Nuevo León", municipio: "Monterrey", fecha: "2026-06-02", activa: true, descripcion: "Cabello negro corto, 1.40m. Visto por última vez en Col. Independencia" },
-  { id: 5, nombre: "Camila G. V.", edad: 15, estado: "Chihuahua", municipio: "Cd. Juárez", fecha: "2026-06-01", activa: false, descripcion: "LOCALIZADA CON BIEN — Caso cerrado" },
 ];
 
 export const NOTICIAS: Noticia[] = [

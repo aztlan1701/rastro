@@ -83,30 +83,26 @@ export const MONITOR_ESTADOS = (
 
 export const ALERT_WEBHOOK_URL = process.env.RASTRO_ALERT_WEBHOOK_URL ?? "";
 
+/** Shared secret required to trigger the monitor webhook. Without it the webhook never fires. */
+export const MONITOR_TOKEN = process.env.RASTRO_MONITOR_TOKEN ?? "";
+
+/** Identifies RASTRO to the servers it queries, with a way to reach the operator. */
+export const USER_AGENT =
+  process.env.RASTRO_USER_AGENT ?? "RASTRO/0.3 (+https://github.com/aztlan1701/rastro)";
+
 export const RECONSTRUCCION_AGGREGADOS_URL =
   process.env.RASTRO_RECONSTRUCCION_AGGREGADOS_URL ?? "/data/reconstruccion-agregados.json";
-
-export const TELEGRAM_CHANNELS = (
-  process.env.RASTRO_TELEGRAM_CHANNELS ?? "buscadoras_mx,AlertaAmberMexico"
-)
-  .split(",")
-  .map((c) => c.trim())
-  .filter(Boolean);
 
 export const CACHE_TTL = {
   rnpdno: 24 * 60 * 60 * 1000,
   vad: 24 * 60 * 60 * 1000,
-  amber: 30 * 60 * 1000,
   news: 15 * 60 * 1000,
   gdelt: 30 * 60 * 1000,
-  telegram: 15 * 60 * 1000,
 };
 
 export const CACHE_STALE = {
   rnpdno: 7 * 24 * 60 * 60 * 1000,
   vad: 7 * 24 * 60 * 60 * 1000,
-  amber: 24 * 60 * 60 * 1000,
   news: 24 * 60 * 60 * 1000,
   gdelt: 24 * 60 * 60 * 1000,
-  telegram: 24 * 60 * 60 * 1000,
 };

@@ -29,19 +29,6 @@ export interface MunicipioPoint {
   total: number;
 }
 
-export interface AlertaAmber {
-  id: number;
-  nombre: string;
-  edad: number;
-  estado: string;
-  municipio: string;
-  fecha: string;
-  activa: boolean;
-  descripcion: string;
-  lat?: number;
-  lng?: number;
-}
-
 export type NoticiaTipo =
   | "hallazgo"
   | "denuncia"
@@ -64,18 +51,6 @@ export interface Noticia {
 
 export type GeoConfidence = "exact" | "state" | "inferred" | "none";
 
-export interface TelegramPost {
-  id: string;
-  channel: string;
-  text: string;
-  url: string;
-  hora: string;
-  lat?: number;
-  lng?: number;
-  lugar?: string;
-  geoConfidence?: GeoConfidence;
-}
-
 export type DataStatus = "live" | "cached" | "stale" | "mock";
 
 export interface ApiMeta {
@@ -84,13 +59,11 @@ export interface ApiMeta {
   source?: string;
 }
 
-export type TabId = "mapa" | "alertas" | "noticias" | "datos" | "buscar";
-export type AlertaFilter = "todas" | "activas" | "cerradas";
+export type TabId = "mapa" | "noticias" | "datos" | "buscar";
 
 export type LayerId =
   | "rnpdno_estados"
   | "rnpdno_municipios"
-  | "amber_activas"
   | "noticias_geo";
 
 export interface LayerState {
@@ -103,17 +76,13 @@ export interface LayerState {
 
 export interface DashboardData {
   estados: EstadoData[];
-  alertas: AlertaAmber[];
   noticias: Noticia[];
-  telegram: TelegramPost[];
   municipios: MunicipioPoint[];
   meta: {
     rnpdno: ApiMeta;
     vad: ApiMeta;
-    amber: ApiMeta;
     news: ApiMeta;
     gdelt: ApiMeta;
-    telegram: ApiMeta;
   };
 }
 

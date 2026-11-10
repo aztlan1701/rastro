@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useDashboardKeyboard } from "@/hooks/useDashboardKeyboard";
 import { useRastroData } from "@/hooks/useRastroData";
 import type { EstadoData, TabId } from "@/lib/types";
-import { AlertsTab } from "./AlertsTab";
 import { DashboardHeader } from "./DashboardHeader";
 import { DataFallbackBanner } from "./DataFallbackBanner";
 import { DataTab } from "./DataTab";
@@ -58,15 +57,11 @@ export function RastroDashboard() {
 
   const {
     estados,
-    alertas,
     noticias,
-    telegram,
     municipios,
     layers,
     meta,
     vad,
-    amberDemo,
-    amberPortalReachable,
     loading,
     toggleLayer,
   } = useRastroData();
@@ -88,16 +83,14 @@ export function RastroDashboard() {
     const totalNacional = estados.reduce((sum, estado) => sum + estado.total, 0);
     const totalNuevos = estados.reduce((sum, estado) => sum + estado.nuevos30d, 0);
     const totalLocalizados = estados.reduce((sum, estado) => sum + estado.localizados, 0);
-    const amberActivas = alertas.filter((alerta) => alerta.activa).length;
 
     return buildStats(
       totalNacional,
       totalNuevos,
       totalLocalizados,
-      amberActivas,
       estados.length,
     );
-  }, [alertas, estados]);
+  }, [estados]);
 
   const handleTabChange = (tab: TabId) => {
     setLayerPanelOpen(false);
@@ -201,9 +194,7 @@ export function RastroDashboard() {
             />
             <MexicoMap
               estados={estados}
-              alertas={alertas}
               noticias={noticias}
-              telegram={telegram}
               municipios={municipios}
               layers={layers}
               selectedEstado={selectedEstado}
@@ -213,31 +204,10 @@ export function RastroDashboard() {
               onResetSelection={handleResetSelection}
             />
             <MobileFeedDrawer
-              alertas={alertas}
               noticias={noticias}
-              onGoToAlerts={() => handleTabChange("alertas")}
               onGoToNews={() => handleTabChange("noticias")}
             />
           </div>
-
-          <motion.div
-            id="tabpanel-alertas"
-            role="tabpanel"
-            aria-labelledby="tab-alertas"
-            tabIndex={-1}
-            hidden={activeTab !== "alertas"}
-            aria-hidden={activeTab !== "alertas"}
-            initial={false}
-            animate={activeTab === "alertas" ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-            className={`flex flex-1 flex-col overflow-hidden outline-none ${activeTab === "alertas" ? "" : "hidden"}`}
-          >
-            <AlertsTab
-              alertas={alertas}
-              meta={meta.amber}
-              demoMode={amberDemo}
-              portalReachable={amberPortalReachable}
-            />
-          </motion.div>
 
           <motion.div
             id="tabpanel-noticias"
@@ -252,10 +222,8 @@ export function RastroDashboard() {
           >
             <NewsTab
               noticias={noticias}
-              telegram={telegram}
               newsMeta={meta.news}
               gdeltMeta={meta.gdelt}
-              telegramMeta={meta.telegram}
             />
           </motion.div>
 
@@ -300,10 +268,8 @@ export function RastroDashboard() {
         </main>
 
         <RightPanel
-          alertas={alertas}
           noticias={noticias}
           meta={meta}
-          onGoToAlerts={() => handleTabChange("alertas")}
           onGoToNews={() => handleTabChange("noticias")}
         />
       </div>

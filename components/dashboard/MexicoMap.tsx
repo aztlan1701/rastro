@@ -7,7 +7,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { buildEstadosGeoJson, filterMunicipiosByBbox, maplibreChoroplethExpression } from "@/lib/geo/choropleth";
 import {
   bindPointLayerHover,
-  buildAlertGeoJson,
   buildMunicipioGeoJson,
   buildNewsGeoJson,
   NEWS_DOT_COLOR_EXPRESSION,
@@ -23,16 +22,15 @@ import {
   MEXICO_MAP_DEFAULT,
 } from "@/lib/map-view";
 import type {
-  AlertaAmber,
   EstadoData,
   LayerState,
   MunicipioPoint,
   Noticia,
-  TelegramPost,
 } from "@/lib/types";
 import { formatNum } from "@/lib/utils";
 import { MapLegend } from "./MapLegend";
 import { useMexicoMap } from "@/hooks/useMexicoMap";
+import { escapeHtml } from "@/lib/export/escape";
 
 const DEFAULT_MAP_STYLE =
   "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
@@ -76,9 +74,7 @@ function frameMexico(map: maplibregl.Map, duration = 0) {
 
 interface MexicoMapProps {
   estados: EstadoData[];
-  alertas: AlertaAmber[];
   noticias: Noticia[];
-  telegram: TelegramPost[];
   municipios: MunicipioPoint[];
   layers: LayerState[];
   selectedEstado: EstadoData | null;
@@ -137,9 +133,7 @@ function resetMapView(
 
 export function MexicoMap({
   estados,
-  alertas,
   noticias,
-  telegram,
   municipios,
   layers,
   selectedEstado,
@@ -169,9 +163,7 @@ export function MexicoMap({
   }, []);
 
   const municipiosRef = useRef(municipios);
-  const alertasRef = useRef(alertas);
   const noticiasRef = useRef(noticias);
-  const telegramRef = useRef(telegram);
   const layersRef = useRef(layers);
   const estadosRef = useRef(estados);
   const onHoverRef = useRef(onHoverEstado);
@@ -200,14 +192,11 @@ export function MexicoMap({
   const estadoCentroids = useMemo(() => buildEstadoCentroids(choropleth), [choropleth]);
   const showEstados = layerEnabled(layers, "rnpdno_estados");
   const showMunicipios = layerEnabled(layers, "rnpdno_municipios");
-  const showAmber = layerEnabled(layers, "amber_activas");
   const showNews = layerEnabled(layers, "noticias_geo");
 
   useEffect(() => {
     estadosRef.current = estados;
-    alertasRef.current = alertas;
     noticiasRef.current = noticias;
-    telegramRef.current = telegram;
     layersRef.current = layers;
     municipiosRef.current = municipios;
     onHoverRef.current = onHoverEstado;
@@ -217,7 +206,7 @@ export function MexicoMap({
     hoveredEstadoRef.current = hoveredEstado;
     officialTemplateRef.current = officialTemplate;
     buildChoroplethRef.current = buildChoropleth;
-  }, [alertas, estados, estadoCentroids, hoveredEstado, layers, municipios, noticias, onHoverEstado, onSelectEstado, selectedEstado, telegram, officialTemplate, buildChoropleth]);
+  }, [estados, estadoCentroids, hoveredEstado, layers, municipios, noticias, onHoverEstado, onSelectEstado, selectedEstado, officialTemplate, buildChoropleth]);
 
   useEffect(() => {
     loadOfficialStatesGeoJson()
@@ -239,17 +228,13 @@ export function MexicoMap({
     const currentLayers = layersRef.current;
     const showEstadosLayer = layerEnabled(currentLayers, "rnpdno_estados");
     const showMunicipiosLayer = layerEnabled(currentLayers, "rnpdno_municipios");
-    const showAmberLayer = layerEnabled(currentLayers, "amber_activas");
     const showNewsLayer = layerEnabled(currentLayers, "noticias_geo");
 
     (map.getSource("estados-choropleth") as maplibregl.GeoJSONSource | undefined)?.setData(
       buildChoroplethRef.current(estadosRef.current),
     );
-    (map.getSource("alertas") as maplibregl.GeoJSONSource | undefined)?.setData(
-      buildAlertGeoJson(alertasRef.current),
-    );
     (map.getSource("noticias-geo") as maplibregl.GeoJSONSource | undefined)?.setData(
-      buildNewsGeoJson(noticiasRef.current, telegramRef.current),
+      buildNewsGeoJson(noticiasRef.current),
     );
 
     if (map.getLayer("estados-fill")) {
@@ -285,14 +270,6 @@ export function MexicoMap({
       }
     }
 
-    if (map.getLayer("alertas-dots")) {
-      map.setLayoutProperty(
-        "alertas-dots",
-        "visibility",
-        showAmberLayer ? "visible" : "none",
-      );
-    }
-
     if (map.getLayer("noticias-geo-dots")) {
       map.setLayoutProperty(
         "noticias-geo-dots",
@@ -316,14 +293,9 @@ export function MexicoMap({
         data: buildMunicipioGeoJson([]),
       });
 
-      map.addSource("alertas", {
-        type: "geojson",
-        data: buildAlertGeoJson(alertasRef.current),
-      });
-
       map.addSource("noticias-geo", {
         type: "geojson",
-        data: buildNewsGeoJson(noticiasRef.current, telegramRef.current),
+        data: buildNewsGeoJson(noticiasRef.current),
       });
 
       map.addLayer({
@@ -361,19 +333,6 @@ export function MexicoMap({
       });
 
       map.addLayer({
-        id: "alertas-dots",
-        type: "circle",
-        source: "alertas",
-        paint: {
-          "circle-radius": 6,
-          "circle-color": "#ffb300",
-          "circle-stroke-width": 2,
-          "circle-stroke-color": "#ffb300",
-          "circle-opacity": 0.9,
-        },
-      });
-
-      map.addLayer({
         id: "noticias-geo-dots",
         type: "circle",
         source: "noticias-geo",
@@ -401,7 +360,7 @@ export function MexicoMap({
         popup
           .setLngLat(event.lngLat)
           .setHTML(
-            `<div class="rastro-popup-inner"><strong>${estado.nombre}</strong><span>${formatNum(estado.total)} registradas · clic para fijar</span></div>`,
+            `<div class="rastro-popup-inner"><strong>${escapeHtml(estado.nombre)}</strong><span>${formatNum(estado.total)} registradas · clic para fijar</span></div>`,
           )
           .addTo(map);
       });
@@ -435,19 +394,6 @@ export function MexicoMap({
           }
         }
 
-        const amberFeature = map.queryRenderedFeatures(event.point, {
-          layers: ["alertas-dots"],
-        })[0];
-        if (amberFeature?.properties) {
-          popup
-            .setLngLat(event.lngLat)
-            .setHTML(
-              `<div class="rastro-popup-inner"><strong>${amberFeature.properties.nombre ?? "Alerta AMBER"}</strong><span>Alerta activa</span></div>`,
-            )
-            .addTo(map);
-          return;
-        }
-
         const municipioFeature = map.queryRenderedFeatures(event.point, {
           layers: ["municipios-points"],
         })[0];
@@ -455,7 +401,7 @@ export function MexicoMap({
           popup
             .setLngLat(event.lngLat)
             .setHTML(
-              `<div class="rastro-popup-inner"><strong>${municipioFeature.properties.nombre ?? "Municipio"}</strong><span>${formatNum(Number(municipioFeature.properties.total ?? 0))} registradas</span></div>`,
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(municipioFeature.properties.nombre ?? "Municipio")}</strong><span>${formatNum(Number(municipioFeature.properties.total ?? 0))} registradas</span></div>`,
             )
             .addTo(map);
           return;
@@ -468,7 +414,7 @@ export function MexicoMap({
           popup
             .setLngLat(event.lngLat)
             .setHTML(
-              `<div class="rastro-popup-inner"><strong>${newsFeature.properties.tipo ?? "Noticia"}</strong><span>${newsFeature.properties.titulo ?? ""}</span></div>`,
+              `<div class="rastro-popup-inner"><strong>${escapeHtml(newsFeature.properties.tipo ?? "Noticia")}</strong><span>${escapeHtml(newsFeature.properties.titulo ?? "")}</span></div>`,
             )
             .addTo(map);
         }
@@ -476,20 +422,10 @@ export function MexicoMap({
 
       bindPointLayerHover(
         map,
-        "alertas-dots",
-        popup,
-        (properties) =>
-          `<strong>${properties.nombre ?? "Alerta AMBER"}</strong><span>Alerta activa</span>`,
-        selectedEstadoRef,
-        estadoCentroidsRef,
-      );
-
-      bindPointLayerHover(
-        map,
         "municipios-points",
         popup,
         (properties) =>
-          `<strong>${properties.nombre ?? "Municipio"}</strong><span>${formatNum(Number(properties.total ?? 0))} registradas</span>`,
+          `<strong>${escapeHtml(properties.nombre ?? "Municipio")}</strong><span>${formatNum(Number(properties.total ?? 0))} registradas</span>`,
         selectedEstadoRef,
         estadoCentroidsRef,
       );
@@ -499,7 +435,7 @@ export function MexicoMap({
         "noticias-geo-dots",
         popup,
         (properties) =>
-          `<strong>${properties.tipo ?? "Noticia"}</strong><span>${properties.titulo ?? ""}</span>`,
+          `<strong>${escapeHtml(properties.tipo ?? "Noticia")}</strong><span>${escapeHtml(properties.titulo ?? "")}</span>`,
         selectedEstadoRef,
         estadoCentroidsRef,
       );
@@ -625,18 +561,15 @@ export function MexicoMap({
     if (!mapReady) return;
     syncMapLayers();
   }, [
-    alertas,
     choropleth,
     layers,
     mapReady,
     municipios,
     noticias,
-    showAmber,
     showEstados,
     showMunicipios,
     showNews,
     syncMapLayers,
-    telegram,
   ]);
 
   useEffect(() => {

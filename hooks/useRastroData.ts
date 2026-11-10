@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ALERTAS_AMBER, ESTADOS_DATA, NOTICIAS } from "@/lib/mock-data";
+import { ESTADOS_DATA, NOTICIAS } from "@/lib/mock-data";
 import type {
-  AlertaAmber,
   ApiMeta,
   DashboardData,
   EstadoData,
@@ -11,14 +10,12 @@ import type {
   LayerState,
   MunicipioPoint,
   Noticia,
-  TelegramPost,
   VadSummary,
 } from "@/lib/types";
 
 const DEFAULT_LAYERS: LayerState[] = [
   { id: "rnpdno_estados", label: "RNPDNO estados", enabled: true, count: 0, color: "#ff2d55" },
   { id: "rnpdno_municipios", label: "Municipios", enabled: false, count: 0, color: "#4a9eff" },
-  { id: "amber_activas", label: "AMBER activas", enabled: true, count: 0, color: "#ffb300" },
   { id: "noticias_geo", label: "Noticias geo", enabled: false, count: 0, color: "#00d084" },
 ];
 
@@ -36,25 +33,19 @@ async function fetchJson<T>(url: string): Promise<T> {
 
 export function useRastroData() {
   const [estados, setEstados] = useState<EstadoData[]>(ESTADOS_DATA);
-  const [alertas, setAlertas] = useState<AlertaAmber[]>(ALERTAS_AMBER);
   const [noticias, setNoticias] = useState<Noticia[]>(NOTICIAS);
-  const [telegram, setTelegram] = useState<TelegramPost[]>([]);
   const [municipios, setMunicipios] = useState<MunicipioPoint[]>([]);
   const [baseLayers, setLayers] = useState<LayerState[]>(DEFAULT_LAYERS);
   const [loading, setLoading] = useState(true);
   const [meta, setMeta] = useState<DashboardData["meta"]>({
     rnpdno: EMPTY_META,
     vad: EMPTY_META,
-    amber: EMPTY_META,
     news: EMPTY_META,
     gdelt: EMPTY_META,
-    telegram: EMPTY_META,
   });
   const [vad, setVad] = useState<VadSummary | null>(null);
-  const [amberDemo, setAmberDemo] = useState(true);
-  const [amberPortalReachable, setAmberPortalReachable] = useState(false);
 
-  const fetchedLayers = useRef<Set<LayerId>>(new Set(["rnpdno_estados", "amber_activas"]));
+  const fetchedLayers = useRef<Set<LayerId>>(new Set(["rnpdno_estados"]));
 
   const refreshLayer = useCallback(async (layerId: LayerId) => {
     if (fetchedLayers.current.has(layerId)) return;
@@ -67,12 +58,8 @@ export function useRastroData() {
     if (layerId === "noticias_geo") {
       fetchedLayers.current.add(layerId);
       try {
-        const [gdelt, tg] = await Promise.all([
-          fetchJson<{ noticias: Noticia[]; meta: ApiMeta }>("/api/gdelt"),
-          fetchJson<{ posts: TelegramPost[]; meta: ApiMeta }>("/api/telegram-feed"),
-        ]);
-        setMeta((current) => ({ ...current, gdelt: gdelt.meta, telegram: tg.meta }));
-        setTelegram(tg.posts);
+        const gdelt = await fetchJson<{ noticias: Noticia[]; meta: ApiMeta }>("/api/gdelt");
+        setMeta((current) => ({ ...current, gdelt: gdelt.meta }));
         setNoticias((current) => {
           const merged = [...current];
           for (const item of gdelt.noticias) {
@@ -108,17 +95,11 @@ export function useRastroData() {
     async function load() {
       setLoading(true);
       try {
-        const [rnpdno, vadResponse, amber, news] = await Promise.all([
+        const [rnpdno, vadResponse, news] = await Promise.all([
           fetchJson<{ estados: EstadoData[]; municipios: MunicipioPoint[]; meta: ApiMeta }>(
             "/api/rnpdno",
           ),
           fetchJson<{ summary: VadSummary; meta: ApiMeta }>("/api/volver-a-desaparecer"),
-          fetchJson<{
-            alertas: AlertaAmber[];
-            meta: ApiMeta;
-            demoMode?: boolean;
-            portalReachable?: boolean;
-          }>("/api/amber"),
           fetchJson<{ noticias: Noticia[]; meta: ApiMeta }>("/api/news"),
         ]);
 
@@ -127,17 +108,12 @@ export function useRastroData() {
         setEstados(rnpdno.estados);
         setMunicipios(rnpdno.municipios);
         setVad(vadResponse.summary);
-        setAlertas(amber.alertas);
-        setAmberDemo(amber.demoMode ?? true);
-        setAmberPortalReachable(amber.portalReachable ?? false);
         setNoticias(news.noticias);
         setMeta({
           rnpdno: rnpdno.meta,
           vad: vadResponse.meta,
-          amber: amber.meta,
           news: news.meta,
           gdelt: EMPTY_META,
-          telegram: EMPTY_META,
         });
 
         setLayers((current) =>
@@ -147,12 +123,6 @@ export function useRastroData() {
             }
             if (layer.id === "rnpdno_municipios") {
               return { ...layer, count: rnpdno.municipios.length };
-            }
-            if (layer.id === "amber_activas") {
-              return {
-                ...layer,
-                count: amber.alertas.filter((item) => item.activa).length,
-              };
             }
             return layer;
           }),
@@ -172,23 +142,19 @@ export function useRastroData() {
 
   const layers = useMemo(() => {
     const geoCount =
-      noticias.filter((item) => item.lat && item.lng).length + telegram.length;
+      noticias.filter((item) => item.lat && item.lng).length;
     return baseLayers.map((layer) =>
       layer.id === "noticias_geo" ? { ...layer, count: geoCount } : layer,
     );
-  }, [baseLayers, noticias, telegram]);
+  }, [baseLayers, noticias]);
 
   return {
     estados,
-    alertas,
     noticias,
-    telegram,
     municipios,
     layers,
     meta,
     vad,
-    amberDemo,
-    amberPortalReachable,
     loading,
     toggleLayer,
     setLayers,

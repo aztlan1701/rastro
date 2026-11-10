@@ -13,7 +13,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
       role="tablist"
       aria-label="Navegación principal"
     >
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-4">
         {DASHBOARD_TABS.map((tab) => (
           <button
             key={tab.id}

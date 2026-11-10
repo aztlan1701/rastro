@@ -2,25 +2,17 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { AlertaAmber, Noticia } from "@/lib/types";
+import type { Noticia } from "@/lib/types";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { FeedPanelContent } from "./FeedPanelContent";
 
 interface MobileFeedDrawerProps {
-  alertas: AlertaAmber[];
   noticias: Noticia[];
-  onGoToAlerts: () => void;
   onGoToNews: () => void;
 }
 
-export function MobileFeedDrawer({
-  alertas,
-  noticias,
-  onGoToAlerts,
-  onGoToNews,
-}: MobileFeedDrawerProps) {
+export function MobileFeedDrawer({ noticias, onGoToNews }: MobileFeedDrawerProps) {
   const [open, setOpen] = useState(false);
-  const activasCount = alertas.filter((alerta) => alerta.activa).length;
   const trapRef = useFocusTrap<HTMLElement>(open, () => setOpen(false));
 
   return (
@@ -28,13 +20,12 @@ export function MobileFeedDrawer({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed right-3 z-30 flex items-center gap-2 rounded-sm border border-[#ffb300]/30 bg-[#030508]/95 px-3 py-2 text-[11px] text-[#ffb300] shadow-lg backdrop-blur-md"
+        className="fixed right-3 z-30 flex items-center gap-2 rounded-sm border border-white/15 bg-[#030508]/95 px-3 py-2 text-[11px] text-[#c0bfb8] shadow-lg backdrop-blur-md"
         style={{ bottom: "calc(3.75rem + env(safe-area-inset-bottom, 0px))" }}
       >
-        <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-[#ffb300]" />
-        Alertas
-        {activasCount > 0 ? (
-          <span className="rounded-sm bg-[#ffb300]/20 px-1.5 font-bold">{activasCount}</span>
+        Noticias
+        {noticias.length > 0 ? (
+          <span className="rounded-sm bg-white/10 px-1.5 font-bold">{noticias.length}</span>
         ) : null}
       </button>
 
@@ -61,7 +52,7 @@ export function MobileFeedDrawer({
             >
               <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
                 <span className="text-[11px] tracking-[0.12em] text-[#556070] uppercase">
-                  Resumen en vivo
+                  Últimas noticias
                 </span>
                 <button
                   type="button"
@@ -73,13 +64,8 @@ export function MobileFeedDrawer({
               </div>
               <div className="flex-1 overflow-auto">
                 <FeedPanelContent
-                  alertas={alertas}
                   noticias={noticias}
                   compact
-                  onGoToAlerts={() => {
-                    setOpen(false);
-                    onGoToAlerts();
-                  }}
                   onGoToNews={() => {
                     setOpen(false);
                     onGoToNews();

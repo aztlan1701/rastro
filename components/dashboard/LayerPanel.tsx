@@ -6,7 +6,7 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 const LAYER_HINTS: Partial<Record<LayerState["id"], string>> = {
   rnpdno_municipios: "Puntos aproximados por municipio (coordenadas estimadas)",
-  noticias_geo: "Carga GDELT y Telegram al activar la capa",
+  noticias_geo: "Carga GDELT al activar la capa",
 };
 
 interface LayerPanelProps {
@@ -92,7 +92,7 @@ export function LayerPanel({ open, layers, onToggle, onClose }: LayerPanelProps)
           </div>
 
           <div className="mt-3 border-t border-white/6 pt-2 text-[11px] leading-relaxed text-[#3a4558]">
-            Atajos: 1–5 tabs · L capas · A AMBER · N noticias · ? ayuda
+            Atajos: 1–4 tabs · L capas · N noticias · ? ayuda
           </div>
         </motion.aside>
       )}

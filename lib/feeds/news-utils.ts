@@ -59,7 +59,7 @@ export function normalizeNewsItem(input: {
     hora: relativeTime(input.publishedAt),
     estado: extractEstadoFromText(titulo),
     tipo: classifyNews(titulo),
-    url: input.url,
+    url: input.url && /^https?:\/\//i.test(input.url) ? input.url : undefined,
     lat: input.lat,
     lng: input.lng,
     geoConfidence: input.lat && input.lng ? inferred ?? "state" : inferred ?? "none",

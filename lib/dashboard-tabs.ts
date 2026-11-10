@@ -9,10 +9,9 @@ export interface DashboardTab {
 
 export const DASHBOARD_TABS: DashboardTab[] = [
   { id: "mapa", label: "Mapa", panelId: "tabpanel-mapa", shortcut: "1" },
-  { id: "alertas", label: "Alertas", panelId: "tabpanel-alertas", shortcut: "2" },
-  { id: "noticias", label: "Noticias", panelId: "tabpanel-noticias", shortcut: "3" },
-  { id: "datos", label: "Datos", panelId: "tabpanel-datos", shortcut: "4" },
-  { id: "buscar", label: "Buscar", panelId: "tabpanel-buscar", shortcut: "5" },
+  { id: "noticias", label: "Noticias", panelId: "tabpanel-noticias", shortcut: "2" },
+  { id: "datos", label: "Datos", panelId: "tabpanel-datos", shortcut: "3" },
+  { id: "buscar", label: "Buscar", panelId: "tabpanel-buscar", shortcut: "4" },
 ];
 
 export const TAB_BY_SHORTCUT: Record<string, TabId> = Object.fromEntries(

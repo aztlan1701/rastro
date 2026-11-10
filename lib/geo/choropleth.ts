@@ -19,11 +19,9 @@ export const CHOROPLETH_STOPS: ChoroplethStop[] = [
 ];
 
 export const MAP_MARKER_LEGEND = [
-  { color: "#ffb300", label: "Alerta AMBER" },
   { color: "#4a9eff", label: "Municipio RNPDNO" },
   { color: "#ff2d55", label: "Noticia hallazgo" },
   { color: "#ffb300", label: "Noticia alerta" },
-  { color: "#00e5ff", label: "Telegram geo" },
   { color: "#00d084", label: "Otras noticias geo" },
 ] as const;
 

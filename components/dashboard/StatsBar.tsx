@@ -44,7 +44,6 @@ export function buildStats(
   totalNacional: number,
   totalNuevos: number,
   totalLocalizados: number,
-  amberActivas: number,
   estadosCount: number,
 ): StatItem[] {
   return [
@@ -65,13 +64,6 @@ export function buildStats(
       value: formatNum(totalLocalizados),
       color: "#00d084",
       sub: "del total registrado",
-    },
-    {
-      label: "Alertas AMBER",
-      value: amberActivas,
-      color: "#ffb300",
-      sub: "activas ahora",
-      pulse: true,
     },
     {
       label: "Estados monitoreados",

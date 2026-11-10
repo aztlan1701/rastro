@@ -3,10 +3,8 @@ import { DATACIVICA, RNPDNO_CSV_URL, VAD_DATASETS } from "@/lib/config";
 export type SourceId =
   | "rnpdno"
   | "vad"
-  | "amber"
   | "news"
   | "gdelt"
-  | "telegram"
   | "buscar"
   | "mapa";
 
@@ -38,14 +36,6 @@ export const SOURCE_CATALOG: Record<SourceId, SourceDefinition> = {
     method: "CSV nombres borrados + cruce ELIMINADO en RNPDNO público",
     url: DATACIVICA.site,
   },
-  amber: {
-    id: "amber",
-    label: "Alertas AMBER / ALBA",
-    provider: "FGR",
-    cutDate: "Demo",
-    method: "Datos de demostración; verifique en alertaamber.fgr.org.mx",
-    url: "https://alertaamber.fgr.org.mx/",
-  },
   news: {
     id: "news",
     label: "Noticias RSS",
@@ -61,14 +51,6 @@ export const SOURCE_CATALOG: Record<SourceId, SourceDefinition> = {
     cutDate: "Últimas 24 h",
     method: "Consulta doc API filtrada por México",
     url: "https://www.gdeltproject.org/",
-  },
-  telegram: {
-    id: "telegram",
-    label: "Telegram OSINT",
-    provider: "Canales públicos (RASTRO_TELEGRAM_CHANNELS)",
-    cutDate: "Tiempo real",
-    method: "Scrape HTML público t.me/s/",
-    url: "https://t.me/",
   },
   buscar: {
     id: "buscar",
@@ -95,8 +77,6 @@ export const THIRD_PARTY_SERVICES = [
   "Google Drive (CSVs Data Cívica)",
   "Carto (mapa base)",
   "GDELT Project",
-  "Telegram (canales públicos)",
-  "FGR portal AMBER",
   "Medios RSS configurados",
 ];
 

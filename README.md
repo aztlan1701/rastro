@@ -2,7 +2,7 @@
 
 Dashboard open source de inteligencia civil para monitoreo de personas desaparecidas en México.
 
-Patrones inspirados en [OSIRIS](https://github.com/simplifaisoul/osiris): API routes con caché, capas MapLibre progresivas, agregador RSS/GDELT/Telegram.
+Patrones inspirados en [OSIRIS](https://github.com/simplifaisoul/osiris): API routes con caché, capas MapLibre progresivas, agregador RSS/GDELT.
 
 Integración con [Volver a Desaparecer](https://volveradesaparecer.datacivica.org) (Data Cívica) para trazabilidad del RNPDNO.
 
@@ -29,23 +29,20 @@ npm run dev
 - `GET /api/buscar?q=&source=&estadoId=&sexo=` — búsqueda por nombre
 - `GET /api/inconsistencias?estadoId=&limit=` — registros ELIMINADO / borrados
 - `GET /api/informe/[estadoId]` — informe HTML descargable por estado
-- `GET /api/monitor` — monitoreo OSINT + webhook opcional
-- `GET /api/amber` — alertas AMBER (modo demo)
+- `GET /api/monitor` — monitoreo de RSS + GDELT; el webhook solo se dispara con token
 - `GET /api/news` — RSS configurable
 - `GET /api/gdelt` — noticias GDELT filtradas México
-- `GET /api/telegram-feed` — posts geoparseados de canales públicos
 
 ## Tabs del dashboard
 
 | Tecla | Tab |
 |---|---|
 | 1 | Mapa |
-| 2 | Alertas |
-| 3 | Noticias |
-| 4 | Datos |
-| 5 | Buscar |
+| 2 | Noticias |
+| 3 | Datos |
+| 4 | Buscar |
 
-Atajos adicionales: `L` capas · `A` AMBER · `N` noticias geo · `Esc` limpiar · `?` ayuda
+Atajos adicionales: `L` capas · `N` noticias geo · `Esc` limpiar · `?` ayuda
 
 ## Variables de entorno
 
@@ -55,10 +52,23 @@ Atajos adicionales: `L` capas · `A` AMBER · `N` noticias geo · `Esc` limpiar 
 | `RASTRO_VAD_BORRADOS_CSV_URL` | CSV nombres borrados |
 | `RASTRO_RECONSTRUCCION_AGGREGADOS_URL` | JSON agregados 2017–2024 |
 | `RASTRO_RSS_FEEDS` | Feeds RSS separados por coma |
-| `RASTRO_TELEGRAM_CHANNELS` | Canales Telegram públicos |
 | `RASTRO_MONITOR_KEYWORDS` | Keywords para `/api/monitor` |
 | `RASTRO_MONITOR_ESTADOS` | Filtrar monitor por estado |
 | `RASTRO_ALERT_WEBHOOK_URL` | Webhook POST al detectar coincidencias |
+| `RASTRO_MONITOR_TOKEN` | Secreto que la petición debe presentar para disparar el webhook |
+| `RASTRO_USER_AGENT` | Agente con el que RASTRO se identifica ante las fuentes |
+| `NEXT_PUBLIC_MAP_STYLE` | Estilo del mapa base (MapLibre) |
+| `RASTRO_PORT` | Puerto publicado por docker compose |
+
+## Salvaguardas
+
+- Sin alta de casos ni almacenamiento de consultas; no hay base de datos.
+- Búsqueda e inconsistencias: máximo 100 registros por consulta y 30 consultas por minuto por IP.
+- Informes por estado: solo agregados, 10 por minuto por IP, con todo valor escapado.
+- Búsqueda, inconsistencias, informes y monitoreo responden con `X-Robots-Tag: noindex`.
+- El webhook de `/api/monitor` solo se dispara si `RASTRO_MONITOR_TOKEN` está definido y la petición lo presenta (`Authorization: Bearer <token>`). Sin token la ruta sigue siendo pública, pero no envía nada.
+
+Los límites por IP usan `X-Forwarded-For`: despliega RASTRO detrás de un proxy que fije esa cabecera.
 
 ## Metodología
 

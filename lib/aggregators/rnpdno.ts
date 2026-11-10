@@ -1,3 +1,5 @@
+import { withCache } from "@/lib/cache";
+import { CACHE_STALE, CACHE_TTL, RNPDNO_CSV_URL } from "@/lib/config";
 import { ESTADOS_DATA } from "@/lib/mock-data";
 import { normalizeStateName, STATE_CATALOG } from "@/lib/state-catalog";
 import type { EstadoData, RnpdnoRecord } from "@/lib/types";
@@ -214,4 +216,16 @@ export async function fetchRnpdnoEstados(csvUrl: string): Promise<{
       usedMock: true,
     };
   }
+}
+
+/** RNPDNO aggregates shared by every route, so the CSV is downloaded once per cache window. */
+export function getRnpdnoCached() {
+  return withCache("rnpdno", CACHE_TTL.rnpdno, CACHE_STALE.rnpdno, async () => {
+    const result = await fetchRnpdnoEstados(RNPDNO_CSV_URL);
+    return {
+      data: result,
+      status: result.usedMock ? ("mock" as const) : ("live" as const),
+      source: result.usedMock ? "mock-data" : RNPDNO_CSV_URL,
+    };
+  });
 }
