@@ -5,7 +5,6 @@ const KEYWORDS: Record<NoticiaTipo, string[]> = {
   hallazgo: ["hallazgo", "fosa", "restos", "localiz", "encontrad"],
   denuncia: ["denuncia", "obstaculiz", "amenaza", "exige", "presunto"],
   institucional: ["cnbp", "cndh", "convenio", "plataforma", "gobierno", "fiscal"],
-  alerta: ["alerta amber", "alerta alba", "amber", "alba"],
   estadistica: ["aumento", "reporte", "estadist", "porcentaje", "semestre"],
 };
 

@@ -26,5 +26,4 @@ export const NOTICIAS: Noticia[] = [
   { id: "5", titulo: "GIZ y OAJ firman convenio para fortalecer búsqueda de personas en circuitos judiciales", fuente: "CNDH", hora: "hace 12h", estado: "Nacional", tipo: "institucional" },
   { id: "6", titulo: "Madre buscadora de Sinaloa recibe amenazas tras localizar restos en predio", fuente: "Sin Embargo", hora: "hace 14h", estado: "Sinaloa", tipo: "denuncia" },
   { id: "7", titulo: "Colectivo FUNDEM exige auditoría al RNPDNO por presuntos registros duplicados", fuente: "FUNDEM", hora: "hace 1d", estado: "Nacional", tipo: "denuncia" },
-  { id: "8", titulo: "Alerta Alba activada en Guerrero por mujer de 34 años desaparecida en Tlapa", fuente: "FGR", hora: "hace 1d", estado: "Guerrero", tipo: "alerta" },
 ];

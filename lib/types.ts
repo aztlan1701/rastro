@@ -33,7 +33,6 @@ export type NoticiaTipo =
   | "hallazgo"
   | "denuncia"
   | "institucional"
-  | "alerta"
   | "estadistica";
 
 export interface Noticia {

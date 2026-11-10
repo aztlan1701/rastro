@@ -68,7 +68,7 @@ export const RSS_FEEDS = (
 
 export const MONITOR_KEYWORDS = (
   process.env.RASTRO_MONITOR_KEYWORDS ??
-  "desaparec,hallazgo,fosa,alerta amber,alerta alba,buscadoras,localizad"
+  "desaparec,hallazgo,fosa,buscadoras,localizad"
 )
   .split(",")
   .map((keyword) => keyword.trim().toLowerCase())

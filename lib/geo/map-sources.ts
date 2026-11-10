@@ -104,7 +104,5 @@ export const NEWS_DOT_COLOR_EXPRESSION: ExpressionSpecification = [
   ["get", "tipo"],
   "hallazgo",
   "#ff2d55",
-  "alerta",
-  "#ffb300",
   "#00d084",
 ];

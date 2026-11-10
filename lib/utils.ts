@@ -38,7 +38,6 @@ export function getNoticiaStyles(tipo: string): { bg: string; text: string } {
     estadistica: { bg: "rgba(74,158,255,0.12)", text: "#4a9eff" },
     denuncia: { bg: "rgba(255,107,53,0.12)", text: "#ff6b35" },
     institucional: { bg: "rgba(0,208,132,0.12)", text: "#00d084" },
-    alerta: { bg: "rgba(255,179,0,0.12)", text: "#ffb300" },
   };
   return styles[tipo] ?? { bg: "rgba(255,255,255,0.04)", text: "#888" };
 }
