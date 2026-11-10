@@ -62,8 +62,8 @@ export function getMapFitPadding(): MapViewportPadding {
   const isMobile = window.matchMedia(`(max-width: ${XL_BREAKPOINT - 1}px)`).matches;
 
   return {
-    top: 48,
-    bottom: isMobile ? 44 : 24,
+    top: isMobile ? 16 : 48,
+    bottom: isMobile ? 16 : 24,
     left: 16,
     right: 16,
   };

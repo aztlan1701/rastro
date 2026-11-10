@@ -38,9 +38,9 @@ export function DataTab({
       : null;
 
   return (
-    <div className="flex-1 overflow-auto p-6">
+    <div className="flex-1 overflow-auto p-4 lg:p-6">
       {vad ? (
-        <section className="mb-8 rounded-lg border border-edge/12 bg-surface p-5">
+        <section className="mb-8 rounded-lg border border-edge/12 bg-surface p-3 lg:p-5">
           <SourceMetaBar sourceId="vad" meta={vadMeta} />
           <div className="mb-4">
             <h2 className="font-display text-lg font-bold text-ink-strong">Volver a Desaparecer</h2>
@@ -273,17 +273,26 @@ export function DataTab({
         />
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] border-collapse text-[11px]">
+          <table className="w-full border-collapse text-[11px] sm:min-w-[640px]">
             <thead>
               <tr className="border-b border-edge/12">
-                {["Estado", "Desaparecidas", "Nuevos 30d", `Mujeres${sexoNota}`, `Hombres${sexoNota}`, "Localizadas", "% Loc."].map(
-                  (header) => (
+                {/* En celular solo caben tres columnas; el resto aparece desde `sm`. */}
+                {[
+                  { header: "Estado", wide: false },
+                  { header: "Desaparecidas", wide: false },
+                  { header: "Nuevos 30d", wide: true },
+                  { header: `Mujeres${sexoNota}`, wide: true },
+                  { header: `Hombres${sexoNota}`, wide: true },
+                  { header: "Localizadas", wide: false },
+                  { header: "% Loc.", wide: true },
+                ].map(
+                  ({ header, wide }) => (
                     <th
                       key={header}
                       scope="col"
-                      className={`px-3 py-2 text-[11px] tracking-widest text-muted uppercase ${
+                      className={`px-2 py-2 text-[11px] tracking-wide text-muted uppercase sm:px-3 sm:tracking-widest ${
                         header === "Estado" ? "text-left" : "text-right"
-                      }`}
+                      } ${wide ? "hidden sm:table-cell" : ""}`}
                     >
                       {header}
                     </th>
@@ -312,7 +321,7 @@ export function DataTab({
                     index % 2 === 0 ? "bg-surface" : ""
                   }`}
                 >
-                  <td className="px-3 py-2.5 text-ink-2">
+                  <td className="px-2 py-2.5 text-ink-2 sm:px-3">
                     <div className="flex items-center gap-2">
                       <div
                         className="h-1.5 w-1.5 shrink-0 rounded-full"
@@ -322,24 +331,24 @@ export function DataTab({
                     </div>
                   </td>
                   <td
-                    className="px-3 py-2.5 text-right font-bold"
+                    className="px-2 py-2.5 text-right font-bold sm:px-3"
                     style={{ color: "#0b0d10" }}
                   >
                     {formatNum(estado.total)}
                   </td>
-                  <td className="px-3 py-2.5 text-right text-[#c2410c]">
+                  <td className="hidden px-3 py-2.5 text-right text-[#c2410c] sm:table-cell">
                     {estado.nuevos30d === null ? "—" : `+${formatNum(estado.nuevos30d)}`}
                   </td>
-                  <td className="px-3 py-2.5 text-right text-[#be3d7a]">
+                  <td className="hidden px-3 py-2.5 text-right text-[#be3d7a] sm:table-cell">
                     {formatNum(estado.mujeres)}
                   </td>
-                  <td className="px-3 py-2.5 text-right text-[#1f6fd0]">
+                  <td className="hidden px-3 py-2.5 text-right text-[#1f6fd0] sm:table-cell">
                     {formatNum(estado.hombres)}
                   </td>
-                  <td className="px-3 py-2.5 text-right text-[#0b7a52]">
+                  <td className="px-2 py-2.5 text-right text-[#0b7a52] sm:px-3">
                     {formatNumOrDash(estado.localizados)}
                   </td>
-                  <td className="px-3 py-2.5 text-right text-ink-4">
+                  <td className="hidden px-3 py-2.5 text-right text-ink-4 sm:table-cell">
                     {pctLocalizados(estado)}
                   </td>
                 </tr>

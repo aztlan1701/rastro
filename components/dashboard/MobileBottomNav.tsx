@@ -24,7 +24,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
             aria-controls={tab.panelId}
             tabIndex={activeTab === tab.id ? 0 : -1}
             onClick={() => onTabChange(tab.id)}
-            className={`py-2.5 text-[11px] tracking-wide uppercase transition-colors ${
+            className={`min-h-[3.25rem] text-[11px] tracking-wide uppercase transition-colors ${
               activeTab === tab.id
                 ? "border-t-2 border-[#c8102e] text-ink"
                 : "border-t-2 border-transparent text-muted"

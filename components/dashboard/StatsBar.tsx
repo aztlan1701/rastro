@@ -15,24 +15,27 @@ interface StatsBarProps {
 export function StatsBar({ stats }: StatsBarProps) {
   return (
     <div className="relative shrink-0 border-b border-edge/10 bg-surface">
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-canvas to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-canvas to-transparent md:hidden" />
-      <div className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+      <div
+        className="grid lg:flex"
+        style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
+      >
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="min-w-[160px] shrink-0 snap-start border-r border-edge/10 px-6 py-3"
+            className="min-w-0 border-r border-edge/10 px-3 py-2 last:border-r-0 lg:min-w-[160px] lg:shrink-0 lg:px-6 lg:py-3 lg:last:border-r"
           >
-            <div className="mb-1 text-[11px] tracking-[0.12em] text-muted uppercase">
+            <div className="mb-1 text-[10px] leading-tight tracking-[0.08em] text-muted uppercase lg:text-[11px] lg:tracking-[0.12em]">
               {stat.label}
             </div>
             <div
-              className={`font-display text-[26px] leading-none font-black ${stat.pulse ? "animate-alert-pulse" : ""}`}
+              className={`font-display text-[19px] leading-none font-black lg:text-[26px] ${stat.pulse ? "animate-alert-pulse" : ""}`}
               style={{ color: stat.color }}
             >
               {stat.value}
             </div>
-            <div className="mt-1 text-[11px] tracking-wide text-faint">{stat.sub}</div>
+            <div className="mt-1 hidden text-[11px] tracking-wide text-faint lg:block">
+              {stat.sub}
+            </div>
           </div>
         ))}
       </div>

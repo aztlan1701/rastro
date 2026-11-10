@@ -140,7 +140,7 @@ export function RastroDashboard() {
   const showEstadoPanel = activeTab === "mapa";
 
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-canvas pb-[calc(3rem+env(safe-area-inset-bottom,0px))] text-ink lg:pb-0">
+    <div className="flex h-dvh flex-col overflow-hidden bg-canvas pb-[calc(3.25rem+env(safe-area-inset-bottom,0px))] text-ink lg:h-auto lg:min-h-screen lg:pb-0">
       <a
         href={`#tabpanel-${activeTab}`}
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-sm focus:border focus:border-edge/30 focus:bg-canvas focus:px-3 focus:py-2 focus:text-[11px] focus:text-ink-strong"
@@ -163,10 +163,18 @@ export function RastroDashboard() {
         <DataFallbackBanner meta={meta.rnpdno} onGoToData={() => handleTabChange("datos")} />
       ) : null}
       <UsageDisclaimer />
-      <StatsBar stats={totals} />
+      {/* En celular las cifras nacionales solo acompañan al mapa sin selección;
+          con un estado elegido o en otra pestaña, el espacio es para el contenido. */}
+      <div className={showEstadoPanel && !selectedEstado ? "" : "hidden lg:block"}>
+        <StatsBar stats={totals} />
+      </div>
 
       <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
-        <div className={`${showEstadoPanel ? "flex" : "hidden xl:flex"} min-h-0 min-w-0 flex-col`}>
+        {/* En celular el panel va debajo del mapa (order-2) y con altura acotada,
+            para que el mapa sea lo primero que se ve. */}
+        <div
+          className={`${showEstadoPanel ? "flex" : "hidden xl:flex"} order-2 max-h-[42dvh] min-h-0 min-w-0 shrink-0 flex-col overflow-y-auto border-t border-edge/10 lg:max-h-none lg:overflow-visible lg:border-t-0 xl:order-none`}
+        >
           <EstadoPanel
             hoveredEstado={hoveredEstado}
             selectedEstado={selectedEstado}
@@ -177,7 +185,7 @@ export function RastroDashboard() {
           />
         </div>
 
-        <main className="relative flex min-h-[420px] min-w-0 flex-1 flex-col overflow-hidden bg-grid">
+        <main className="relative order-1 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-grid lg:min-h-[420px] xl:order-none">
           <div
             id="tabpanel-mapa"
             role="tabpanel"
@@ -187,8 +195,8 @@ export function RastroDashboard() {
             aria-hidden={activeTab !== "mapa"}
             className={`relative flex min-h-0 flex-1 flex-col outline-none ${activeTab === "mapa" ? "" : "hidden"}`}
           >
-            <div className="shrink-0 border-b border-edge/10 py-3 pr-4 pl-14">
-              <SourceMetaBar sourceId="rnpdno" meta={meta.rnpdno} />
+            <div className="shrink-0 border-b border-edge/10 py-2 pr-3 pl-14 lg:py-3 lg:pr-4">
+              <SourceMetaBar sourceId="rnpdno" meta={meta.rnpdno} dense />
             </div>
             {!layerPanelOpen ? (
               <LayerToggleButton

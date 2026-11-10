@@ -49,6 +49,10 @@ const EMPTY_FEATURE_COLLECTION: FeatureCollection = {
   features: [],
 };
 
+const WORLD_TILE_SIZE = 512;
+/** Suficiente para encuadrar el país completo en la pantalla de un celular. */
+const MAP_MIN_ZOOM = 2.6;
+
 function getMexicoFrameZoom(map: maplibregl.Map): number {
   const padding = getMapFitPadding();
   const width = Math.max(
@@ -64,11 +68,13 @@ function getMexicoFrameZoom(map: maplibregl.Map): number {
   const lngSpan = MEXICO_FRAME_NE[0] - MEXICO_FRAME_SW[0];
   const latRad = (MEXICO_FRAME_CENTER[1] * Math.PI) / 180;
 
-  const zoomLat = Math.log2((height / 256) * (360 / latSpan));
-  const zoomLng = Math.log2((width / 256) * (360 / lngSpan) / Math.cos(latRad));
+  // MapLibre usa teselas de 512 px: a zoom z el mundo mide 512 · 2^z px de ancho.
+  // Con 256 el cálculo salía un nivel de más y México quedaba recortado.
+  const zoomLat = Math.log2((height / WORLD_TILE_SIZE) * (360 / latSpan));
+  const zoomLng = Math.log2((width / WORLD_TILE_SIZE) * (360 / lngSpan) / Math.cos(latRad));
   const zoom = Math.min(zoomLat, zoomLng) - 0.05;
 
-  return Math.min(Math.max(zoom, 4), 10);
+  return Math.min(Math.max(zoom, MAP_MIN_ZOOM), 10);
 }
 
 function frameMexico(map: maplibregl.Map, duration = 0) {
@@ -459,11 +465,22 @@ export function MexicoMap({
         },
       });
 
+      const municipioPopupHtml = (properties: Record<string, unknown>) => {
+        const nombre = String(properties.NOM_MUN ?? properties.nombre ?? "Municipio");
+        const detalle = properties.hasData
+          ? `${formatNum(Number(properties.total ?? 0))} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}`
+          : `Sin dato en ${escapeHtml(municipalFuenteRef.current)}`;
+        return `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${detalle}</span></div>`;
+      };
+
       // Con la capa municipal a la vista el popup del estado no se fija: taparía
       // los municipios, y el panel lateral ya muestra sus cifras.
+      // Se pregunta por la intención (capa activa + estado elegido), no por la
+      // visibilidad del momento: los polígonos tardan en cargar y, en pantallas
+      // táctiles, el popup se fijaba justo en ese intervalo.
       const municipiosVisibles = () =>
-        Boolean(map.getLayer("municipios-fill")) &&
-        map.getLayoutProperty("municipios-fill", "visibility") === "visible";
+        layerEnabled(layersRef.current, "rnpdno_municipios") &&
+        Boolean(selectedEstadoRef.current);
 
       const showRestingPopup = () => {
         const selected = selectedEstadoRef.current;
@@ -474,7 +491,17 @@ export function MexicoMap({
         popup.remove();
       };
 
+      // Tras un toque el navegador emite eventos de ratón sintéticos (mover,
+      // salir). No son un cursor real: si se atendieran, borrarían el popup que
+      // el propio toque acaba de abrir. En táctil solo cuenta el `click`.
+      let lastTouchAt = 0;
+      map.on("touchstart", () => {
+        lastTouchAt = Date.now();
+      });
+      const fromTouch = () => Date.now() - lastTouchAt < 1000;
+
       const clearHover = () => {
+        if (fromTouch()) return;
         if (hoverKeyRef.current === null) return;
         hoverKeyRef.current = null;
         map.getCanvas().style.cursor = "";
@@ -486,6 +513,7 @@ export function MexicoMap({
       // completa, no al pasar de un polígono al contiguo. Por eso el hover se
       // resuelve en cada movimiento, consultando qué hay bajo el cursor.
       map.on("mousemove", (event) => {
+        if (fromTouch()) return;
         if (
           map.getLayer("noticias-geo-dots") &&
           map.queryRenderedFeatures(event.point, { layers: ["noticias-geo-dots"] }).length > 0
@@ -506,13 +534,7 @@ export function MexicoMap({
           if (hoverKeyRef.current !== key) {
             hoverKeyRef.current = key;
             onHoverRef.current(null);
-            const total = Number(municipio.properties.total ?? 0);
-            const detalle = municipio.properties.hasData
-              ? `${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}`
-              : `Sin dato en ${escapeHtml(municipalFuenteRef.current)}`;
-            popup.setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${detalle}</span></div>`,
-            );
+            popup.setHTML(municipioPopupHtml(municipio.properties));
           }
           popup.setLngLat(event.lngLat).addTo(map);
           return;
@@ -552,17 +574,9 @@ export function MexicoMap({
           layers: ["municipios-fill"],
         })[0];
         if (municipioFeature?.properties) {
-          const nombre = String(
-            municipioFeature.properties.NOM_MUN ??
-              municipioFeature.properties.nombre ??
-              "Municipio",
-          );
-          const total = Number(municipioFeature.properties.total ?? 0);
           popup
             .setLngLat(event.lngLat)
-            .setHTML(
-              `<div class="rastro-popup-inner"><strong>${escapeHtml(nombre)}</strong><span>${formatNum(total)} ${escapeHtml(municipalUnidadRef.current)} · ${escapeHtml(municipalFuenteRef.current)}</span></div>`,
-            )
+            .setHTML(municipioPopupHtml(municipioFeature.properties))
             .addTo(map);
           return;
         }
@@ -639,12 +653,20 @@ export function MexicoMap({
       style: mapStyle,
       center: MEXICO_MAP_DEFAULT.center,
       zoom: MEXICO_MAP_DEFAULT.zoom,
-      minZoom: 4.0,
+      minZoom: MAP_MIN_ZOOM,
       maxZoom: 10,
       attributionControl: false,
     });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    // En pantallas chicas la atribución arranca plegada (sigue a un toque en la "i").
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      map.once("load", () => {
+        const attribution = map.getContainer().querySelector(".maplibregl-ctrl-attrib");
+        attribution?.classList.remove("maplibregl-compact-show");
+        attribution?.removeAttribute("open");
+      });
+    }
     map.addControl(
       new maplibregl.AttributionControl({ compact: true }),
       "bottom-left",
@@ -788,8 +810,8 @@ export function MexicoMap({
   };
 
   return (
-    <div className="relative min-h-[420px] w-full flex-1">
-      <div ref={containerRef} className="absolute inset-0 h-full w-full" aria-label="Mapa de México" />
+    <div className="relative min-h-0 w-full flex-1 lg:min-h-[420px]">
+      <div ref={containerRef} className="rastro-map absolute inset-0 h-full w-full" aria-label="Mapa de México" />
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {liveMessage}
       </div>

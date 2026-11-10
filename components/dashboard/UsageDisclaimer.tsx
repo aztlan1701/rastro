@@ -8,15 +8,16 @@ const STORAGE_KEY = "RASTRO_DISCLAIMER_COLLAPSED";
 
 const subscribeNoop = () => () => {};
 
+/** Solo afecta a la versión móvil: plegado salvo que la persona lo haya abierto. */
 function readStoredCollapsed() {
   try {
-    return sessionStorage.getItem(STORAGE_KEY) === "1";
+    return sessionStorage.getItem(STORAGE_KEY) !== "0";
   } catch {
-    return false;
+    return true;
   }
 }
 
-const readStoredCollapsedOnServer = () => false;
+const readStoredCollapsedOnServer = () => true;
 
 export function UsageDisclaimer() {
   const storedCollapsed = useSyncExternalStore(
@@ -41,7 +42,7 @@ export function UsageDisclaimer() {
   return (
     <div
       role="note"
-      className="shrink-0 border-b border-edge/10 bg-surface px-4 py-2.5 text-[11px] leading-relaxed text-muted"
+      className="shrink-0 border-b border-edge/10 bg-surface px-4 py-2 text-[11px] leading-relaxed text-muted lg:py-2.5"
     >
       <div className="flex items-start justify-between gap-3 lg:hidden">
         <button
@@ -52,7 +53,9 @@ export function UsageDisclaimer() {
         >
           <span className="text-ink-4">Aviso de uso</span>
           {collapsed ? (
-            <span className="ml-2 text-faint">(tocar para expandir)</span>
+            <span className="ml-1 text-faint">
+              · no sustituye denuncias oficiales · <span className="underline">leer</span>
+            </span>
           ) : (
             <span className="mt-1 block">{USAGE_DISCLAIMER}</span>
           )}
