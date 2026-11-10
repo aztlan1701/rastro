@@ -33,7 +33,7 @@ import { useMexicoMap } from "@/hooks/useMexicoMap";
 import { escapeHtml } from "@/lib/export/escape";
 
 const DEFAULT_MAP_STYLE =
-  "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
+  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 const FALLBACK_MAP_STYLE = "https://demotiles.maplibre.org/style.json";
 
 const MEXICO_FRAME_SW: [number, number] = [-117.85, 14.15];
@@ -304,7 +304,7 @@ export function MexicoMap({
         source: "estados-choropleth",
         paint: {
           "fill-color": maplibreChoroplethExpression(),
-          "fill-opacity": 0.55,
+          "fill-opacity": 0.78,
         },
       });
 
@@ -313,9 +313,9 @@ export function MexicoMap({
         type: "line",
         source: "estados-choropleth",
         paint: {
-          "line-color": "#ffffff",
+          "line-color": "#5c2a1e",
           "line-width": 0.6,
-          "line-opacity": 0.35,
+          "line-opacity": 0.45,
         },
       });
 
@@ -325,10 +325,10 @@ export function MexicoMap({
         source: "municipios",
         paint: {
           "circle-radius": ["interpolate", ["linear"], ["get", "total"], 1, 3, 20, 8, 100, 12],
-          "circle-color": "#4a9eff",
+          "circle-color": "#1f6fd0",
           "circle-opacity": 0.65,
           "circle-stroke-width": 1,
-          "circle-stroke-color": "#1a2030",
+          "circle-stroke-color": "#ffffff",
         },
       });
 
@@ -582,7 +582,7 @@ export function MexicoMap({
       lastFocusedIdRef.current = null;
       if (!selectedEstado) popup?.remove();
       map.setPaintProperty("estados-outline", "line-width", 0.6);
-      map.setPaintProperty("estados-fill", "fill-opacity", 0.55);
+      map.setPaintProperty("estados-fill", "fill-opacity", 0.78);
       return;
     }
 
@@ -598,14 +598,14 @@ export function MexicoMap({
     map.setPaintProperty("estados-outline", "line-width", [
       "case",
       ["==", ["get", "id"], highlight.id],
-      2.5,
+      2.2,
       0.6,
     ]);
     map.setPaintProperty("estados-fill", "fill-opacity", [
       "case",
       ["==", ["get", "id"], highlight.id],
-      0.85,
-      0.45,
+      0.92,
+      0.6,
     ]);
   }, [estadoCentroids, hoveredEstado, mapReady, selectedEstado]);
 
@@ -633,7 +633,7 @@ export function MexicoMap({
         <button
           type="button"
           onClick={handleResetView}
-          className="absolute top-12 right-3 z-20 rounded-sm border border-white/10 bg-[#030508]/95 px-3 py-1.5 text-[11px] text-[#c0bfb8] backdrop-blur-md transition-colors hover:border-white/20 hover:text-white lg:top-3"
+          className="absolute top-12 right-3 z-20 rounded-sm border border-edge/15 bg-canvas/95 px-3 py-1.5 text-[11px] text-ink-2 backdrop-blur-md transition-colors hover:border-edge/30 hover:text-ink-strong lg:top-3"
         >
           Ver todo México
         </button>

@@ -27,7 +27,7 @@ const MexicoMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex min-h-[420px] flex-1 items-center justify-center text-[11px] tracking-widest text-[#556070] uppercase">
+      <div className="flex min-h-[420px] flex-1 items-center justify-center text-[11px] tracking-widest text-muted uppercase">
         Cargando mapa…
       </div>
     ),
@@ -130,10 +130,10 @@ export function RastroDashboard() {
   const showEstadoPanel = activeTab === "mapa";
 
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-[#030508] pb-[calc(3rem+env(safe-area-inset-bottom,0px))] text-[#e8e4dc] lg:pb-0">
+    <div className="flex min-h-screen flex-col overflow-hidden bg-canvas pb-[calc(3rem+env(safe-area-inset-bottom,0px))] text-ink lg:pb-0">
       <a
         href={`#tabpanel-${activeTab}`}
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-sm focus:border focus:border-white/20 focus:bg-[#030508] focus:px-3 focus:py-2 focus:text-[11px] focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-sm focus:border focus:border-edge/30 focus:bg-canvas focus:px-3 focus:py-2 focus:text-[11px] focus:text-ink-strong"
       >
         Saltar al contenido
       </a>
@@ -177,7 +177,7 @@ export function RastroDashboard() {
             aria-hidden={activeTab !== "mapa"}
             className={`relative flex min-h-0 flex-1 flex-col outline-none ${activeTab === "mapa" ? "" : "hidden"}`}
           >
-            <div className="shrink-0 border-b border-white/6 px-4 py-3 xl:px-4">
+            <div className="shrink-0 border-b border-edge/10 py-3 pr-4 pl-14">
               <SourceMetaBar sourceId="rnpdno" meta={meta.rnpdno} />
             </div>
             {!layerPanelOpen ? (

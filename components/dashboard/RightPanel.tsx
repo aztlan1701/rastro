@@ -10,12 +10,12 @@ interface RightPanelProps {
 
 export function RightPanel({ noticias, meta, onGoToNews }: RightPanelProps) {
   return (
-    <aside className="hidden w-[260px] shrink-0 flex-col overflow-hidden border-l border-white/6 xl:flex">
+    <aside className="hidden w-[260px] shrink-0 flex-col overflow-hidden border-l border-edge/10 xl:flex">
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <FeedPanelContent noticias={noticias} onGoToNews={onGoToNews} />
       </div>
 
-      <footer className="space-y-2 border-t border-white/6 p-4 text-[11px] leading-relaxed tracking-wide text-[#2a3040]">
+      <footer className="space-y-2 border-t border-edge/10 p-4 text-[11px] leading-relaxed tracking-wide text-ghost">
         <div>RASTRO v0.3 · Next.js + MapLibre</div>
         <DataStatusBadge meta={meta.news} />
       </footer>

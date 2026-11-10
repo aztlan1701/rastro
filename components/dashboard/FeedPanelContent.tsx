@@ -14,14 +14,14 @@ export function FeedPanelContent({ noticias, compact, onGoToNews }: FeedPanelCon
   return (
     <div className="flex-1 overflow-auto">
       <div className="flex items-center justify-between px-4 py-2.5">
-        <div className="text-[11px] tracking-[0.12em] text-[#556070] uppercase">
+        <div className="text-[11px] tracking-[0.12em] text-muted uppercase">
           Últimas noticias
         </div>
         {onGoToNews ? (
           <button
             type="button"
             onClick={onGoToNews}
-            className="text-[11px] text-[#556070] hover:text-[#aaa]"
+            className="text-[11px] text-muted hover:text-ink-3"
           >
             Ver todas
           </button>

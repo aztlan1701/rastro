@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function MetodologiaPage() {
   return (
-    <main className="min-h-screen bg-[#030508]">
+    <main className="min-h-screen bg-canvas">
       <MethodologyPageContent />
     </main>
   );

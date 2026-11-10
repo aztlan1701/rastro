@@ -14,9 +14,9 @@ import type {
 } from "@/lib/types";
 
 const DEFAULT_LAYERS: LayerState[] = [
-  { id: "rnpdno_estados", label: "RNPDNO estados", enabled: true, count: 0, color: "#ff2d55" },
-  { id: "rnpdno_municipios", label: "Municipios", enabled: false, count: 0, color: "#4a9eff" },
-  { id: "noticias_geo", label: "Noticias geo", enabled: false, count: 0, color: "#00d084" },
+  { id: "rnpdno_estados", label: "RNPDNO estados", enabled: true, count: 0, color: "#c8102e" },
+  { id: "rnpdno_municipios", label: "Municipios", enabled: false, count: 0, color: "#1f6fd0" },
+  { id: "noticias_geo", label: "Noticias geo", enabled: false, count: 0, color: "#0b7a52" },
 ];
 
 const EMPTY_META: ApiMeta = {

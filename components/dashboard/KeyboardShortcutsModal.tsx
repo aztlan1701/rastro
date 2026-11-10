@@ -43,16 +43,16 @@ export function KeyboardShortcutsModal({ open, onClose }: KeyboardShortcutsModal
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
-            className="fixed top-1/2 left-1/2 z-[61] w-[min(420px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-sm border border-white/10 bg-[#030508] p-5 shadow-2xl"
+            className="fixed top-1/2 left-1/2 z-[61] w-[min(420px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 rounded-sm border border-edge/15 bg-canvas p-5 shadow-2xl"
           >
             <div className="mb-4 flex items-center justify-between">
-              <h2 id="shortcuts-title" className="font-display text-base font-bold text-white">
+              <h2 id="shortcuts-title" className="font-display text-base font-bold text-ink-strong">
                 Atajos de teclado
               </h2>
               <button
                 type="button"
                 onClick={onClose}
-                className="text-[11px] text-[#556070] hover:text-[#aaa]"
+                className="text-[11px] text-muted hover:text-ink-3"
               >
                 Cerrar
               </button>
@@ -60,14 +60,14 @@ export function KeyboardShortcutsModal({ open, onClose }: KeyboardShortcutsModal
             <ul className="space-y-2">
               {SHORTCUTS.map((item) => (
                 <li key={item.keys} className="flex items-start justify-between gap-4 text-[11px]">
-                  <kbd className="shrink-0 rounded-sm border border-white/10 bg-white/[0.04] px-2 py-1 font-mono text-[#ffb300]">
+                  <kbd className="shrink-0 rounded-sm border border-edge/15 bg-surface px-2 py-1 font-mono text-[#a16207]">
                     {item.keys}
                   </kbd>
-                  <span className="text-right text-[#aaa]">{item.action}</span>
+                  <span className="text-right text-ink-3">{item.action}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[11px] text-[#3a4558]">
+            <p className="mt-4 text-[11px] text-faint">
               Pestañas: {DASHBOARD_TABS.map((tab) => tab.label).join(" · ")}
             </p>
           </motion.div>

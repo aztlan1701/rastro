@@ -63,10 +63,10 @@ export function EstadoPanel({
   };
 
   return (
-    <aside className="flex w-full shrink-0 flex-col overflow-hidden border-r border-white/6 lg:w-[300px]">
+    <aside className="flex w-full shrink-0 flex-col overflow-hidden border-r border-edge/10 lg:w-[300px]">
       <div
-        className={`min-h-[160px] border-b border-white/6 p-5 ${
-          isSelected ? "border-l-2 border-l-[#ff2d55]" : isHoverOnly ? "opacity-90" : ""
+        className={`min-h-[160px] border-b border-edge/10 p-5 ${
+          isSelected ? "border-l-2 border-l-[#c8102e]" : isHoverOnly ? "opacity-90" : ""
         }`}
       >
         {displayEstado ? (
@@ -75,15 +75,15 @@ export function EstadoPanel({
               <div>
                 <div
                   className={`mb-1 text-[11px] tracking-[0.12em] uppercase ${
-                    isSelected ? "text-[#ff2d55]" : "text-[#556070]"
+                    isSelected ? "text-[#c8102e]" : "text-muted"
                   }`}
                 >
                   {isSelected ? "Estado seleccionado" : "Explorando"}
                 </div>
-                <div className="font-display text-lg font-bold text-white">
+                <div className="font-display text-lg font-bold text-ink-strong">
                   {displayEstado.nombre}
                 </div>
-                <p className="mt-1 text-[11px] text-[#556070]">
+                <p className="mt-1 text-[11px] text-muted">
                   Color = volumen de casos en este estado
                 </p>
               </div>
@@ -91,25 +91,25 @@ export function EstadoPanel({
                 className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full"
                 style={{
                   background: getColor(displayEstado.total),
-                  boxShadow: isSelected ? `0 0 8px ${getColor(displayEstado.total)}` : undefined,
+                  boxShadow: isSelected ? "0 0 0 2px rgba(11,13,16,0.25)" : undefined,
                 }}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               {[
-                { l: "Total", v: formatNum(displayEstado.total), c: getColor(displayEstado.total) },
-                { l: "Este mes", v: `+${displayEstado.nuevos30d}`, c: "#ff6b35" },
-                { l: "Mujeres", v: formatNum(displayEstado.mujeres), c: "#ff80ab" },
-                { l: "Hombres", v: formatNum(displayEstado.hombres), c: "#4a9eff" },
-                { l: "Localizadas", v: formatNum(displayEstado.localizados), c: "#00d084" },
-                { l: "Borrados VAD", v: formatNum(borradosEstado), c: "#ff6b35" },
+                { l: "Total", v: formatNum(displayEstado.total), c: "#0b0d10" },
+                { l: "Este mes", v: `+${displayEstado.nuevos30d}`, c: "#c2410c" },
+                { l: "Mujeres", v: formatNum(displayEstado.mujeres), c: "#be3d7a" },
+                { l: "Hombres", v: formatNum(displayEstado.hombres), c: "#1f6fd0" },
+                { l: "Localizadas", v: formatNum(displayEstado.localizados), c: "#0b7a52" },
+                { l: "Borrados VAD", v: formatNum(borradosEstado), c: "#c2410c" },
               ].map((item) => (
                 <div
                   key={item.l}
-                  className="rounded-sm border border-white/5 bg-white/[0.03] px-2.5 py-2"
+                  className="rounded-sm border border-edge/10 bg-surface px-2.5 py-2"
                 >
-                  <div className="mb-1 text-[11px] tracking-[0.1em] text-[#556070] uppercase">
+                  <div className="mb-1 text-[11px] tracking-[0.1em] text-muted uppercase">
                     {item.l}
                   </div>
                   <div className="font-display text-sm font-bold" style={{ color: item.c }}>
@@ -123,13 +123,13 @@ export function EstadoPanel({
                 <button
                   type="button"
                   onClick={() => pinTerritory(displayEstado)}
-                  className="rounded-sm border border-white/10 px-2.5 py-1 text-[11px] text-[#aaa] hover:bg-white/5"
+                  className="rounded-sm border border-edge/15 px-2.5 py-1 text-[11px] text-ink-3 hover:bg-edge/5"
                 >
                   Fijar territorio
                 </button>
                 <a
                   href={`/api/informe/${displayEstado.id}`}
-                  className="rounded-sm border border-[#4a9eff]/30 px-2.5 py-1 text-[11px] text-[#4a9eff] hover:bg-[#4a9eff]/10"
+                  className="rounded-sm border border-[#1f6fd0]/30 px-2.5 py-1 text-[11px] text-[#1f6fd0] hover:bg-[#1f6fd0]/10"
                 >
                   Descargar informe HTML
                 </a>
@@ -138,12 +138,12 @@ export function EstadoPanel({
           </div>
         ) : (
           <div className="flex h-full min-h-[120px] flex-col items-center justify-center opacity-50">
-            <p className="text-center text-[11px] tracking-wide text-[#556070] uppercase">
+            <p className="text-center text-[11px] tracking-wide text-muted uppercase">
               Pasa el cursor o haz clic
               <br />
               en un estado del mapa
             </p>
-            <p className="mt-2 text-center text-[11px] text-[#3a4558]">
+            <p className="mt-2 text-center text-[11px] text-faint">
               También puedes elegir uno del ranking
             </p>
           </div>
@@ -152,13 +152,13 @@ export function EstadoPanel({
 
       <div className="lg:flex lg:flex-1 lg:flex-col lg:overflow-auto">
         <div className="flex items-center justify-between px-5 py-2.5 lg:py-2.5">
-          <div className="text-[11px] tracking-[0.12em] text-[#556070] uppercase">
+          <div className="text-[11px] tracking-[0.12em] text-muted uppercase">
             Ranking por total registradas
           </div>
           <button
             type="button"
             onClick={() => setRankingExpanded((expanded) => !expanded)}
-            className="text-[11px] text-[#556070] hover:text-[#aaa] lg:hidden"
+            className="text-[11px] text-muted hover:text-ink-3 lg:hidden"
             aria-expanded={rankingExpanded}
             aria-controls="estado-ranking-list"
           >
@@ -189,24 +189,24 @@ export function EstadoPanel({
                 onKeyDown={(event) => handleRankingKeyDown(event, index)}
                 className={`flex w-full items-center gap-2.5 px-5 py-2 text-left transition-colors ${
                   selected
-                    ? "border-l-2 border-[#ff2d55] bg-[#ff2d55]/8"
+                    ? "border-l-2 border-[#c8102e] bg-[#c8102e]/8"
                     : hovered
-                      ? "border-l-2 border-[#556070] bg-white/[0.03]"
-                      : "border-l-2 border-transparent hover:bg-white/[0.02]"
+                      ? "border-l-2 border-muted bg-surface"
+                      : "border-l-2 border-transparent hover:bg-surface"
                 }`}
               >
-                <span className="w-3.5 text-[11px] text-[#3a4558]">#{index + 1}</span>
+                <span className="w-3.5 text-[11px] text-faint">#{index + 1}</span>
                 <div className="flex-1">
                   <div className="mb-1 flex justify-between">
-                    <span className="text-[11px] text-[#c0bfb8]">{estado.nombre}</span>
+                    <span className="text-[11px] text-ink-2">{estado.nombre}</span>
                     <span
                       className="text-[11px] font-bold"
-                      style={{ color: getColor(estado.total) }}
+                      style={{ color: "#0b0d10" }}
                     >
                       {formatNum(estado.total)}
                     </span>
                   </div>
-                  <div className="h-[3px] overflow-hidden rounded-sm bg-white/[0.06]">
+                  <div className="h-[3px] overflow-hidden rounded-sm bg-edge/[0.06]">
                     <div
                       className="h-full rounded-sm transition-all duration-500"
                       style={{

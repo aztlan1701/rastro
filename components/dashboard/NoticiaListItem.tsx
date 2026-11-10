@@ -10,7 +10,7 @@ interface NoticiaListItemProps {
 
 export function NoticiaListItem({ noticia, index = 0, compact, onPress }: NoticiaListItemProps) {
   const styles = getNoticiaStyles(noticia.tipo);
-  const className = `animate-fade-in block border-l-2 border-transparent transition-colors hover:border-[#ff2d55] hover:bg-white/[0.03] ${
+  const className = `animate-fade-in block border-l-2 border-transparent transition-colors hover:border-[#c8102e] hover:bg-surface ${
     compact ? "px-4 py-2.5" : "px-3.5 py-2.5"
   }`;
 
@@ -18,19 +18,19 @@ export function NoticiaListItem({ noticia, index = 0, compact, onPress }: Notici
     <>
       <div
         className="mb-1 inline-block rounded-sm px-1.5 py-0.5 text-[11px] font-bold tracking-widest uppercase"
-        style={{ color: styles.text, background: "rgba(255,255,255,0.04)" }}
+        style={{ color: styles.text, background: "rgba(11,13,16,0.05)" }}
       >
         {noticia.tipo}
       </div>
-      <p className="mb-1 text-[11px] leading-snug text-[#c0bfb8]">{noticia.titulo}</p>
-      <p className="text-[11px] text-[#3a4558]">
+      <p className="mb-1 text-[11px] leading-snug text-ink-2">{noticia.titulo}</p>
+      <p className="text-[11px] text-faint">
         {noticia.fuente} · {noticia.hora}
       </p>
     </>
   ) : (
     <>
       <div className="mb-1 flex items-start justify-between gap-3">
-        <h3 className="flex-1 text-[13px] leading-snug text-[#d4d0c8]">{noticia.titulo}</h3>
+        <h3 className="flex-1 text-[13px] leading-snug text-ink-2">{noticia.titulo}</h3>
         <span
           className="shrink-0 rounded-sm border px-1.5 py-0.5 text-[11px] font-bold tracking-widest uppercase"
           style={{
@@ -42,7 +42,7 @@ export function NoticiaListItem({ noticia, index = 0, compact, onPress }: Notici
           {noticia.tipo}
         </span>
       </div>
-      <p className="text-[11px] text-[#3a4558]">
+      <p className="text-[11px] text-faint">
         {noticia.fuente} · {noticia.estado} · {noticia.hora}
       </p>
     </>

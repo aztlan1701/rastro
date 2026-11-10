@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030508;
-  --foreground: #e8e4dc;
-  --accent-red: #ff2d55;
-  --accent-amber: #ffb300;
-  --accent-blue: #4a9eff;
-  --muted: #556070;
+  color-scheme: light;
+  --background: #f7f6f2;
+  --foreground: #1c2026;
+  --surface: #ffffff;
+  --ink-strong: #0b0d10;
+  --ink-2: #333941;
+  --ink-3: #49515d;
+  --ink-4: #5f6876;
+  --muted: #5c6674;
+  --faint: #6b7483;
+  --ghost: #7b8492;
+  --edge: #0b0d10;
+  --accent-red: #c8102e;
+  --accent-amber: #a16207;
+  --accent-blue: #1f6fd0;
 }
 
 @theme inline {
@@ -16,6 +25,16 @@
   --color-accent-amber: var(--accent-amber);
   --color-accent-blue: var(--accent-blue);
   --color-muted: var(--muted);
+  --color-canvas: var(--background);
+  --color-surface: var(--surface);
+  --color-ink: var(--foreground);
+  --color-ink-strong: var(--ink-strong);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-faint: var(--faint);
+  --color-ghost: var(--ghost);
+  --color-edge: var(--edge);
   --font-mono: var(--font-mono);
   --font-display: var(--font-display);
 }
@@ -73,11 +92,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0d12;
+  background: #ecebe6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a3040;
+  background: #b4bac4;
   border-radius: 2px;
 }
 
@@ -107,10 +126,10 @@ body {
 @keyframes alert-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 45, 85, 0.4);
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(255, 45, 85, 0);
+    box-shadow: 0 0 0 8px rgba(200, 16, 46, 0);
   }
 }
 
@@ -128,8 +147,8 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(11, 13, 16, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 13, 16, 0.035) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -152,18 +171,18 @@ body {
 }
 
 .maplibregl-popup.rastro-popup .maplibregl-popup-content {
-  background: rgba(3, 5, 8, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(11, 13, 16, 0.14);
   border-radius: 2px;
   padding: 8px 10px;
-  color: #e8e4dc;
+  color: #1c2026;
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(11, 13, 16, 0.16);
 }
 
 .maplibregl-popup.rastro-popup .maplibregl-popup-tip {
-  border-top-color: rgba(3, 5, 8, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.97);
 }
 
 .rastro-popup-inner {
@@ -173,9 +192,9 @@ body {
 }
 
 .rastro-popup-inner strong {
-  color: #fff;
+  color: #0b0d10;
 }
 
 .rastro-popup-inner span {
-  color: #888;
+  color: #5f6876;
 }

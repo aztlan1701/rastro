@@ -20,12 +20,12 @@ export function MobileFeedDrawer({ noticias, onGoToNews }: MobileFeedDrawerProps
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed right-3 z-30 flex items-center gap-2 rounded-sm border border-white/15 bg-[#030508]/95 px-3 py-2 text-[11px] text-[#c0bfb8] shadow-lg backdrop-blur-md"
+        className="fixed right-3 z-30 flex items-center gap-2 rounded-sm border border-edge/20 bg-canvas/95 px-3 py-2 text-[11px] text-ink-2 shadow-lg backdrop-blur-md"
         style={{ bottom: "calc(3.75rem + env(safe-area-inset-bottom, 0px))" }}
       >
         Noticias
         {noticias.length > 0 ? (
-          <span className="rounded-sm bg-white/10 px-1.5 font-bold">{noticias.length}</span>
+          <span className="rounded-sm bg-edge/10 px-1.5 font-bold">{noticias.length}</span>
         ) : null}
       </button>
 
@@ -47,17 +47,17 @@ export function MobileFeedDrawer({ noticias, onGoToNews }: MobileFeedDrawerProps
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 320 }}
-              className="fixed right-0 left-0 z-50 flex max-h-[65vh] flex-col overflow-hidden rounded-t-md border border-white/10 bg-[#030508]"
+              className="fixed right-0 left-0 z-50 flex max-h-[65vh] flex-col overflow-hidden rounded-t-md border border-edge/15 bg-canvas"
               style={{ bottom: "calc(3rem + env(safe-area-inset-bottom, 0px))" }}
             >
-              <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
-                <span className="text-[11px] tracking-[0.12em] text-[#556070] uppercase">
+              <div className="flex items-center justify-between border-b border-edge/12 px-4 py-3">
+                <span className="text-[11px] tracking-[0.12em] text-muted uppercase">
                   Últimas noticias
                 </span>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="text-[11px] text-[#556070] hover:text-[#aaa]"
+                  className="text-[11px] text-muted hover:text-ink-3"
                 >
                   Cerrar
                 </button>

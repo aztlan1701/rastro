@@ -12,7 +12,7 @@ export function LayerToggleButton({ open, onToggle }: LayerToggleButtonProps) {
       aria-controls="layer-panel"
       aria-label="Capas del mapa"
       title="Capas del mapa (L)"
-      className="absolute top-3 left-3 z-20 flex h-9 w-9 items-center justify-center rounded-sm border border-white/10 bg-[#030508]/95 text-[#c0bfb8] backdrop-blur-md transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+      className="absolute top-3 left-3 z-20 flex h-9 w-9 items-center justify-center rounded-sm border border-edge/15 bg-canvas/95 text-ink-2 backdrop-blur-md transition-colors hover:border-edge/30 hover:bg-edge/[0.06] hover:text-ink-strong"
     >
       <svg
         width="16"
