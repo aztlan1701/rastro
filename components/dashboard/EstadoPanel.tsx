@@ -69,17 +69,19 @@ export function EstadoPanel({
 
   return (
     <aside className="flex w-full shrink-0 flex-col overflow-hidden border-r border-edge/10 lg:w-[300px]">
+      {/* En celular este bloque solo aparece con un estado elegido: sin cursor
+          no hay "explorar", y el aviso vacío le quitaba pantalla al mapa. */}
       <div
-        className={`min-h-[160px] border-b border-edge/10 p-5 ${
-          isSelected ? "border-l-2 border-l-[#c8102e]" : isHoverOnly ? "opacity-90" : ""
-        }`}
+        className={`border-b border-edge/10 px-4 py-3 lg:block lg:min-h-[160px] lg:p-5 ${
+          displayEstado ? "" : "hidden"
+        } ${isSelected ? "border-l-2 border-l-[#c8102e]" : isHoverOnly ? "opacity-90" : ""}`}
       >
         {displayEstado ? (
           <div className="animate-fade-in">
-            <div className="mb-3 flex items-start justify-between">
+            <div className="mb-2 flex items-start justify-between lg:mb-3">
               <div>
                 <div
-                  className={`mb-1 text-[11px] tracking-[0.12em] uppercase ${
+                  className={`mb-0.5 text-[10px] tracking-[0.12em] uppercase lg:mb-1 lg:text-[11px] ${
                     isSelected ? "text-[#c8102e]" : "text-muted"
                   }`}
                 >
@@ -88,12 +90,12 @@ export function EstadoPanel({
                 <div className="font-display text-lg font-bold text-ink-strong">
                   {displayEstado.nombre}
                 </div>
-                <p className="mt-1 text-[11px] text-muted">
+                <p className="mt-1 hidden text-[11px] text-muted lg:block">
                   Color = volumen de casos en este estado
                 </p>
               </div>
               <div
-                className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full"
+                className="mt-1 hidden h-2.5 w-2.5 shrink-0 rounded-full lg:block"
                 style={{
                   background: getColor(displayEstado.total),
                   boxShadow: isSelected ? "0 0 0 2px rgba(11,13,16,0.25)" : undefined,
@@ -101,7 +103,8 @@ export function EstadoPanel({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            {/* Celular: una sola fila deslizable, para dejarle altura al mapa. */}
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0 lg:pb-0">
               {[
                 { l: "Desaparecidas", v: formatNum(displayEstado.total), c: "#0b0d10" },
                 ...(displayEstado.nuevos30d !== null
@@ -114,9 +117,9 @@ export function EstadoPanel({
               ].map((item) => (
                 <div
                   key={item.l}
-                  className="rounded-sm border border-edge/10 bg-surface px-2.5 py-2"
+                  className="min-w-[6.5rem] shrink-0 rounded-sm border border-edge/10 bg-surface px-2.5 py-2 lg:min-w-0"
                 >
-                  <div className="mb-1 text-[11px] tracking-[0.1em] text-muted uppercase">
+                  <div className="mb-1 text-[11px] tracking-[0.1em] whitespace-nowrap text-muted uppercase lg:whitespace-normal">
                     {item.l}
                   </div>
                   <div className="font-display text-sm font-bold" style={{ color: item.c }}>
@@ -136,13 +139,13 @@ export function EstadoPanel({
                 <button
                   type="button"
                   onClick={() => pinTerritory(displayEstado)}
-                  className="rounded-sm border border-edge/15 px-2.5 py-1 text-[11px] text-ink-3 hover:bg-edge/5"
+                  className="rounded-sm border border-edge/15 px-3 py-2 text-[11px] text-ink-3 hover:bg-edge/5 lg:px-2.5 lg:py-1"
                 >
                   Fijar territorio
                 </button>
                 <a
                   href={`/api/informe/${displayEstado.id}`}
-                  className="rounded-sm border border-[#1f6fd0]/30 px-2.5 py-1 text-[11px] text-[#1f6fd0] hover:bg-[#1f6fd0]/10"
+                  className="rounded-sm border border-[#1f6fd0]/30 px-3 py-2 text-[11px] text-[#1f6fd0] hover:bg-[#1f6fd0]/10 lg:px-2.5 lg:py-1"
                 >
                   Descargar informe HTML
                 </a>
@@ -164,14 +167,15 @@ export function EstadoPanel({
       </div>
 
       <div className="lg:flex lg:flex-1 lg:flex-col lg:overflow-auto">
-        <div className="flex items-center justify-between px-5 py-2.5 lg:py-2.5">
+        <div className="flex items-center justify-between gap-3 px-4 py-1 lg:px-5 lg:py-2.5">
           <div className="text-[11px] tracking-[0.12em] text-muted uppercase">
-            Ranking por desaparecidas y no localizadas
+            <span className="lg:hidden">Ranking de estados</span>
+            <span className="hidden lg:inline">Ranking por desaparecidas y no localizadas</span>
           </div>
           <button
             type="button"
             onClick={() => setRankingExpanded((expanded) => !expanded)}
-            className="text-[11px] text-muted hover:text-ink-3 lg:hidden"
+            className="shrink-0 py-2.5 pl-3 text-[11px] text-[#1f6fd0] hover:text-[#174f99] lg:hidden"
             aria-expanded={rankingExpanded}
             aria-controls="estado-ranking-list"
           >
@@ -186,7 +190,7 @@ export function EstadoPanel({
           aria-activedescendant={
             selectedEstado ? `estado-rank-${selectedEstado.id}` : undefined
           }
-          className={`max-h-[min(280px,38vh)] flex-1 overflow-auto lg:max-h-[min(320px,45vh)] ${rankingExpanded ? "block" : "hidden lg:block"}`}
+          className={`flex-1 lg:max-h-[min(320px,45vh)] lg:overflow-auto ${rankingExpanded ? "block" : "hidden lg:block"}`}
         >
           {ranked.map((estado, index) => {
             const selected = selectedEstado?.id === estado.id;
@@ -200,7 +204,7 @@ export function EstadoPanel({
                 aria-selected={selected}
                 onClick={() => selectFromRanking(estado, selected)}
                 onKeyDown={(event) => handleRankingKeyDown(event, index)}
-                className={`flex w-full items-center gap-2.5 px-5 py-2 text-left transition-colors ${
+                className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-left transition-colors lg:px-5 lg:py-2 ${
                   selected
                     ? "border-l-2 border-[#c8102e] bg-[#c8102e]/8"
                     : hovered

@@ -12,7 +12,7 @@ interface NewsTabProps {
 
 export function NewsTab({ noticias, newsMeta, gdeltMeta }: NewsTabProps) {
   return (
-    <div className="flex-1 overflow-auto p-6">
+    <div className="flex-1 overflow-auto p-4 lg:p-6">
       <SourceMetaBar sourceId="news" meta={newsMeta} />
       {gdeltMeta && gdeltMeta.status !== "mock" ? (
         <SourceMetaBar sourceId="gdelt" meta={gdeltMeta} />

@@ -103,7 +103,7 @@ export function SearchTab({ estados, searchMeta, onSelectEstado, onGoToMap }: Se
   };
 
   return (
-    <div className="flex-1 overflow-auto p-6">
+    <div className="flex-1 overflow-auto p-4 lg:p-6">
       <TabSectionHeader
         title="Buscar personas"
         subtitle="Búsqueda por nombre en el RNPDNO público (sep 2023) y en la base de nombres borrados reconstruida por Data Cívica. Mínimo 2 caracteres."

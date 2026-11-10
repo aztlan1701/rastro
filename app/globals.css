@@ -166,6 +166,13 @@ body {
   height: 100%;
 }
 
+/* MapLibre fija `position: relative` en su contenedor; con un padre sin altura
+   definida eso lo colapsaba a 0 px en celular. */
+.rastro-map.maplibregl-map {
+  position: absolute;
+  inset: 0;
+}
+
 .maplibregl-canvas-container {
   touch-action: none;
 }
@@ -197,4 +204,11 @@ body {
 
 .rastro-popup-inner span {
   color: #5f6876;
+}
+
+/* En pantallas táctiles el zoom se hace con los dedos; los botones tapaban el mapa. */
+@media (pointer: coarse) and (max-width: 1023px) {
+  .rastro-map .maplibregl-ctrl-bottom-right .maplibregl-ctrl-group {
+    display: none;
+  }
 }

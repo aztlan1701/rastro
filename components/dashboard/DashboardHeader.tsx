@@ -20,7 +20,7 @@ export function DashboardHeader({
   onShowShortcuts,
 }: DashboardHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-edge/12 bg-canvas/95 px-4 py-3 backdrop-blur-md lg:px-6">
+    <header className="sticky top-0 z-50 flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-edge/12 bg-canvas/95 px-4 py-2 backdrop-blur-md lg:px-6 lg:py-3">
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3 lg:gap-4">
         <div className="flex min-w-0 items-center gap-3">
           <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#c8102e]">
@@ -83,7 +83,7 @@ export function DashboardHeader({
             onClick={onShowShortcuts}
             aria-label="Atajos de teclado"
             title="Atajos de teclado (?)"
-            className="rounded-sm border border-edge/15 px-2 py-1 text-muted hover:text-ink-3"
+            className="hidden rounded-sm border border-edge/15 px-2 py-1 text-muted hover:text-ink-3 lg:block"
           >
             ?
           </button>
